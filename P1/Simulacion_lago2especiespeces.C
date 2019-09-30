@@ -143,11 +143,12 @@ double *  y_aux = new double[1];
 	//	cout << " tcom " << _tcom << endl;
 		_tcom = 10;
 
+		// Peces pequeños -> __x[0]
 		cerr << " Numero inicial de peces pequeños, x(0) => ";
 		cin >> __x[0];
 	//	cout << " x(0) "<< __x[0] << endl;
 
-
+		// Peces pequeños -> __y[0]
 		cerr << " Numero inicial de peces grandes, y(0) => ";
 		cin >> __y[0];
 	//	cout << " y(0) "<< __y[0] << endl;
