@@ -187,7 +187,7 @@ los resultados que se han obtenido:
 
 \begin{table}[H]
 \begin{tabular}{c|c|c}
-\textbf{Probabilidad de ocupación} & \textbf{Mejor posición inicial} & \textbf{Mejor distancia} \\ \hline
+\textbf{Probabilidad de ocupación} & \textbf{Mejor posición inicial ($c$)} & \textbf{Mejor distancia} \\ \hline
 0.01                               & 99                              & 0.008400                 \\
 0.1                                & 99                              & 0.100000                 \\
 0.2                                & 99                              & 0.213100                 \\
@@ -200,7 +200,7 @@ los resultados que se han obtenido:
 0.9                                & 94                              & 6.477300                 \\
 0.99                               & 36                              & 67.957802               
 \end{tabular}
-\caption{Valores mejor posición inicial y distancia en función de la probabilidad de ocupación.}
+\caption{Valores de la mejor posición inicial y distancia en función de la probabilidad de ocupación.}
 \label{aparc-tabla-prob}
 \end{table}
 
@@ -218,8 +218,6 @@ la posición inicial.}
 \label{aparc-3d-prob}
 \end{figure}
 
-Como se puede ver en la figura \ref{aparc-3d-prob},
-
 Si se prueba con valores muy extremos, como por ejemplo con probabilidad de ocupación de 0.999, se obtiene el
 siguiente error:
 
@@ -229,21 +227,49 @@ siguiente error:
 \caption{Error al ejecutar el programa \textit{aparcamiento} con 0.999 de probabilidad de ocupación.}
 \end{figure}
 
-
 Esto se debe a que no se consigue encontrar sitio libre y se supera el tamaño del vector que representa las posiciones,
 lo cuál genera un fallo de segmentación al intentar acceder a posiciones no válidas de memoria.
 
 \subsection{Modificación del nivel de visión}
 
+Vamos a intentar variar ahora el nivel de visión para ver cómo son afectados los resultados. Estos son los resultados
+obtenidos:
+
+\begin{table}[H]
+\begin{tabular}{c|c|c}
+\textbf{Alcance de visión} & \textbf{Mejor posición inicial ($c$)} & \textbf{Mejor distancia} \\ \hline
+2                          & 94                              & 6.480800                 \\
+4                          & 94                              & 6.339700                 \\
+6                          & 94                              & 6.069100                 \\
+8                          & 93                              & 5.706100                 \\
+10                         & 92                              & 5.505300                 \\
+15                         & 90                              & 5.244000                 \\
+20                         & 86                              & 4.954400                 \\
+25                         & 83                              & 4.890900                 \\
+30                         & 82                              & 4.778700                 \\
+50                         & 72                              & 4.687100                 \\
+100                        & 80                              & 4.624000                
+\end{tabular}
+\caption{Valores de la mejor posición inicial y distancia en función del alcance de visión.}
+\end{table}
+
+Como se puede ver, aquí también al aumentar el valor del alcance de visión, el valor de $c$ disminuye. Sin embargo,
+a diferencia del caso anterior, la mejor distancia media va disminuyendo, posiblemente debido a que se tenga más
+conocimiento de las posiciones venideras. En el caso extremo en el que se ven todas las plazas de aparcamiento,
+se ve que la distancia media es la mínima. Todo esto se puede ver en la siguiente figura:
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.5]{img/aparc-vis-3d.png}
+\caption{Representación 3D de la distancia media al destino en función del alcance de visión y
+la posición inicial.}
+\label{aparc-3d-vis}
+\end{figure}
+
 \newpage
 
-\begin{thebibliography}{5}
+\chapter{Mi primer modelo de simulación discreto}
 
-\bibitem{nombre-referencia}
-Texto referencia
-\\\url{https://url.referencia.com}
-
-\end{thebibliography}
 
 \end{document}
 
