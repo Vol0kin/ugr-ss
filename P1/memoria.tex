@@ -251,6 +251,7 @@ obtenidos:
 100                        & 80                              & 4.624000                
 \end{tabular}
 \caption{Valores de la mejor posición inicial y distancia en función del alcance de visión.}
+\label{aparc-tabla-vis}
 \end{table}
 
 Como se puede ver, aquí también al aumentar el valor del alcance de visión, el valor de $c$ disminuye. Sin embargo,
@@ -265,6 +266,40 @@ se ve que la distancia media es la mínima. Todo esto se puede ver en la siguien
 la posición inicial.}
 \label{aparc-3d-vis}
 \end{figure}
+
+\subsection{Modificación de la visión y la probabilidad de ocupación}
+
+En este último apartado, se ha querido ver qué pasa si se modifican dos variables a la vez. Para ello, se van a
+modificar tanto el alcance de visión como la probabilidad de ocupación.
+
+Los resultados se pueden ver en la siguiente tabla:
+
+\begin{table}[H]
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{c|c|c|c}
+\textbf{\begin{tabular}[c]{@{}c@{}}Probabilidad\\ de ocupación\end{tabular}} & \textbf{Alcance de visión} & \textbf{Mejor posición inicial  ($c$)} & \textbf{Mejor distancia} \\ \hline
+0.4                                                                          & 5                          & 98                              & 0.480700                 \\
+0.4                                                                          & 10                         & 94                              & 0.469800                 \\
+0.4                                                                          & 15                         & 90                              & 0.459100                 \\
+0.5                                                                          & 5                          & 97                              & 0.660100                 \\
+0.5                                                                          & 10                         & 96                              & 0.661500                 \\
+0.5                                                                          & 15                         & 90                              & 0.655300                 \\
+0.6                                                                          & 5                          & 96                              & 1.472600                 \\
+0.6                                                                          & 10                         & 95                              & 1.362600                 \\
+0.6                                                                          & 15                         & 91                              & 1.364300                
+\end{tabular}
+}%
+\caption{Valores de la mejor posición inicial y distancia en función de la probabilidad de ocupación y el alcance
+de visión.}
+\label{aparc-tabla-prob-vis}
+\end{table}
+
+Como se puede ver, aún con la misma probabilidad de ocupación, el hecho de tener un mayor alcance de visión permite
+disminuir la mejor distancia media al destino, lo cuál sugiere que las suposiciones anteriores sobre que el alcance de
+visión permite tener más conocimiento sobre el problema son correctas. También se puede ver un claro patrón en el que,
+si se incrementa solo la probabilidad de ocupación sin cambiar el alcance de visión, la mejor distancia media empeora,
+pero al incrementar el alcance, ésta disminuye, tal y como se puede observar en las tablas \ref{aparc-tabla-prob} y
+\ref{aparc-tabla-vis}.
 
 \newpage
 
