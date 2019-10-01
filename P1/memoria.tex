@@ -82,18 +82,10 @@
 \section{Pruebas iniciales con el modelo}
 
 Inicialmente, se ha probado el modelo para ver cómo funcionaba. Se ha ejecutado el modelo una serie de
-veces (10 para ser más precisos), y se han almacenado los resultados. La ejecución, suponiendo que
-el programa ya estaba compilado, se ha hecho de la siguiente forma:
+veces (10 para ser más precisos), y se han almacenado los resultados. Estos resultados pueden verse a
+continuación:
 
-\begin{lstlisting}[language=bash]
-$ for i in {1..10}; do \ 
-bin/aparcamiento | tail -2 >> data/aparc-media.dat; \
-done
-\end{lstlisting}
-
-Los resultados se muestran a continuación:
-
-\begin{figure}[H]
+\begin{table}[H]
 \centering
 \begin{tabular}{c|c}
 \textbf{Mejor posición inicial ($c$)} & \textbf{Mejor distancia} \\ \hline
@@ -109,7 +101,8 @@ Los resultados se muestran a continuación:
 94                              & 6.478660                
 \end{tabular}
 \caption{Resultados de mejor posición inicial y mejor distancia para 10 ejecuciones.}
-\end{figure}
+\label{aparc-tabla}
+\end{table}
 
 Como se puede apreciar, parece que hay cierta semejanza entre los resultados obtenidos en cada
 ejecución. Se puede ver que el valor de $c$ obtenido es muy similar en casi todos los casos, siendo
@@ -124,6 +117,7 @@ encontramos con la siguiente gráfica:
 \centering
 \includegraphics[scale=0.6]{img/c-dist.png}
 \caption{Evolución del valor de la distancia al destino en función del valor de la posición inicial.}
+\label{aparc-grafica}
 \end{figure}
 
 Como se puede ver, existe una tendencia a que, cuanto más cerca de la posición a la que se quiera llegar
@@ -141,6 +135,105 @@ Por tanto, a vista de los resultados que hemos obtenido, podemos afirmar con bas
 a partir de la que empezar sitio para aparcar es aproximadamente la 94.
 
 \section{Experimentación con los parámetros}
+
+Se han realizado una serie de experimentaciones con los parámetros con los que se puede llamar al programa.
+A continuación, se muestran algunos de los resultados obtenidos.
+
+\subsection{Modificación de la posición destino}
+
+Se ha probado a modificar la posición destino, estableciendo que $x = 150$, y se han realizado 10 ejecuciones.
+A continuación, se pueden ver los resultados obtenidos:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{c|c}
+\textbf{Mejor posición inicial ($c$)} & \textbf{Mejor distancia} \\ \hline
+144                              & 6.438900                 \\
+144                              & 6.438900                 \\
+144                              & 6.438900                 \\
+143                              & 6.472200                 \\
+143                              & 6.472200                 \\
+143                              & 6.472200                 \\
+143                              & 6.472200                 \\
+143                              & 6.472200                 \\
+143                              & 6.472200                 \\
+143                              & 6.358800                
+\end{tabular}
+\caption{Resultados de mejor posición inicial y mejor distancia para 10 ejecuciones con
+con posición destino $x = 150$.}
+\label{aparc-150-tabla}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.47]{img/c-dist.png}
+\caption{Evolución del valor de la distancia al destino en función del valor de la posición inicial para $x = 150$.}
+\label{aparc-150-grafica}
+\end{figure}
+
+Los resultados obtenidos en la tabla \ref{aparc-150-tabla} son muy parecidos a los que obtuvimos en \ref{aparc-tabla},
+solo que los valores de $c$ han cambiado, aunque siguen unos patrones parecisos. En este caso, la moda parece ser 143,
+y la media tiende a ese valor. Las mejores distancias están también muy próximas, y no se ve mucha disparidad.
+
+Además, tal y como se hizo en el caso anterior, se ha obtenido una gráfica que muestra la evolución de la distancia media
+en función del valor de $c$, la cuál se puede ver en la figura \ref{aparc-150-grafica}. Como se puede observar, sigue
+un patrón muy parecido al que se puede ver en la figura \ref{aparc-grafica}, así que parece que no es un parámetro
+que influya demasiado por sí solo.
+
+\subsection{Modificación de la probabilidad de ocupación}
+
+Se ha probado a variar la probabilidad de ocupación para ver cómo es afectada la salida. A continuación, se pueden ver
+los resultados que se han obtenido:
+
+\begin{table}[H]
+\begin{tabular}{c|c|c}
+\textbf{Probabilidad de ocupación} & \textbf{Mejor posición inicial} & \textbf{Mejor distancia} \\ \hline
+0.01                               & 99                              & 0.008400                 \\
+0.1                                & 99                              & 0.100000                 \\
+0.2                                & 99                              & 0.213100                 \\
+0.3                                & 99                              & 0.344800                 \\
+0.4                                & 99                              & 0.495100                 \\
+0.5                                & 98                              & 0.744800                 \\
+0.6                                & 98                              & 1.074900                 \\
+0.7                                & 98                              & 1.659600                 \\
+0.8                                & 97                              & 2.901000                 \\
+0.9                                & 94                              & 6.477300                 \\
+0.99                               & 36                              & 67.957802               
+\end{tabular}
+\caption{Valores mejor posición inicial y distancia en función de la probabilidad de ocupación.}
+\label{aparc-tabla-prob}
+\end{table}
+
+Es interesante ver cómo, a medida que va incrementando la probabilidad de ocupación, los valores de $c$ y de distancia
+van cambiando, y se van haciendo cada vez peores. Se puede ver como el valor de $c$ va disminuyendo a medida que va aumentando
+la probabilidad, lo cuál afecta directamente a la distancia, aumentándola proporcionalmente cada vez que disminuye el valor de
+$c$. Todo esto se debe a que, cuanto menor sea la probabilidad de ocupación, más cerca del destino se podrá encontrar un sitio.
+Todo esto se puede ver gráficamente en la siguiente figura:
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.6]{img/aparc-prob-3d.png}
+\caption{Representación 3D de la distancia media al destino en función de la probabilidad de ocupación y
+la posición inicial.}
+\label{aparc-3d-prob}
+\end{figure}
+
+Como se puede ver en la figura \ref{aparc-3d-prob},
+
+Si se prueba con valores muy extremos, como por ejemplo con probabilidad de ocupación de 0.999, se obtiene el
+siguiente error:
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.3]{img/aparc-prob-error.png}
+\caption{Error al ejecutar el programa \textit{aparcamiento} con 0.999 de probabilidad de ocupación.}
+\end{figure}
+
+
+Esto se debe a que no se consigue encontrar sitio libre y se supera el tamaño del vector que representa las posiciones,
+lo cuál genera un fallo de segmentación al intentar acceder a posiciones no válidas de memoria.
+
+\subsection{Modificación del nivel de visión}
 
 \newpage
 
