@@ -1,0 +1,451 @@
+
+SIMULANDO...
+
+
+	MEDIAS:
+
+La media del numero de fallos en los radares es: 36
+La media del tiempo de desproteccion es: 135.44
+La media del porcentaje de tiempo de desproteccion es: 37.1069
+
+	DESVIACIONES TIPICAS:
+
+La desviacion tipica del numero de fallos en los radares es: -nan
+La desviacion tipica del tiempo de desproteccion es: -nan
+La desviacion tipica del porcentaje de tiempo de desproteccion es: -nan
+
+El tiempo en realizar las 1 simulaciones ha sido de: 0.001208 segundos, con 5 radares y 5 piezas, para un tiempo de parada de: 365 y periodo de envio a reparacion entre 15 y 30, y tiempos entre fallos del radar: 20
+
+
+SIMULANDO...
+
+
+	MEDIAS:
+
+La media del numero de fallos en los radares es: 17
+La media del tiempo de desproteccion es: 43.02
+La media del porcentaje de tiempo de desproteccion es: 11.7863
+
+	DESVIACIONES TIPICAS:
+
+La desviacion tipica del numero de fallos en los radares es: -nan
+La desviacion tipica del tiempo de desproteccion es: -nan
+La desviacion tipica del porcentaje de tiempo de desproteccion es: -nan
+
+El tiempo en realizar las 1 simulaciones ha sido de: 0.001329 segundos, con 5 radares y 7 piezas, para un tiempo de parada de: 365 y periodo de envio a reparacion entre 15 y 30, y tiempos entre fallos del radar: 20
+
+
+SIMULANDO...
+
+
+	MEDIAS:
+
+La media del numero de fallos en los radares es: 5
+La media del tiempo de desproteccion es: 11.9295
+La media del porcentaje de tiempo de desproteccion es: 3.26835
+
+	DESVIACIONES TIPICAS:
+
+La desviacion tipica del numero de fallos en los radares es: -nan
+La desviacion tipica del tiempo de desproteccion es: -nan
+La desviacion tipica del porcentaje de tiempo de desproteccion es: -nan
+
+El tiempo en realizar las 1 simulaciones ha sido de: 0.003098 segundos, con 5 radares y 9 piezas, para un tiempo de parada de: 365 y periodo de envio a reparacion entre 15 y 30, y tiempos entre fallos del radar: 20
+
+
+SIMULANDO...
+
+
+	MEDIAS:
+
+La media del numero de fallos en los radares es: 2
+La media del tiempo de desproteccion es: 2.02277
+La media del porcentaje de tiempo de desproteccion es: 0.554182
+
+	DESVIACIONES TIPICAS:
+
+La desviacion tipica del numero de fallos en los radares es: -nan
+La desviacion tipica del tiempo de desproteccion es: -nan
+La desviacion tipica del porcentaje de tiempo de desproteccion es: -nan
+
+El tiempo en realizar las 1 simulaciones ha sido de: 0.002577 segundos, con 5 radares y 11 piezas, para un tiempo de parada de: 365 y periodo de envio a reparacion entre 15 y 30, y tiempos entre fallos del radar: 20
+
+
+SIMULANDO...
+
+
+	MEDIAS:
+
+La media del numero de fallos en los radares es: 0
+La media del tiempo de desproteccion es: 0
+La media del porcentaje de tiempo de desproteccion es: 0
+
+	DESVIACIONES TIPICAS:
+
+La desviacion tipica del numero de fallos en los radares es: -nan
+La desviacion tipica del tiempo de desproteccion es: -nan
+La desviacion tipica del porcentaje de tiempo de desproteccion es: -nan
+
+El tiempo en realizar las 1 simulaciones ha sido de: 0.00573 segundos, con 5 radares y 12 piezas, para un tiempo de parada de: 365 y periodo de envio a reparacion entre 15 y 30, y tiempos entre fallos del radar: 20
+
+
+SIMULANDO...
+
+
+	MEDIAS:
+
+La media del numero de fallos en los radares es: 37
+La media del tiempo de desproteccion es: 116.49
+La media del porcentaje de tiempo de desproteccion es: 31.9152
+
+	DESVIACIONES TIPICAS:
+
+La desviacion tipica del numero de fallos en los radares es: 7.7746
+La desviacion tipica del tiempo de desproteccion es: 21.2086
+La desviacion tipica del porcentaje de tiempo de desproteccion es: 5.81056
+
+El tiempo en realizar las 10 simulaciones ha sido de: 0.011351 segundos, con 5 radares y 5 piezas, para un tiempo de parada de: 365 y periodo de envio a reparacion entre 15 y 30, y tiempos entre fallos del radar: 20
+
+
+SIMULANDO...
+
+
+	MEDIAS:
+
+La media del numero de fallos en los radares es: 20.2
+La media del tiempo de desproteccion es: 53.1538
+La media del porcentaje de tiempo de desproteccion es: 14.5627
+
+	DESVIACIONES TIPICAS:
+
+La desviacion tipica del numero de fallos en los radares es: 9.2111
+La desviacion tipica del tiempo de desproteccion es: 22.7694
+La desviacion tipica del porcentaje de tiempo de desproteccion es: 6.23818
+
+El tiempo en realizar las 10 simulaciones ha sido de: 0.013329 segundos, con 5 radares y 7 piezas, para un tiempo de parada de: 365 y periodo de envio a reparacion entre 15 y 30, y tiempos entre fallos del radar: 20
+
+
+SIMULANDO...
+
+
+	MEDIAS:
+
+La media del numero de fallos en los radares es: 5.6
+La media del tiempo de desproteccion es: 10.3937
+La media del porcentaje de tiempo de desproteccion es: 2.8476
+
+	DESVIACIONES TIPICAS:
+
+La desviacion tipica del numero de fallos en los radares es: 3.62706
+La desviacion tipica del tiempo de desproteccion es: 7.2076
+La desviacion tipica del porcentaje de tiempo de desproteccion es: 1.97468
+
+El tiempo en realizar las 10 simulaciones ha sido de: 0.01373 segundos, con 5 radares y 9 piezas, para un tiempo de parada de: 365 y periodo de envio a reparacion entre 15 y 30, y tiempos entre fallos del radar: 20
+
+
+SIMULANDO...
+
+
+	MEDIAS:
+
+La media del numero de fallos en los radares es: 1.8
+La media del tiempo de desproteccion es: 3.44872
+La media del porcentaje de tiempo de desproteccion es: 0.944855
+
+	DESVIACIONES TIPICAS:
+
+La desviacion tipica del numero de fallos en los radares es: 1.8738
+La desviacion tipica del tiempo de desproteccion es: 4.53935
+La desviacion tipica del porcentaje de tiempo de desproteccion es: 1.24366
+
+El tiempo en realizar las 10 simulaciones ha sido de: 0.014119 segundos, con 5 radares y 11 piezas, para un tiempo de parada de: 365 y periodo de envio a reparacion entre 15 y 30, y tiempos entre fallos del radar: 20
+
+
+SIMULANDO...
+
+
+	MEDIAS:
+
+La media del numero de fallos en los radares es: 0.7
+La media del tiempo de desproteccion es: 1.49764
+La media del porcentaje de tiempo de desproteccion es: 0.410312
+
+	DESVIACIONES TIPICAS:
+
+La desviacion tipica del numero de fallos en los radares es: 1.33749
+La desviacion tipica del tiempo de desproteccion es: 3.78848
+La desviacion tipica del porcentaje de tiempo de desproteccion es: 1.03794
+
+El tiempo en realizar las 10 simulaciones ha sido de: 0.016263 segundos, con 5 radares y 12 piezas, para un tiempo de parada de: 365 y periodo de envio a reparacion entre 15 y 30, y tiempos entre fallos del radar: 20
+
+
+SIMULANDO...
+
+
+	MEDIAS:
+
+La media del numero de fallos en los radares es: 40.65
+La media del tiempo de desproteccion es: 138.956
+La media del porcentaje de tiempo de desproteccion es: 38.0701
+
+	DESVIACIONES TIPICAS:
+
+La desviacion tipica del numero de fallos en los radares es: 9.56674
+La desviacion tipica del tiempo de desproteccion es: 31.4378
+La desviacion tipica del porcentaje de tiempo de desproteccion es: 8.61312
+
+El tiempo en realizar las 100 simulaciones ha sido de: 0.100577 segundos, con 5 radares y 5 piezas, para un tiempo de parada de: 365 y periodo de envio a reparacion entre 15 y 30, y tiempos entre fallos del radar: 20
+
+
+SIMULANDO...
+
+
+	MEDIAS:
+
+La media del numero de fallos en los radares es: 22.6
+La media del tiempo de desproteccion es: 58.9689
+La media del porcentaje de tiempo de desproteccion es: 16.1558
+
+	DESVIACIONES TIPICAS:
+
+La desviacion tipica del numero de fallos en los radares es: 9.23104
+La desviacion tipica del tiempo de desproteccion es: 23.9746
+La desviacion tipica del porcentaje de tiempo de desproteccion es: 6.5684
+
+El tiempo en realizar las 100 simulaciones ha sido de: 0.145317 segundos, con 5 radares y 7 piezas, para un tiempo de parada de: 365 y periodo de envio a reparacion entre 15 y 30, y tiempos entre fallos del radar: 20
+
+
+SIMULANDO...
+
+
+	MEDIAS:
+
+La media del numero de fallos en los radares es: 6.89
+La media del tiempo de desproteccion es: 15.4718
+La media del porcentaje de tiempo de desproteccion es: 4.23885
+
+	DESVIACIONES TIPICAS:
+
+La desviacion tipica del numero de fallos en los radares es: 5.59021
+La desviacion tipica del tiempo de desproteccion es: 12.7277
+La desviacion tipica del porcentaje de tiempo de desproteccion es: 3.48704
+
+El tiempo en realizar las 100 simulaciones ha sido de: 0.119911 segundos, con 5 radares y 9 piezas, para un tiempo de parada de: 365 y periodo de envio a reparacion entre 15 y 30, y tiempos entre fallos del radar: 20
+
+
+
+SIMULANDO...
+
+
+	MEDIAS:
+
+La media del numero de fallos en los radares es: 2.15
+La media del tiempo de desproteccion es: 4.0502
+La media del porcentaje de tiempo de desproteccion es: 1.10964
+
+	DESVIACIONES TIPICAS:
+
+La desviacion tipica del numero de fallos en los radares es: 2.58346
+La desviacion tipica del tiempo de desproteccion es: 5.52981
+La desviacion tipica del porcentaje de tiempo de desproteccion es: 1.51502
+
+El tiempo en realizar las 100 simulaciones ha sido de: 0.130059 segundos, con 5 radares y 11 piezas, para un tiempo de parada de: 365 y periodo de envio a reparacion entre 15 y 30, y tiempos entre fallos del radar: 20
+
+
+SIMULANDO...
+
+
+	MEDIAS:
+
+La media del numero de fallos en los radares es: 1.24
+La media del tiempo de desproteccion es: 2.16619
+La media del porcentaje de tiempo de desproteccion es: 0.593476
+
+	DESVIACIONES TIPICAS:
+
+La desviacion tipica del numero de fallos en los radares es: 2.16548
+La desviacion tipica del tiempo de desproteccion es: 3.9028
+La desviacion tipica del porcentaje de tiempo de desproteccion es: 1.06926
+
+El tiempo en realizar las 100 simulaciones ha sido de: 0.123802 segundos, con 5 radares y 12 piezas, para un tiempo de parada de: 365 y periodo de envio a reparacion entre 15 y 30, y tiempos entre fallos del radar: 20
+
+
+SIMULANDO...
+
+
+	MEDIAS:
+
+La media del numero de fallos en los radares es: 40.252
+La media del tiempo de desproteccion es: 134.758
+La media del porcentaje de tiempo de desproteccion es: 36.92
+
+	DESVIACIONES TIPICAS:
+
+La desviacion tipica del numero de fallos en los radares es: 9.42604
+La desviacion tipica del tiempo de desproteccion es: 30.3368
+La desviacion tipica del porcentaje de tiempo de desproteccion es: 8.31143
+
+El tiempo en realizar las 500 simulaciones ha sido de: 0.487937 segundos, con 5 radares y 5 piezas, para un tiempo de parada de: 365 y periodo de envio a reparacion entre 15 y 30, y tiempos entre fallos del radar: 20
+
+
+SIMULANDO...
+
+
+	MEDIAS:
+
+La media del numero de fallos en los radares es: 21.4
+La media del tiempo de desproteccion es: 56.1886
+La media del porcentaje de tiempo de desproteccion es: 15.3941
+
+	DESVIACIONES TIPICAS:
+
+La desviacion tipica del numero de fallos en los radares es: 8.75816
+La desviacion tipica del tiempo de desproteccion es: 23.1913
+La desviacion tipica del porcentaje de tiempo de desproteccion es: 6.35381
+
+El tiempo en realizar las 500 simulaciones ha sido de: 0.582026 segundos, con 5 radares y 7 piezas, para un tiempo de parada de: 365 y periodo de envio a reparacion entre 15 y 30, y tiempos entre fallos del radar: 20
+
+
+SIMULANDO...
+
+
+	MEDIAS:
+
+La media del numero de fallos en los radares es: 8.298
+La media del tiempo de desproteccion es: 18.0512
+La media del porcentaje de tiempo de desproteccion es: 4.94555
+
+	DESVIACIONES TIPICAS:
+
+La desviacion tipica del numero de fallos en los radares es: 6.12309
+La desviacion tipica del tiempo de desproteccion es: 13.7852
+La desviacion tipica del porcentaje de tiempo de desproteccion es: 3.77676
+
+El tiempo en realizar las 500 simulaciones ha sido de: 0.59391 segundos, con 5 radares y 9 piezas, para un tiempo de parada de: 365 y periodo de envio a reparacion entre 15 y 30, y tiempos entre fallos del radar: 20
+
+
+SIMULANDO...
+
+
+	MEDIAS:
+
+La media del numero de fallos en los radares es: 2.126
+La media del tiempo de desproteccion es: 3.84885
+La media del porcentaje de tiempo de desproteccion es: 1.05448
+
+	DESVIACIONES TIPICAS:
+
+La desviacion tipica del numero de fallos en los radares es: 2.96981
+La desviacion tipica del tiempo de desproteccion es: 5.92925
+La desviacion tipica del porcentaje de tiempo de desproteccion es: 1.62445
+
+El tiempo en realizar las 500 simulaciones ha sido de: 0.645655 segundos, con 5 radares y 11 piezas, para un tiempo de parada de: 365 y periodo de envio a reparacion entre 15 y 30, y tiempos entre fallos del radar: 20
+
+
+SIMULANDO...
+
+
+	MEDIAS:
+
+La media del numero de fallos en los radares es: 0.86
+La media del tiempo de desproteccion es: 1.43926
+La media del porcentaje de tiempo de desproteccion es: 0.394317
+
+	DESVIACIONES TIPICAS:
+
+La desviacion tipica del numero de fallos en los radares es: 1.86852
+La desviacion tipica del tiempo de desproteccion es: 3.55643
+La desviacion tipica del porcentaje de tiempo de desproteccion es: 0.974363
+
+El tiempo en realizar las 500 simulaciones ha sido de: 0.654629 segundos, con 5 radares y 12 piezas, para un tiempo de parada de: 365 y periodo de envio a reparacion entre 15 y 30, y tiempos entre fallos del radar: 20
+
+
+SIMULANDO...
+
+
+	MEDIAS:
+
+La media del numero de fallos en los radares es: 40.563
+La media del tiempo de desproteccion es: 136.04
+La media del porcentaje de tiempo de desproteccion es: 37.2712
+
+	DESVIACIONES TIPICAS:
+
+La desviacion tipica del numero de fallos en los radares es: 9.72371
+La desviacion tipica del tiempo de desproteccion es: 31.1252
+La desviacion tipica del porcentaje de tiempo de desproteccion es: 8.52754
+
+El tiempo en realizar las 1000 simulaciones ha sido de: 0.984872 segundos, con 5 radares y 5 piezas, para un tiempo de parada de: 365 y periodo de envio a reparacion entre 15 y 30, y tiempos entre fallos del radar: 20
+
+
+SIMULANDO...
+
+
+	MEDIAS:
+
+La media del numero de fallos en los radares es: 21.52
+La media del tiempo de desproteccion es: 56.6682
+La media del porcentaje de tiempo de desproteccion es: 15.5255
+
+	DESVIACIONES TIPICAS:
+
+La desviacion tipica del numero de fallos en los radares es: 8.98155
+La desviacion tipica del tiempo de desproteccion es: 23.9191
+La desviacion tipica del porcentaje de tiempo de desproteccion es: 6.55317
+
+El tiempo en realizar las 1000 simulaciones ha sido de: 1.14451 segundos, con 5 radares y 7 piezas, para un tiempo de parada de: 365 y periodo de envio a reparacion entre 15 y 30, y tiempos entre fallos del radar: 20
+
+
+SIMULANDO...
+
+
+	MEDIAS:
+
+La media del numero de fallos en los radares es: 8.152
+La media del tiempo de desproteccion es: 17.658
+La media del porcentaje de tiempo de desproteccion es: 4.83779
+
+	DESVIACIONES TIPICAS:
+
+La desviacion tipica del numero de fallos en los radares es: 5.74891
+La desviacion tipica del tiempo de desproteccion es: 12.8844
+La desviacion tipica del porcentaje de tiempo de desproteccion es: 3.52998
+
+El tiempo en realizar las 1000 simulaciones ha sido de: 1.22632 segundos, con 5 radares y 9 piezas, para un tiempo de parada de: 365 y periodo de envio a reparacion entre 15 y 30, y tiempos entre fallos del radar: 20
+
+
+SIMULANDO...
+
+
+	MEDIAS:
+
+La media del numero de fallos en los radares es: 1.942
+La media del tiempo de desproteccion es: 3.44413
+La media del porcentaje de tiempo de desproteccion es: 0.943597
+
+	DESVIACIONES TIPICAS:
+
+La desviacion tipica del numero de fallos en los radares es: 2.62746
+La desviacion tipica del tiempo de desproteccion es: 5.18525
+La desviacion tipica del porcentaje de tiempo de desproteccion es: 1.42062
+
+El tiempo en realizar las 1000 simulaciones ha sido de: 1.26368 segundos, con 5 radares y 11 piezas, para un tiempo de parada de: 365 y periodo de envio a reparacion entre 15 y 30, y tiempos entre fallos del radar: 20
+
+
+SIMULANDO...
+
+
+	MEDIAS:
+
+La media del numero de fallos en los radares es: 0.897
+La media del tiempo de desproteccion es: 1.58924
+La media del porcentaje de tiempo de desproteccion es: 0.435409
+
+	DESVIACIONES TIPICAS:
+
+La desviacion tipica del numero de fallos en los radares es: 1.88837
+La desviacion tipica del tiempo de desproteccion es: 3.64734
+La desviacion tipica del porcentaje de tiempo de desproteccion es: 0.999271
+
+El tiempo en realizar las 1000 simulaciones ha sido de: 1.2503 segundos, con 5 radares y 12 piezas, para un tiempo de parada de: 365 y periodo de envio a reparacion entre 15 y 30, y tiempos entre fallos del radar: 20
+
