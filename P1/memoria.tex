@@ -354,7 +354,107 @@ umbral. El hecho de tener 11 piezas es suficiente en algunos casos, pero en otro
 Por tanto, aunque podríamos decir que el valor óptimo de piezas de repuesto está entre 11 y 12, vamos a quedarnos con
 las 12, tal y cómo hemos dicho anteriormente, debido a que ofrece más ``seguridad'' tener una pieza más.
 
+\section{Experimentación con los parámetros}
 
+Habiendo determinado el número mínimo de componentes de repuesto necesarios, vamos a ver cómo modificando los valores
+de algunos de los parámetros cambian los resultados obtenidos.
+
+\subsection{Modificación del tiempo de reparación}
+
+Vamos a disminuir el tiempo de reparación para ver cuál sería en este caso el mínimo número de componentes que
+necesitaríamos. Para ello, vamos a cambiar los tiempos para que se tarde entre 5 y 15 días, siguiendo una distribución
+uniforme. Para evitar tener tantos datos como antes, vamos a considerar solo 100, 500 y 1000 repeticiones, ya que
+hemos visto que son una buena aproximación porque se trata de un resultado medio.
+
+A continuación se pueden ver los resultados:
+
+\begin{table}[H]
+\begin{tabular}{c|c|c}
+\textbf{\begin{tabular}[c]{@{}c@{}}Nº piezas\\ de repuesto\end{tabular}} & \textbf{Nº de repeticiones} & \textbf{\begin{tabular}[c]{@{}c@{}}Media del \% de\\ tiempo de desprotección\end{tabular}} \\ \hline
+5                                                                        & 100                         & 3.74915                                                                                    \\
+7                                                                        & 100                         & 0.412021                                                                                   \\
+9                                                                        & 100                         & 0.0101209                                                                                  \\
+11                                                                       & 100                         & 0                                                                                          \\
+12                                                                       & 100                         & 0                                                                                          \\ \hline
+5                                                                        & 500                         & 3.7748                                                                                     \\
+7                                                                        & 500                         & 0.354648                                                                                   \\
+9                                                                        & 500                         & 0.026469                                                                                   \\
+11                                                                       & 500                         & 0.000546791                                                                                \\
+12                                                                       & 500                         & 0                                                                                          \\ \hline
+5                                                                        & 1000                        & 3.56635                                                                                    \\
+7                                                                        & 1000                        & 0.393049                                                                                   \\
+9                                                                        & 1000                        & 0.02624                                                                                    \\
+11                                                                       & 1000                        & 0.000315176                                                                                \\
+12                                                                       & 1000                        & 0.000970965                                                                               
+\end{tabular}
+\end{table}
+
+Como se puede ver claramente, parece ser que con un número de 6-7 piezas de repuesto se puede conseguir que el porcentaje
+del tiempo de desprotección sea inferior al 1\%. Este número es inferior al que teníamos antes, el cuál rondaba las 12 piezas,
+lo cuál es bastante bueno, ya que implica invertir menos en piezas, pero por otra parte, implica invertir más en las reparaciones.
+Si estas no son muy caras (y teniendo en cuenta que las piezas de por sí son caras), sería más recomendable buscar
+una reparación más rápida que disponer de un número mayor de piezas.
+
+\subsection{Modificación del tiempo de vida}
+
+Vamos a aumentar el tiempo de vida de los componentes hasta 50 días de media, siguiendo una distribución exponencial, para
+ver como esta modificación afecta a la cantidad mínima de componentes de repuesto que se necesitarían. Para ello, se ha
+seguido un proceso similar al que se ha llevado a cabo en la sección anterior.
+
+A continuación se pueden ver los resultados que se han obtenido:
+
+\begin{table}[H]
+\begin{tabular}{c|c|c}
+\textbf{\begin{tabular}[c]{@{}c@{}}Nº piezas\\ de repuesto\end{tabular}} & \textbf{Nº de repeticiones} & \textbf{\begin{tabular}[c]{@{}c@{}}Media del \% de\\ tiempo de desprotección\end{tabular}} \\ \hline
+5                                                                        & 100                         & 2.6056                                                                                     \\
+7                                                                        & 100                         & 0.163214                                                                                   \\
+9                                                                        & 100                         & 0.0138627                                                                                  \\
+11                                                                       & 100                         & 0                                                                                          \\
+12                                                                       & 100                         & 0                                                                                          \\ \hline
+5                                                                        & 500                         & 2.34215                                                                                    \\
+7                                                                        & 500                         & 0.163914                                                                                   \\
+9                                                                        & 500                         & 0.0128837                                                                                  \\
+11                                                                       & 500                         & 0                                                                                          \\
+12                                                                       & 500                         & 0                                                                                          \\ \hline
+5                                                                        & 1000                        & 2.4367                                                                                     \\
+7                                                                        & 1000                        & 0.207335                                                                                   \\
+9                                                                        & 1000                        & 0.0154164                                                                                  \\
+11                                                                       & 1000                        & 0                                                                                          \\
+12                                                                       & 1000                        & 0                                                                                         
+\end{tabular}
+\end{table}
+
+En este caso, con esta modificación, se obtienen unos resultados muy parecidos al caso anterior, ya que parece que el
+número mínimo de componentes de repuesto ronda las 6-7 piezas. No obstante, aunque los resultados sean similares, parece
+que el porcentaje del tiempo de desprotección es menor en este caso, lo cuál parece indicar que tener componentes más
+duraderos es mejor que tener unos tiempos de reparación más pequeños. En la siguiente gráfica, se pueden ver
+las diferencias:
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.55]{img/radar.png}
+\caption{Gráfica comparativa para 1000 repeticiones modificando el tiempo de reparación y el tiempo medio de vida.}
+\end{figure}
+
+Como se puede ver, existe cierta diferencia, aunque a medida que se van aumentando el número de piezas, ésta se hace
+menos notable. Esta diferencia puede deberse a que el valor escogido como tiempo medio de vida sea bastante más alto que
+los valores que se habían escogido como extremos del intervalo del tiempo de reparación; es decir, que se ha variado más
+el tiempo medio de vida que el de reparación. Pero, parece que en este caso, si tuvieramos que escoger alguna de las
+dos opciones sin considerar nada más, parece que sería más recomendable escoger piezas con una mayor duración, ya que
+ofrecen una mayor protección.
+
+\subsection{Conclusión}
+
+Parece que tener unos tiempos de reparación más bajos y disponer de componentes más duraderos permite reducir el número
+de componentes de repuesto necesarios. Parece que estos dos parámetros tienen bastante influencia en este número, así que,
+en caso de querer determinar cuántos componentes necesitaríamos como mínimo, tenemos que considerar, además del precio de
+éstos, cuánto tiempo se tardaría en reparar y el tiempo de vida medio de éstos. Dependiendo de cuáles sean los valores
+de estos tiempos, nos interesará tener un mayor o un menor número de componentes.
+
+También hay que considerear que, al ser los procesos de reparación más rápidos, éstos pueden ser más caros. Lo mismo pasa
+con los componentes de mayor durabilidad: sus precios pueden ser mayores que unos que duran bastante menos tiempo. Por tanto,
+en una situación real, también tenemos que tener en cuenta el factor económico para tomar una decisión con los datos que
+nos ofrece la simulación, ya que estos factores no se han tenido en cuenta a la hora de desarrollar el modelo.
 
 \newpage
 
