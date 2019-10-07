@@ -460,6 +460,74 @@ nos ofrece la simulación, ya que estos factores no se han tenido en cuenta a la
 
 \chapter{Mi primer modelo de simulación continuo}
 
+\section{Búsqueda del punto de equilibrio}
+
+Vamos a comenzar buscando un punto de equilibrio, en el que ninguno de los tipos de peces se extinga. Para ello, vamos a
+simular la vida en el lago durante 20000 días, y vamos a ir probando distintas cantidades iniciales de peces de cada tipo
+hasta que demos con un número en el que haya equilibrio.
+
+Al probar con 1000 peces pequeños y 10 grandes, se han obtenido los siguientes resultados:
+
+\begin{figure}[H]
+\centering
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[scale=0.4]{img/peces-1000-1.png}
+  \caption{Evolución del número de peces pequeños en el tiempo.}
+  \label{fig:peces-1000-p}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[scale=0.4]{img/peces-1000-2.png}
+  \caption{Evolución del número de peces grandes en el tiempo}
+  \label{fig:peces-1000-g}
+\end{minipage}
+\end{figure}
+
+Como se puede ver, no se alcanza una situación de equilibrio. En la figura \ref{fig:peces-1000-p} se puede ver como, al pasar
+solo unos pocos días, éstos se extinguen. Además, se puede ver en la figura \ref{fig:peces-1000-g} como el número de peces
+grandes comienza a disminuir con el tiempo. Por tanto, de aquí deducimos que necesitamos un mayor número de peces pequeños
+inicialmente, ya que se extinguen demasiado rápido.
+
+Al probar ahora con 1500 peces pequeños y 10 grandes, se han obtenido los siguientes resultados:
+
+\begin{figure}[H]
+\centering
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[scale=0.4]{img/peces-1500-1.png}
+  \caption{Evolución del número de peces pequeños en el tiempo.}
+  \label{fig:peces-1500-p}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[scale=0.4]{img/peces-1500-2.png}
+  \caption{Evolución del número de peces grandes en el tiempo}
+  \label{fig:peces-1500-g}
+\end{minipage}
+\end{figure}
+
+Se puede ver que en este caso las dos poblaciones de peces se han estabilizado. Se puede ver claramente como se llega
+a un punto de equilibrio en el que los números de peces no varían. Este tiempo es poco más de 2500 días. Se puede ver,
+además, que la población de peces pequeños crece mucho más que la de peces grandes.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.52]{img/peces-1500-3.png}
+\caption{Evolución del número de peces pequeño y grande}
+\label{fig:peces-peq-grand}
+\end{figure}
+
+Si estudiamos como evolucionan las dos poblaciones, tal y como se puede ver en la figura \ref{fig:peces-peq-grand}, podemos
+ver que tiene una forma que recuerda a una espiral. Esto se debe a que, al principio, la población de peces pequeños crece
+desmesuradamente (como se puede ver en el pico inicial). Sin embargo, después de un tiempo, el número de peces pequeños
+comienza a disminuir, debido a que el número de peces grandes va aumentando. Posteriormente, el número de peces grandes
+comienza a disminuir, debido a que hay pocos peces pequeños, y así sucesivamente. De esta forma se crea la espiral que
+se ve en la figura, hasta que se llega al punto de equilibrio, en el que ya no se producen cambios.
+
+\section{Estudio de una campaña de pesca}
+
+\section{Estudio de políticas de pesca}
 
 \end{document}
 
