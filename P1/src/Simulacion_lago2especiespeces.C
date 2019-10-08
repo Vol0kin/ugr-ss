@@ -148,10 +148,18 @@ double *  y_aux = new double[1];
 		cin >> __x[0];
 	//	cout << " x(0) "<< __x[0] << endl;
 
-		// Peces pequeños -> __y[0]
+		// Peces grandes -> __y[0]
 		cerr << " Numero inicial de peces grandes, y(0) => ";
 		cin >> __y[0];
 	//	cout << " y(0) "<< __y[0] << endl;
+		double prop, dias, num_peces = 0.0;
+		cerr << " Numero de dias entre captura y captura => ";
+		cin >> dias;
+		cerr << " Proporcion de peces grandes que capturar => ";
+		cin >> prop;
+		double captura = prop;
+		prop = 1.0 - prop;
+		
 
 /*
 		cerr << " A_inic => ";
@@ -184,9 +192,16 @@ double *  y_aux = new double[1];
 		cout << "\t" << _tinicio << "\t" << __x[0]<< "\t" << __y[0]<< endl;
 
 		for(double t=_tinicio ; t < (_tfin-10e-8) ; t += inc ){
+			if (fmod(t, dias) == 0 && t > 0.0)
+			{
+				num_peces += __y[0] * captura;
+				__y[0] *= prop;
+			}
+			
 			resolver( t, t + inc, aux );
 			cout << "\t" << aux[0]<< "\t" << aux[1]<< "\t" << aux[2]<< endl;
 		}
+		cout << "Capturas: " << num_peces << endl;
 	}
 
 

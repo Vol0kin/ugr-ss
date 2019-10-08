@@ -12,6 +12,7 @@
 \usepackage{amsmath}						% Símbolos matemáticos
 \usepackage{listings}
 \usepackage{longtable}
+\usepackage{subcaption}
 
 % Comando para poner el nombre de la asignatura
 \newcommand{\asignatura}{Simulación de Sistemas}
@@ -479,7 +480,7 @@ Al probar con 1000 peces pequeños y 10 grandes, se han obtenido los siguientes 
 \begin{minipage}{.5\textwidth}
   \centering
   \includegraphics[scale=0.4]{img/peces-1000-2.png}
-  \caption{Evolución del número de peces grandes en el tiempo}
+  \caption{Evolución del número de peces grandes en el tiempo.}
   \label{fig:peces-1000-g}
 \end{minipage}
 \end{figure}
@@ -502,7 +503,7 @@ Al probar ahora con 1500 peces pequeños y 10 grandes, se han obtenido los sigui
 \begin{minipage}{.5\textwidth}
   \centering
   \includegraphics[scale=0.4]{img/peces-1500-2.png}
-  \caption{Evolución del número de peces grandes en el tiempo}
+  \caption{Evolución del número de peces grandes en el tiempo.}
   \label{fig:peces-1500-g}
 \end{minipage}
 \end{figure}
@@ -514,7 +515,7 @@ además, que la población de peces pequeños crece mucho más que la de peces g
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.52]{img/peces-1500-3.png}
-\caption{Evolución del número de peces pequeño y grande}
+\caption{Evolución del número de peces pequeños y grandes.}
 \label{fig:peces-peq-grand}
 \end{figure}
 
@@ -527,7 +528,169 @@ se ve en la figura, hasta que se llega al punto de equilibrio, en el que ya no s
 
 \section{Estudio de una campaña de pesca}
 
+Vamos a probar qué pasa si capturamos un determinado número de peces grandes cada cierto tiempo. Para ello, vamos a suponer
+que, partiendo de una situación en la que sabemos que hay equilibrio (gracias a los resultados del apartado anterior), se
+captura un número determinado de peces grandes. Esta captura se llevará a mitad de simulación (es decir, al cabo de uno 10000
+días). Se harán capturas tales que queden la mitad de los peces, un tercio y un cuarto.
+
+A continuación, se pueden ver los resultados obtenidos:
+
+\begin{figure}[H]
+\centering
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[scale=0.4]{img/peces-p-mitad.png}
+  \subcaption{Evolución del número de peces pequeños.}
+  \label{fig:peces-p-mitad}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[scale=0.4]{img/peces-g-mitad.png}
+  \subcaption{Evolución del número de peces grandes.}
+  \label{fig:peces-g-mitad}
+\end{minipage}
+\caption{Evolución del número de peces de cada población en el tiempo dejando un cuarto de los grandes.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[scale=0.4]{img/peces-p-tercio.png}
+  \subcaption{Evolución del número de peces pequeños.}
+  \label{fig:peces-p-tercio}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[scale=0.4]{img/peces-g-tercio.png}
+  \subcaption{Evolución del número de peces grandes.}
+  \label{fig:peces-g-tercio}
+\end{minipage}
+\caption{Evolución del número de peces de cada población en el tiempo dejando un tercio de los grandes.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[scale=0.4]{img/peces-p-cuarto.png}
+  \subcaption{Evolución del número de peces pequeños.}
+  \label{fig:peces-p-cuarto}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[scale=0.4]{img/peces-g-cuarto.png}
+  \subcaption{Evolución del número de peces grandes.}
+  \label{fig:peces-g-cuarto}
+\end{minipage}
+\caption{Evolución del número de peces de cada población en el tiempo dejando un cuarto de los grandes.}
+\end{figure}
+
+Como se puede ver, a grandes rasgos, el comportamiento es bastante similar. Al capturar un número determinado de peces
+grandes, la población de peces pequeños crece más o menos dependiendo del número de peces que se hayan capturado. Durante
+los siguientes instantes de tiempo, el número de peces pequeños comienza a disminuir y el de grandes a aumentar. El número
+de peces de cada población va oscilando hasta llegar a un equilibrio de nuevo, como se puede ver en todas las figuras.
+
+Si estudiamos como evoluciona el número de individuos de cada población de forma conjunta tal y como hicimos anteriormente,
+nos encontramos con lo siguiente:
+
+\begin{figure}[H]
+\centering
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[scale=0.4]{img/peces-pg-mitad.png}
+  \subcaption{Dejando la mitad de los grandes.}
+  \label{fig:peces-pg-mitad}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[scale=0.4]{img/peces-pg-tercio.png}
+  \subcaption{Dejando un tercio de los grandes.}
+  \label{fig:peces-pg-tercio}
+\end{minipage}
+\begin{minipage}{0.5\textwidth}
+  \centering
+  \includegraphics[scale=0.4]{img/peces-pg-cuarto.png}
+  \subcaption{Dejando un cuarto de los grandes.}
+  \label{fig:peces-pg-cuarto}
+\end{minipage}
+\caption{Evolución del número de peces de cada población de forma conjunta.}
+\label{fig:peces-pg-captura}
+\end{figure}
+
+Como se puede ver en la figura \ref{fig:peces-pg-captura}, aun capturando un número determinado de peces grandes,
+se da una de espiral parecida a la que se puede ver en la figura \ref{fig:peces-peq-grand}. La principal diferencia es
+la brusca recesión del número de peces grandes, y como consecuente, el incremento del número de peces pequeños, lo cuál
+no sucedía anteriormente. Este cambio depende del número de peces grandes que se dejen, ya que dejar un mayor número implica
+que la cantidad de peces pequeños crecerá menos.
+
+Como pequeña conlcusión, podemos ver que, a pesar de realizar una captura de un número determinado de peces grandes, si la
+población está en equilibrio, volverá a él al cabo de un tiempo, siempre y cuando se deje algún que otro pez grande.
+
 \section{Estudio de políticas de pesca}
+
+Por último, vamos a estudiar una serie de políticas de pesca para ver cuál sería la mejor. El objetivo es intentar
+maximizar el número de peces grandes que se capturen en total.
+
+Vamos a suponer que existen tres campañas: una a corto plazo, en la que se hacen capturas cada 30 días (aproximadamente un mes);
+una a medio, en la que se hacen capturas cada 90 días (cada 3 meses aproximadamente); y una a largo plazo, en la que se hacen
+capturas cada 180 días (aproximadamente cada 6 meses).
+
+Vamos a suponer también que, para cada campaña, se quiere probar a capturar un número distinto de peces grandes para ver qué
+efectos tiene en la población. Estas cantidades tienen sentido para los intervalos de tiempo (no se espera que se capturen
+el 90\% de los peces en la campaña a corto plazo ya que no tiene mucho sentido capturar tantos). Por tanto, vamos a probar
+los siguientes valores:
+
+\begin{itemize}
+	\item Para la campaña a \textbf{corto plazo}, vamos a probar a capturar el 10\% de los peces y el 20\%.
+	\item Para la campaña a \textbf{medio plazo}, vamos a probar a capturar el 30\% de los peces y el 45\%.
+	\item Para la campaña a \textbf{largo plazo}, vamos a probar a capturar el 55\% de los peces y el 75\%.
+\end{itemize}
+
+Para realizar la simulación, vamos a simular 20000 días, comenzando con 1500 peces pequeños y 10 grandes.
+
+Una vez realizadas las simulaciones, se han obtenido los siguientes resultados:
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.43]{img/campanas.png}
+\caption{Número de peces grandes capturados para cada campaña.}
+\label{fig:campaigns}
+\end{figure}
+
+Parece que las campañas que ofrecen unos mejores resultados son aquellas en las que se captura un mayor número de peces,
+ya sea a corto, medio o largo plazo. Sin embargo, la que permite maximizar el número de peces capturados es una a corto
+plazo en la que se capturan el 20\% de los peces grandes. Si estudiamos las poblaciones de peces, nos encontramos 
+con lo siguiente:
+
+\begin{figure}[H]
+\centering
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[scale=0.4]{img/peces-c-p.png}
+  \subcaption{Evolución de los peces pequeños.}
+  \label{fig:peces-c-p}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[scale=0.4]{img/peces-c-g.png}
+  \subcaption{Evolución de los peces grandes.}
+  \label{fig:peces-c-g}
+\end{minipage}
+\begin{minipage}{0.5\textwidth}
+  \centering
+  \includegraphics[scale=0.4]{img/peces-c-pg.png}
+  \subcaption{Evolución de las dos poblaciones.}
+  \label{fig:peces-c-pg}
+\end{minipage}
+\caption{Evolución del número de peces de cada población según el tiempo y de forma conjunta.}
+\label{fig:peces-corto}
+\end{figure}
+
+Como se puede ver, las dos poblaciones están en un ``margen de estabilidad''. Esto es, crecen y decrecen dentro de un intervalo
+determinado, pero siempre de forma estable y periódica. Por tanto, de aquí podemos conclui que la campaña es relativamente buena,
+ya que permite recuperar la población de peces grandes bastante bien y no afecta mucho a la de peces pequeños. Además, es
+la que maximiza el número de peces capturados, lo cuál era nuestro objetivo desde el principio.
 
 \end{document}
 

@@ -10,10 +10,11 @@ with open(sys.argv[1], 'r') as f:
 	line = f.readline()
 
 	for line in f:
-		t, s, b = map(float, line.split())
-		time.append(t)
-		small.append(s)
-		big.append(b)
+		if 'Capturas' not in line:
+			t, s, b = map(float, line.split())
+			time.append(t)
+			small.append(s)
+			big.append(b)
 
 time = np.array(time, dtype=np.int)
 small = np.array(small)
