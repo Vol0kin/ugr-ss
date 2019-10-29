@@ -101,21 +101,34 @@ int genera_demanda(float* tabla,int tama)
 	return i;
 }
 
+int min(int a, int b)
+{
+	int min_val = a;
+	
+	if (b < a)
+	{
+		min_val = b;ç
+	}
+	
+	return min_val;
+}
+
 int main(int argc, char* argv[])
 {
 	// Comprobar los parametros de la linea de comandos
-  if (argc < 5)
+  if (argc < 6)
   {
     printf("Numero de parametros incorrectos\n");
-    printf("Uso esperado: ./%s <ganancia por venta> <perdida por no venta> <num. simulaciones> <num. tabla>\n", argv[0]);
+    printf("Uso esperado: ./%s <ganancia por venta> <perdida por no venta> <dinero por devolucion> <num. simulaciones> <num. tabla>\n", argv[0]);
     exit(-1);
   }
 
 	// Obtener parametros
   int x = atoi(argv[1]),
   		y = atoi(argv[2]),
-  		veces = atoi(argv[3]),
-  		tipo_tabla = atoi(argv[4]);
+  		z = atoi(argv[3]),
+  		veces = atoi(argv[4]),
+  		tipo_tabla = atoi(argv[5]);
   
   // Comprobar que el tipo de tabla es correcto
   if (tipo_tabla < 0 || tipo_tabla > 2)
@@ -126,6 +139,7 @@ int main(int argc, char* argv[])
   
   printf("Valor de x: %d\n", x);
   printf("Valor de y: %d\n", y);
+  printf("Valor de z: %d\n", z);
   printf("Numero de veces que se va a realizar cada simulacion: %d\n", veces);
   printf("Tipo de tabla a utilzar: %d\n", tipo_tabla);
   
@@ -164,7 +178,8 @@ int main(int argc, char* argv[])
 
       if (s > demanda)
       {
-        ganancia = demanda * x - (s - demanda) * y;
+      	int min_val = min(z, (s - demanda) * y);
+        ganancia = demanda * x - min_val;
       }
       else
       {

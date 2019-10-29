@@ -107,13 +107,13 @@ int main(int argc, char* argv[])
   if (argc < 5)
   {
     printf("Numero de parametros incorrectos\n");
-    printf("Uso esperado: ./%s <ganancia por venta> <perdida por no venta> <num. simulaciones> <num. tabla>\n", argv[0]);
+    printf("Uso esperado: ./%s <ganancia por venta> <dinero por devolucion> <num. simulaciones> <num. tabla>\n", argv[0]);
     exit(-1);
   }
 
 	// Obtener parametros
   int x = atoi(argv[1]),
-  		y = atoi(argv[2]),
+  		z = atoi(argv[2]),
   		veces = atoi(argv[3]),
   		tipo_tabla = atoi(argv[4]);
   
@@ -125,7 +125,7 @@ int main(int argc, char* argv[])
   }
   
   printf("Valor de x: %d\n", x);
-  printf("Valor de y: %d\n", y);
+  printf("Valor de z: %d\n", y);
   printf("Numero de veces que se va a realizar cada simulacion: %d\n", veces);
   printf("Tipo de tabla a utilzar: %d\n", tipo_tabla);
   
@@ -164,7 +164,7 @@ int main(int argc, char* argv[])
 
       if (s > demanda)
       {
-        ganancia = demanda * x - (s - demanda) * y;
+        ganancia = demanda * x - z;
       }
       else
       {

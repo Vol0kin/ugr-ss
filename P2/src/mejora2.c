@@ -94,9 +94,33 @@ int genera_demanda(float* tabla,int tama)
 	int i;
 	double u = uniforme();
 	
-	i = 0;
-	while((i<tama) && (u>=tabla[i]))
-		i++;
+	int a = 0, b = tama - 1;
+	bool encontrado = false;
+	
+	while(a <= b && !encontrado)
+	{
+		i = (int) (a + b)/2;
+		
+		if (u < tabla[i])
+		{
+			if (i == 0)
+			{
+				encontrado = true;
+			}
+			else if (tabla[i - 1] <= u)
+			{
+				encontrado = true;
+			}
+			else
+			{
+				b = i - 1;
+			}
+		}
+		else
+		{
+			a = i + 1;
+		}
+	}
 	
 	return i;
 }

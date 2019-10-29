@@ -1,0 +1,21 @@
+.PHONY: clean
+CC=gcc
+CFLAGS=-std=c99
+LINK=-lm
+SRC=src
+BIN=bin
+
+all: $(BIN)/generador $(BIN)/modificacion1 $(BIN)/modificacion2
+
+$(BIN)/generador: $(SRC)/generador.c
+	$(CC) $(CFLAGS) $< -o $@ $(LINK)
+
+$(BIN)/modificacion1: $(SRC)/modificacion1.c
+	$(CC) $(CFLAGS) $< -o $@ $(LINK)
+
+$(BIN)/modificacion2: $(SRC)/modificacion2.c
+	$(CC) $(CFLAGS) $< -o $@ $(LINK)
+
+clean:
+	@echo Limpiando directorio $(BIN)/
+	rm -f $(BIN)/*

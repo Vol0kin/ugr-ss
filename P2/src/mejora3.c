@@ -101,6 +101,16 @@ int genera_demanda(float* tabla,int tama)
 	return i;
 }
 
+int genera_demanda_mejorada(float* tabla, int tama)
+{
+	double u = uniforme();
+	
+	int i = (int) uniforme * 100;
+	
+	return i;
+
+}
+
 int main(int argc, char* argv[])
 {
 	// Comprobar los parametros de la linea de comandos
