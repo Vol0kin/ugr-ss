@@ -5,7 +5,7 @@ LINK=-lm
 SRC=src
 BIN=bin
 
-all: $(BIN)/generador $(BIN)/modificacion1 $(BIN)/modificacion2
+all: $(BIN)/generador $(BIN)/mejora1 $(BIN)/mejora2 $(BIN)/mejora3 $(BIN)/modificacion1 $(BIN)/modificacion2
 
 $(BIN)/generador: $(SRC)/generador.c
 	$(CC) $(CFLAGS) $< -o $@ $(LINK)
@@ -14,6 +14,15 @@ $(BIN)/modificacion1: $(SRC)/modificacion1.c
 	$(CC) $(CFLAGS) $< -o $@ $(LINK)
 
 $(BIN)/modificacion2: $(SRC)/modificacion2.c
+	$(CC) $(CFLAGS) $< -o $@ $(LINK)
+
+$(BIN)/mejora1: $(SRC)/mejora1.c
+	$(CC) $(CFLAGS) $< -o $@ $(LINK)
+
+$(BIN)/mejora2: $(SRC)/mejora2.c
+	$(CC) $(CFLAGS) $< -o $@ $(LINK)
+
+$(BIN)/mejora3: $(SRC)/mejora3.c
 	$(CC) $(CFLAGS) $< -o $@ $(LINK)
 
 clean:

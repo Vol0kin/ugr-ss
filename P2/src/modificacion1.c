@@ -125,7 +125,7 @@ int main(int argc, char* argv[])
   }
   
   printf("Valor de x: %d\n", x);
-  printf("Valor de z: %d\n", y);
+  printf("Valor de z: %d\n", z);
   printf("Numero de veces que se va a realizar cada simulacion: %d\n", veces);
   printf("Tipo de tabla a utilzar: %d\n", tipo_tabla);
   

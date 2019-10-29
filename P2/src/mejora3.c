@@ -101,14 +101,13 @@ int genera_demanda(float* tabla,int tama)
 	return i;
 }
 
-int genera_demanda_mejorada(float* tabla, int tama)
+int genera_demanda_mejorada()
 {
 	double u = uniforme();
 	
-	int i = (int) uniforme * 100;
+	int i = (int) (u * 100);
 	
 	return i;
-
 }
 
 int main(int argc, char* argv[])
@@ -170,7 +169,14 @@ int main(int argc, char* argv[])
     for (int i = 0; i < veces; i++)
     {
     	// Generar demanda
-      demanda = genera_demanda(tablademanda, 100);
+    	if (tipo_tabla == 0)
+    	{
+    		demanda = genera_demanda_mejorada();
+    	}
+    	else
+    	{
+      	demanda = genera_demanda(tablademanda, 100);
+      }
 
       if (s > demanda)
       {

@@ -107,7 +107,7 @@ int min(int a, int b)
 	
 	if (b < a)
 	{
-		min_val = b;ç
+		min_val = b;
 	}
 	
 	return min_val;
