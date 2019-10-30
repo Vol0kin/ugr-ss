@@ -173,6 +173,9 @@ int main(int argc, char* argv[])
   {
   	tablademanda = construye_prop_c(100);
   }
+  
+  double mejor_ganancia = 0.0, mejor_desviacion = 0.0;
+	int mejor_s = 0;
 
 	clock_t inicio = clock();
 
@@ -203,14 +206,22 @@ int main(int argc, char* argv[])
     // Obtener ganancia media y desviacion tipica
     double ganancia_esperada = sum / veces,
     			 desviacion = sqrt((sum2 - veces * ganancia_esperada * ganancia_esperada)/(veces - 1));
+    
+    if (ganancia_esperada > mejor_ganancia)
+    {
+    	mejor_ganancia = ganancia_esperada;
+    	mejor_desviacion = desviacion;
+    	mejor_s = s;
+    }
     			 
     printf("s: %d, ganancia: %f, desv: %f\n", s, ganancia_esperada, desviacion);
   }
   
-	clock_t fin = clock();  
+  clock_t fin = clock();  
   double tiempo = (double) (fin - inicio) / CLOCKS_PER_SEC;
   
   printf("Tiempo de ejecucion del modelo: %f s\n", tiempo);
+  printf("Mejores s: %d, Mejor ganancia: %f, Mejor desv: %f\n", mejor_s, mejor_ganancia, mejor_desviacion);
   
   free(tablademanda);
 
