@@ -202,6 +202,8 @@ int main(int argc, char* argv[])
   double tiempo = (double) (fin - inicio) / CLOCKS_PER_SEC;
   
   printf("Tiempo de ejecucion del modelo: %f s\n", tiempo);
+  
+  free(tablademanda);
 
   return 0;
 }

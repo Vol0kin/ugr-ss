@@ -5,7 +5,7 @@ LINK=-lm
 SRC=src
 BIN=bin
 
-all: $(BIN)/generador $(BIN)/mejora1 $(BIN)/mejora2 $(BIN)/mejora3 $(BIN)/modificacion1 $(BIN)/modificacion2
+all: $(BIN)/generador $(BIN)/mejora1 $(BIN)/mejora2 $(BIN)/mejora3 $(BIN)/modificacion1 $(BIN)/modificacion2 $(BIN)/gen_congruencial
 
 $(BIN)/generador: $(SRC)/generador.c
 	$(CC) $(CFLAGS) $< -o $@ $(LINK)
@@ -23,6 +23,9 @@ $(BIN)/mejora2: $(SRC)/mejora2.c
 	$(CC) $(CFLAGS) $< -o $@ $(LINK)
 
 $(BIN)/mejora3: $(SRC)/mejora3.c
+	$(CC) $(CFLAGS) $< -o $@ $(LINK)
+
+$(BIN)/gen_congruencial: $(SRC)/gen_congruencial.c
 	$(CC) $(CFLAGS) $< -o $@ $(LINK)
 
 clean:
