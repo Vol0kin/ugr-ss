@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <math.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 
@@ -165,6 +164,8 @@ int main(int argc, char* argv[])
   	tablademanda = construye_prop_c(100);
   }
 
+	clock_t inicio = clock();
+
 	// Ejecutar modelo de Montecarlo
   for (int s = 1; s < 100; s++)
   {
@@ -197,7 +198,10 @@ int main(int argc, char* argv[])
     printf("s: %d, ganancia: %f, desv: %f\n", s, ganancia_esperada, desviacion);
   }
   
-
+  clock_t fin = clock();  
+  double tiempo = (double) (fin - inicio) / CLOCKS_PER_SEC;
+  
+  printf("Tiempo de ejecucion del modelo: %f s\n", tiempo);
 
   return 0;
 }
