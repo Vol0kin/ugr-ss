@@ -3,12 +3,6 @@
 #include <stdlib.h>
 #include <time.h>
 
-typedef struct 
-{
-	int posicion;
-	float prob_acumulada;
-} entrada;
-
 /* Genera un número uniformemente distribuido en el
    intervalo [0,1) a partir de uno de los generadores
 	 disponibles en C. Lo utiliza el generador de demanda */
@@ -22,25 +16,21 @@ double uniforme()
 /* Construye la tabla de búsqueda de
 	 tamaño n para la distribución de
 	 la demanda del apartado (a). */
-entrada* construye_prop_a(int n) 
+float* construye_prop_a(int n) 
 {
 	int i;
-	entrada* temp;
+	float* temp;
 	
-	if ((temp = (entrada*) malloc(n*sizeof(entrada))) == NULL)
+	if ((temp = (float*) malloc(n*sizeof(float))) == NULL)
   {
   	fputs("Error reservando memoria para generador uniforme\n",stderr);
   	exit(1);
   }
   
-  temp[0].posicion = 0;
-	temp[0].prob_acumulada = 1.0/n;
+	temp[0] = 1.0/n;
 	
 	for (i=1;i<n;i++)
-	{
-		temp[i].posicion = i;
-		temp[i].prob_acumulada = temp[i-1].prob_acumulada + 1.0/n;
-	}
+		temp[i] = temp[i-1]+1.0/n;
 	
 	return temp;
 }
@@ -48,26 +38,22 @@ entrada* construye_prop_a(int n)
 /* Construye la tabla de búsqueda de
 	 tamaño n para la distribución de
 	 la demanda del apartado (b).*/
-entrada* construye_prop_b(int n)
+float* construye_prop_b(int n)
 {
 	int i, max;
-	entrada* temp;
+	float* temp;
 	
-	if ((temp = (entrada*) malloc(n*sizeof(entrada))) == NULL)
+	if ((temp = (float*) malloc(n*sizeof(float))) == NULL)
 	{
 		fputs("Error reservando memoria para generador proporcional\n",stderr);
 		exit(1);
 	}
 	
 	max = (n/2)*(n+1);
-	temp[0].posicion = 0;
-	temp[0].prob_acumulada = n*1.0/max;
+	temp[0] = n*1.0/max;
 	
 	for (i=1;i<n;i++)
-	{
-		temp[i].posicion = i;
-		temp[i].prob_acumulada = temp[i-1].prob_acumulada+(float)(n-i)/max;
-	}		
+		temp[i] = temp[i-1]+(float)(n-i)/max;
 	
 	return temp;
 }
@@ -75,39 +61,25 @@ entrada* construye_prop_b(int n)
 /* Construye la tabla de búsqueda de
 	 tamaño n para la distribución de
 	 la demanda del apartado (c). */
-entrada* construye_prop_c(int n) 
+float* construye_prop_c(int n) 
 {
 	int i, max;
-	entrada* temp;
+	float* temp;
 	
-	if ((temp = (entrada*) malloc(n*sizeof(entrada))) == NULL)
+	if ((temp = (float*) malloc(n*sizeof(float))) == NULL)
 	{
 		fputs("Error reservando memoria para generador triangular\n",stderr);
 		exit(1);
 	}
 	
 	max = n*n/4;
+	temp[0] = 0.0;
 	
-	int val_medio = n / 2;
+	for (i=1;i<(n/2);i++)
+		temp[i] = temp[i-1]+(float)i/max;
 	
-	int j = 0;
-	temp[j].posicion = val_medio;
-	temp[j].prob_acumulada = val_medio / max;
-	
-	j++;
-	
-	for (i=val_medio - 1;i > 0;i--)
-	{
-		int dist_medio = val_medio - i;
-		float prob = (float)i / max;
-		temp[j].posicion = i;
-		temp[j].prob_acumulada = temp[j-1].prob_acumulada + prob;
-		j++;
-		
-		temp[j].posicion = val_medio + dist_medio;
-		temp[j].prob_acumulada = temp[j-1].prob_acumulada + prob;
-		j++;		
-	}
+	for (i=(n/2);i<n;i++)
+		temp[i] = temp[i-1]+(float)(n-i)/max;
 	
 	return temp;
 }
@@ -116,19 +88,16 @@ entrada* construye_prop_c(int n)
    distribución de la demanda codificada en tabla, por el
    método de tablas de búsqueda. 
    tama es el tamaño de la tabla, 100 en nuestro caso particular */
-int genera_demanda(entrada* tabla,int tama)
+int genera_demanda(float* tabla,int tama)
 {
-	int i, j;
+	int i;
 	double u = uniforme();
 	
 	i = 0;
-	
-	while((i<tama) && (u>=tabla[i].prob_acumulada))
-	{
+	while((i<tama) && (u>=tabla[i]))
 		i++;
-	}
 	
-	return tabla[i].posicion;;
+	return i;
 }
 
 int main(int argc, char* argv[])
@@ -159,7 +128,7 @@ int main(int argc, char* argv[])
   srand(time(NULL));
   
   // Crear tabla
-  entrada* tablademanda;
+  float* tablademanda;
   
   if (tipo_tabla == 0)
   {

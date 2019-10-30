@@ -5,15 +5,18 @@ LINK=-lm
 SRC=src
 BIN=bin
 
-all: $(BIN)/generador $(BIN)/mejora1 $(BIN)/mejora2 $(BIN)/mejora3 $(BIN)/modificacion1 $(BIN)/modificacion2 $(BIN)/gen_congruencial
+all: $(BIN)/montecarlo $(BIN)/gen_base $(BIN)/mejora1 $(BIN)/mejora2 $(BIN)/mejora3 $(BIN)/modificacion1 $(BIN)/modificacion2 $(BIN)/gen_congruencial
 
-$(BIN)/generador: $(SRC)/generador.c
+$(BIN)/montecarlo: $(SRC)/montecarlo.c
 	$(CC) $(CFLAGS) $< -o $@ $(LINK)
 
 $(BIN)/modificacion1: $(SRC)/modificacion1.c
 	$(CC) $(CFLAGS) $< -o $@ $(LINK)
 
 $(BIN)/modificacion2: $(SRC)/modificacion2.c
+	$(CC) $(CFLAGS) $< -o $@ $(LINK)
+
+$(BIN)/gen_base: $(SRC)/gen_base.c
 	$(CC) $(CFLAGS) $< -o $@ $(LINK)
 
 $(BIN)/mejora1: $(SRC)/mejora1.c

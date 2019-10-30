@@ -127,18 +127,16 @@ int genera_demanda(float* tabla,int tama)
 int main(int argc, char* argv[])
 {
 	// Comprobar los parametros de la linea de comandos
-  if (argc < 5)
+  if (argc < 3)
   {
     printf("Numero de parametros incorrectos\n");
-    printf("Uso esperado: ./%s <ganancia por venta> <perdida por no venta> <num. simulaciones> <num. tabla>\n", argv[0]);
+    printf("Uso esperado: ./%s <num. repeticiones> <num. tabla>\n", argv[0]);
     exit(-1);
   }
 
 	// Obtener parametros
-  int x = atoi(argv[1]),
-  		y = atoi(argv[2]),
-  		veces = atoi(argv[3]),
-  		tipo_tabla = atoi(argv[4]);
+  int veces = atoi(argv[1]),
+  		tipo_tabla = atoi(argv[2]);
   
   // Comprobar que el tipo de tabla es correcto
   if (tipo_tabla < 0 || tipo_tabla > 2)
@@ -147,13 +145,8 @@ int main(int argc, char* argv[])
   	exit(-1);
   }
   
-  printf("Valor de x: %d\n", x);
-  printf("Valor de y: %d\n", y);
-  printf("Numero de veces que se va a realizar cada simulacion: %d\n", veces);
+  printf("Numero de aleatorios a generar: %d\n", veces);
   printf("Tipo de tabla a utilzar: %d\n", tipo_tabla);
-  
-  // Crear demanda y ganancia
-  int demanda, ganancia;
   
   // Inicializar semilla
   srand(time(NULL));
@@ -174,54 +167,20 @@ int main(int argc, char* argv[])
   	tablademanda = construye_prop_c(100);
   }
   
-  double mejor_ganancia = 0.0, mejor_desviacion = 0.0;
-	int mejor_s = 0;
+  int demanda;
 
 	clock_t inicio = clock();
 
-	// Ejecutar modelo de Montecarlo
-  for (int s = 1; s < 100; s++)
+	// Generar los valores aleatorios
+	for (int i = 0; i < veces; i++)
   {
-  	// Inicializar sumas de los resultados a 0
-  	double sum = 0.0, sum2 = 0.0;
-  	
-    for (int i = 0; i < veces; i++)
-    {
-    	// Generar demanda
-      demanda = genera_demanda(tablademanda, 100);
-
-      if (s > demanda)
-      {
-        ganancia = demanda * x - (s - demanda) * y;
-      }
-      else
-      {
-        ganancia = s * x;
-      }
-
-      sum += ganancia;
-      sum2 += ganancia * ganancia;
-    }
-    
-    // Obtener ganancia media y desviacion tipica
-    double ganancia_esperada = sum / veces,
-    			 desviacion = sqrt((sum2 - veces * ganancia_esperada * ganancia_esperada)/(veces - 1));
-    
-    if (ganancia_esperada > mejor_ganancia)
-    {
-    	mejor_ganancia = ganancia_esperada;
-    	mejor_desviacion = desviacion;
-    	mejor_s = s;
-    }
-    			 
-    printf("s: %d, ganancia: %f, desv: %f\n", s, ganancia_esperada, desviacion);
+  	demanda = genera_demanda(tablademanda, 100);
   }
   
   clock_t fin = clock();  
   double tiempo = (double) (fin - inicio) / CLOCKS_PER_SEC;
   
-  printf("Tiempo de ejecucion del modelo: %f s\n", tiempo);
-  printf("Mejores s: %d, Mejor ganancia: %f, Mejor desv: %f\n", mejor_s, mejor_ganancia, mejor_desviacion);
+  printf("Tiempo de ejecucion: %f s\n", tiempo);
   
   free(tablademanda);
 
