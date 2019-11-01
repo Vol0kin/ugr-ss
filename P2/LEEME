@@ -1,0 +1,31 @@
+# Información de la práctica 2
+
+Aquí se pueden encontrar los ficheros correspondientes a la práctica 2.
+En el directorio src/ se pueden encontrar los códigos fuentes implementados
+en C. Se deja también un makefile para poder compilar todos los archivos
+fuente. Antes, se debería crear un directorio bin/, ya que ahí es donde
+se generarán los ejecutables.
+
+A continuación se ofrece una breve información de cada fichero fuente. Para
+obtener información sobre como se ejecuta, se recomienda ejecutar el programa
+sin argumentos de la línea de comandos, ya que así se mostrará más
+información. En los casos donde se debe escoger el tipo de tabla, basta
+con poner 0 para la tabla a, 1 para la tabla b y 2 para la tabla c:
+
+src/montecarlo.c -> Contiene la implementación del modelo de Monte Carlo
+utilizado para simular las demanda.
+src/modificacion1.c -> Contiene la modificación del modelo de Monte Carlo
+original para el apartado donde existe un valor z para la devolución y 
+no existe un valor y.
+src/modificacion2.c -> Contiene la modificación del modelo de Monte Carlo
+original para el apartado donde existe un valor z para la devolucion y, además,
+existe un valor y para cada unidad no vendida.
+src/gen_base.c -> Contiene los generadores base que se utilizarán para comparar
+las mejoras.
+src/mejora1.c -> Contiene la mejora donde se reordena la tabla.
+src/mejora2.c -> Contiene la mejora donde se implmeneta una búsqueda binaria.
+src/mejora3.c -> Contiene la mejora donde se implementa el acceso directo.
+En esta mejora, no se puede especificar el tipo de tabla, ya que siempre se
+utiliza la tabla a.
+src/gen_congruencial.c -> Contiene la implementación de los generadores
+congruenciales para la segunda sección del segundo capítulo.
