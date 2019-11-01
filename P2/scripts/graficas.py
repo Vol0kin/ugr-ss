@@ -14,10 +14,13 @@ table_3_mej_2 = np.array([0.000036, 0.000145, 0.000407, 0.001365, 0.002764, 0.01
 
 table_1_mej_3 = np.array([0.000009, 0.000029, 0.000056, 0.000249, 0.000494, 0.002546, 0.005344, 0.024600, 0.041979, 0.133087])
 
-plt.plot(x_axis, table_3, 'r', label='Generador base')
-plt.plot(x_axis, table_3_mej_1, 'g', label='Generador mejorado')
-plt.scatter(x_axis, table_3, c='r')
-plt.scatter(x_axis, table_3_mej_1, c='g')
+
+plt.plot(x_axis, table_1, 'r', label='Generador base')
+plt.plot(x_axis, table_1_mej_2, 'g', label='Búsqueda binaria')
+plt.plot(x_axis, table_1_mej_3, 'b', label='Acceso directo')
+plt.scatter(x_axis, table_1, c='r')
+plt.scatter(x_axis, table_1_mej_2, c='g')
+plt.scatter(x_axis, table_1_mej_3, c='b')
 plt.xlabel('Numero de valores aleatorios')
 plt.ylabel('Tiempo de ejecución')
 plt.legend()

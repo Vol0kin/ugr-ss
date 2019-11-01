@@ -10,6 +10,10 @@
 \usepackage{enumitem}						% Permitir enumerate con distintos simbolos
 \usepackage[T1]{fontenc}					% Usar textsc en sections
 \usepackage{amsmath}						% Símbolos matemáticos
+\usepackage{subcaption}
+
+% no accents in math operators
+\unaccentedoperators
 
 % Comando para poner el nombre de la asignatura
 \newcommand{\asignatura}{Simulación de Sistemas}
@@ -440,7 +444,9 @@ triangular, ya que es donde más se pueden apreciar las diferencias.
 Para hacer la implementación, se ha tenido que modificar la estructura de las tablas para poder almacenar la probabilidad acumulada
 y el valor que aporta a esa probabilidad acumulada. Esto se debe a que, en el caso de la distribución triangular, este valor no
 se corresponde con el índice la tabla, ya que no va a estar a ordenado. El valor más probable es el centro de la distribución.
-Después le siguen sus valores vecinos a cada lado, y así sucesivamente.
+Después le siguen sus valores vecinos a cada lado, y así sucesivamente. Por tanto, al recorrer la tabla y comparar el valor
+generado con la probabilidad acumulada, cuando se llegue a al caso de que el valor aleatorio es menor, se devolverá el valor
+asociado a esa probabilidad acumulada.
 
 A continuación podemos ver los resultados obtenidos de distintas ejecuciones con distintas cantidades de números aleatorios a
 generar:
@@ -467,21 +473,142 @@ de la tercera tabla, vamos a comparar también con los resultados de la sección
 
 A continuación podemos ver los resultados para las dos primeras tablas:
 
+\begin{figure}[H]
+\begin{subfigure}{.5\textwidth}
+	\centering
+	\includegraphics[scale=0.4]{img/mejora2a.png}
+	\caption{Generador con distribución uniforme.}
+	\label{sub-fig:mejora2a}
+\end{subfigure}
+\begin{subfigure}{.5\textwidth}
+	\centering
+	\includegraphics[scale=0.4]{img/mejora2b.png}
+	\caption{Generador con distribución proporcional.}
+	\label{sub-fig:mejora2b}
+\end{subfigure}
+\caption{Mejora de los generadores utilizando búsqueda binaria.}
+\label{fig:mejora2ab}
+\end{figure}
 
+Como se puede ver en ambos casos, los tiempos de ejecución son, obviamente, mucho menores. Hemos pasado de realizar una búsqueda
+que tiene un orden de eficiencia de $\mathcal{O}(n)$ a una que tiene un orden de eficiencia de $\mathcal{O}(log(n))$. Esto se
+puede ver claramente, ya que las diferencias en ambos casos son bastante notables respecto al generador base. Donde más
+pronunciada es esta mejora es en el caso del generador que utiliza una distribución uniforme, ya que para un número de elementos
+muy grande, el tiempo de ejecución se ve reducido a casi la mitad. En el otro caso, podemos apreciar una mejora de aproximadamente
+un 30\%.
+
+Vamos a estudiar ahora el comportamiendo de la tercera tabla, la que utiliza una distribución triangular. A continuación
+podemos ver los resultados:
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.55]{img/mejora2c.png}
+\caption{Comparación del generador base con distribución triangular con las mejoras.}
+\label{fig:mejora2c}
+\end{figure}
+
+Podemos ver como en este caso la mejora que implica realizar una búsqueda binaria es la que ofrece unos mejores tiempos de
+ejecución. Esto se debe a que el cuello de botella es el proceso de búsqueda en la tabla. Tener la tabla reordenada ayuda
+en cierta manera, pero cambiar de un proceso de búsqueda lineal a uno logarítimico ayuda mucho más, tal y como se puede ver
+en la figura \ref{fig:mejora2c}, donde cambiar el tipo de búsqueda reduce los tiempos hasta casi la mitad de los tiempos
+base, mientras que la otra mejora se queda entre el caso base y la búsqueda binaria.
+
+Por tanto, de esta sección podemos concluir que es mucho más importante utilizar un algoritmo de búsqueda rápido que reordenar
+los valores para que los más probables estén al principio.
 
 \subsection{Tiempo de acceso constante a la tabla}
 
+Para evitarnos cualquier tipo de búsqueda en la tabla, hay que realizar una transformación muy simple sobre el valor aleatorio
+uniforme generado.
+
+La búsqueda lineal recorre la tabla comprobando hasta encontrar la primera entrada que cumple que el valor de probabilidad
+acumulada es mayor que el valor aleatorio generado, en cuyo caso devuelve el índice correspondiente de la tabla. Si queremos
+evitarnos esto, solo tenemos que multiplicar por 100 el valor aleatorio generado y truncarlo, quedándonos con la parte
+entera. De esta forma obtendremos el índice correspondiente de la tabla. Esto solo se puede hacer con la distribución uniforme,
+ya que todos los valores son equiprobables.
+
+Por ejemplo, vamos a suponer que tenemos la siguiente tabla, donde podemos ver las probabilidades acumuladas y los índices:
+
+\begin{figure}[H]
+\centering
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+	\hline
+    0.01 & 0.02 & 0.03 & 0.04 & \dots & 0.98 & 0.99 & 1 \\ \hline
+    \multicolumn{1}{c}{0} & \multicolumn{1}{c}{1} & \multicolumn{1}{c}{2} & \multicolumn{1}{c}{3} & \multicolumn{1}{c}{\dots} &
+    \multicolumn{1}{c}{97} & \multicolumn{1}{c}{98} & \multicolumn{1}{c}{99}
+\end{tabular}
+\end{figure}
+
+Si por ejemplo generamos el valor aleatorio 0.034, si realizamos la búsqueda lineal, obtendríamos el índice 3, ya que es el primer
+valor de probabilidad acumulada superior a 0.034. Si directamente multiplicamos el valor por 100, obtendríamos también
+3, lo cuál nos permitiría obtener le mismo resultado pero evitando la búsqueda.
+
+A continuación podemos ver los tiempos obtenidos por este método, comparándolos también con la búsqueda binaria:
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.6]{img/mejora3.png}
+\caption{Comparación entre el generador base y la búsqueda binaria y el acceso directo para la distribución uniforme.}
+\end{figure}
+
+Como podemos ver, la diferencia es absoluta. Si antes parecía que la búsqueda binaria era buena, aquí podemos ver que se
+queda muy corta frente al acceso directo, debido a que este tiene una eficiencia de $\mathcal{O}(1)$. Podemos ver
+que los tiempos de ejecución para este método no varían mucho en función del número de elementos a buscar. Por tanto, si
+conseguimos encontrar alguna forma de realizar un acceso directo a alguna de las tablas, debemos escoger siempre este método,
+ya que es el que nos proporcionará unos mejores resultados.
+
 \section{Generadores congruenciales lineales}
 
-\newpage
+Para realizar la experimentación con los generadores, vamos a establecer un mismo valor $x_0$ para todos ellos, el cuál
+será $x_0 = 303$. El valor de $m$ para los dos casos es $10^4$.
 
-\begin{thebibliography}{5}
+El primer generador congruencial es el siguiente:
 
-\bibitem{nombre-referencia}
-Texto referencia
-\\\url{https://url.referencia.com}
+\begin{equation}
+\label{eq:gen1}
+	x_{n+1} = (2061x_n + 4321) \mod m
+\end{equation}
 
-\end{thebibliography}
+El segundo generador congruencial es el siguiente:
+
+\begin{equation}
+\label{eq:gen2}
+	x_{n+1} = (2060x_n + 4321) \mod m
+\end{equation}
+
+Primero, vamos a ver qué resultados obtenemos para cada generador, y luego comentaremos el porqué de cada uno de ellos.
+A continuación se ofrece una tabla con los resultados:
+
+
+\begin{table}[H]
+\centering
+\begin{tabular}{c|c|c}
+\textbf{Tipo de aritmetica}                                         & \textbf{\begin{tabular}[c]{@{}c@{}}Período\\ generador 1\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Período\\ generador 2\end{tabular}} \\ \hline
+Aritmética entera                                                   & 10000                                                                  & 4                                                                      \\ \hline
+\begin{tabular}[c]{@{}c@{}}Aritmética real\\ ``artesanal''\end{tabular} & 282                                                                    & 8                                                                      \\ \hline
+\begin{tabular}[c]{@{}c@{}}Aritmética real\\ corregida\end{tabular} & 10000                                                                  & 4                                                                      \\ \hline
+\begin{tabular}[c]{@{}c@{}}Aritmética real\\ con \textit{fmod}\end{tabular}  & 10000                                                                  & 4                                                                     
+\end{tabular}
+\caption{Períodos de los dos generadores para cada tipo de aritmética.}
+\label{tabla10}
+\end{table}
+
+Podemos ver que, en general, el generador 1, cuya expresión se puede ver en la ecuación \ref{eq:gen1} es el correcto. Esto se debe
+a que los valores de $c$ y $m$ son primos relativos (4321 y $10^4$ no tienen divisores comunes), $a - 1$ es múltiplo de todos
+los divisores primos de $m$ (2060 es divisible entre 2 y 5) y $a - 1$ es múltiplo de 4 sii $m$ es múltiplo de 4 (2060 y $10^4$
+son ambos múltiplos de 4). De esta forma, nos aseguramos que siempre se consigue el período máximo.
+
+En cambio, el generador 2 no es el correcto, ya que no cumple que $a-1$ sea múltiplo de todos los divisores primos de $m$ (2059
+no se puede dividir ni entre 2 ni entre 5). Por tanto, en este caso no podremos conseguir un período máximo.
+
+Si ahora nos fijamos en cada implementación, podemos ver que la única incorrecta es la que utiliza aritmética real ``artesanal'',
+es decir, sin redondear el valor obtenido. Si no se hace este redondeo, lo que se haría es truncar el valor obtenido. Por tanto,
+7.0001 y 7.9999, por ejemplo, generarían un 7, cuando no tendría que ser así, ya que no son el mismo número, y uno está más
+cerca de un determinado valor entero que el otro.
+
+Por tanto, el generador que funciona con aritmética entera, el que redondea y el que utiliza la función \textit{fmod} son los
+que ofrecen los resultados correctos. El primero no da ningún tipo de problema a la hora de calcular $x_{n+1}$, y los otros
+redondean los resultados. Además, todas ellas permiten obtener el período máximo con el generador, que era lo esperado.
 
 \end{document}
 
