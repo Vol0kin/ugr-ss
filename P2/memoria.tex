@@ -152,8 +152,6 @@ las pérdidas son más grandes.
 Una vez vistos los resultados para el modelo que usa la distribución uniforme, vamos a ver qué obtenemos para el resto.
 Vamos a seguir con la distribución proporcional. Los resultados obtenidos se pueden ver en la siguiente tabla:
 
-% Please add the following required packages to your document preamble:
-% \usepackage{graphicx}
 \begin{table}[H]
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{c|c|c|c|c|c}
@@ -201,8 +199,6 @@ Y la segunda es la relación entre el valor de $x$ y el de $y$, la cuál ya se c
 Visto este generador, vamos a ver qué resultados nos permite obtener el último, el de la distribución ``triangular''.
 A continuación se pueden ver los resultados:
 
-% Please add the following required packages to your document preamble:
-% \usepackage{graphicx}
 \begin{table}[H]
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{c|c|c|c|c|c}
@@ -270,11 +266,11 @@ Para esta modificación, vamos a probar con los siguientes valores:
 	\item Con $x = 10$ y $z = 100$.
 \end{itemize}
 
-Vamos a ver qué resultados obtenemos para cada generador. Por tanto, vamos a comenzar con el generador que utiliza
-una distribución uniforme. A continuación se pueden ver los resultados obtenidos:
 
-% Please add the following required packages to your document preamble:
-% \usepackage{graphicx}
+Una vez dicho esto, vamos a ver qué resultados obtenemos para cada generador. Se han probado dos valores de repeticiones:
+10000 y 100000, ya que antes nos han dado unos resultados relativamente buenos. A continuación podemos observar dichos
+resultados:
+
 \begin{table}[H]
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{c|c|c|c|c|c|c}
@@ -293,7 +289,134 @@ una distribución uniforme. A continuación se pueden ver los resultados obtenid
 \label{tabla4}
 \end{table}
 
+\begin{table}[H]
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{c|c|c|c|c|c|c}
+\textbf{\begin{tabular}[c]{@{}c@{}}Ganancia por\\ unidad vendida\\ (x)\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Pérdida por\\ unidad no vendida\\ (y)\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Precio\\ devolución\\ (z)\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Número de\\ repeticiones\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Mejor número\\ de unidades\\ pedidas (s)\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Mejor\\ ganancia\\ media\end{tabular}} & \textbf{Tiempo (seg)} \\ \hline
+10                                                                                   & 0                                                                                      & 1                                                                          & 10000                                                                     & 93                                                                                        & 331.4806                                                                  & 0.102989              \\
+10                                                                                   & 0                                                                                      & 1                                                                          & 100000                                                                    & 94                                                                                        & 330.09882                                                                 & 0.966469              \\ \hline
+10                                                                                   & 0                                                                                      & 5                                                                          & 10000                                                                     & 87                                                                                        & 330.6005                                                                  & 0.102783              \\
+10                                                                                   & 0                                                                                      & 5                                                                          & 100000                                                                    & 96                                                                                        & 325.7185                                                                  & 0.957378              \\ \hline
+10                                                                                   & 0                                                                                      & 10                                                                         & 10000                                                                     & 95                                                                                        & 322.104                                                                   & 0.128166              \\
+10                                                                                   & 0                                                                                      & 10                                                                         & 100000                                                                    & 91                                                                                        & 321.5704                                                                  & 0.948648              \\ \hline
+10                                                                                   & 0                                                                                      & 100                                                                        & 10000                                                                     & 97                                                                                        & 236.577                                                                   & 0.103133              \\
+10                                                                                   & 0                                                                                      & 100                                                                        & 100000                                                                    & 80                                                                                        & 233.0638                                                                  & 0.934573             
+\end{tabular}%
+}
+\caption{Resultados obtenidos por el modelo utilizando el generador de distribución proporcional.}
+\label{tabla5}
+\end{table}
+
+\begin{table}[H]
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{c|c|c|c|c|c|c}
+\textbf{\begin{tabular}[c]{@{}c@{}}Ganancia por\\ unidad vendida\\ (x)\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Pérdida por\\ unidad no vendida\\ (y)\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Precio\\ devolución\\ (z)\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Número de\\ repeticiones\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Mejor número\\ de unidades\\ pedidas (s)\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Mejor\\ ganancia\\ media\end{tabular}} & \textbf{Tiempo (seg)} \\ \hline
+10                                                                                   & 0                                                                                      & 1                                                                          & 10000                                                                     & 94                                                                                        & 502.7121                                                                  & 0.163440              \\
+10                                                                                   & 0                                                                                      & 1                                                                          & 100000                                                                    & 98                                                                                        & 500.15754                                                                 & 1.313809              \\ \hline
+10                                                                                   & 0                                                                                      & 5                                                                          & 10000                                                                     & 94                                                                                        & 498.4765                                                                  & 0.135989              \\
+10                                                                                   & 0                                                                                      & 5                                                                          & 100000                                                                    & 93                                                                                        & 495.4116                                                                  & 1.322314              \\ \hline
+10                                                                                   & 0                                                                                      & 10                                                                         & 10000                                                                     & 96                                                                                        & 491.398                                                                   & 0.135640              \\
+10                                                                                   & 0                                                                                      & 10                                                                         & 100000                                                                    & 92                                                                                        & 490.4634                                                                  & 1.314528              \\ \hline
+10                                                                                   & 0                                                                                      & 100                                                                        & 10000                                                                     & 81                                                                                        & 406.678                                                                   & 0.140737              \\
+10                                                                                   & 0                                                                                      & 100                                                                        & 100000                                                                    & 82                                                                                        & 403.6275                                                                  & 1.287906             
+\end{tabular}%
+}
+\caption{Resultados obtenidos por el modelo utilizando el generador de distribución ``triangular''.}
+\label{tabla6}
+\end{table}
+
+Como podemos ver, en general, parece que, si el precio por devolver las unidades no vendidadas no es muy alto, interesa hacer
+pedidos más grandes, ya que las pérdidas serán mínimas. Sin embargo, en los 3 casos, si el precio empieza a ser alto (por ejemplo
+$z = 100$), interesa no pedir tanto, ya que las pérdidas en este caso serán mayores.
+
+Si comparamos los resultados con los obtenidos anteriormente, podemos ver, claramente, que las demandas son mucho mayores, ya
+que no existe una pérdida por cada unidad no vendida, si no una pérdida general para todas las unidades no vendidas. Podemos
+observar, en general, que los valores de $s$ obtenidos para todos los generadores son mayores que los que obteníamos
+anteriormente, incluso con péridas muy bajas como por ejemplo $y = 1$.
+
 \subsection{Segunda modificación}
+
+Para esta segunda modificación, vamos a probar de nuevo todos los generadores de datos, y los vamos a comparar con los
+resultados que hemos obtenido anteriormente.
+
+Ya que el valor de $z$ debe ser relativamente alto, vamos a probar con un valor de $z = 150$ en todos los casos. Vamos a probar
+con valores de $x$ de 10 y 20, y con valores de $y$ de 5 y 15. El número de repeticiones que vamos a hacer de cada
+combinación son, de nuevo, 10000 y 100000 repeticiones.
+
+A continuación podemos observar los resultados:
+
+\begin{table}[H]
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{c|c|c|c|c|c|c}
+\textbf{\begin{tabular}[c]{@{}c@{}}Ganancia por\\ unidad vendida\\ (x)\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Pérdida por\\ unidad no vendida\\ (y)\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Precio\\ devolución\\ (z)\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Número de\\ repeticiones\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Mejor número\\ de unidades\\ pedidas (s)\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Mejor\\ ganancia\\ media\end{tabular}} & \textbf{Tiempo (seg)} \\ \hline
+10                                                                                   & 5                                                                                      & 150                                                                        & 10000                                                                     & 82                                                                                        & 384.5845                                                                  & 0.138429              \\
+10                                                                                   & 5                                                                                      & 150                                                                        & 100000                                                                    & 84                                                                                        & 380.0509                                                                  & 1.304792              \\ \hline
+10                                                                                   & 15                                                                                     & 150                                                                        & 10000                                                                     & 90                                                                                        & 367.6025                                                                  & 0.136745              \\
+10                                                                                   & 15                                                                                     & 150                                                                        & 100000                                                                    & 88                                                                                        & 365.3868                                                                  & 1.307265              \\ \hline
+20                                                                                   & 5                                                                                      & 150                                                                        & 10000                                                                     & 89                                                                                        & 875.5235                                                                  & 0.140939              \\
+20                                                                                   & 5                                                                                      & 150                                                                        & 100000                                                                    & 93                                                                                        & 871.6895                                                                  & 1.312315              \\ \hline
+20                                                                                   & 15                                                                                     & 150                                                                        & 10000                                                                     & 93                                                                                        & 860.6085                                                                  & 0.134830              \\
+20                                                                                   & 15                                                                                     & 150                                                                        & 100000                                                                    & 94                                                                                        & 853.73425                                                                 & 1.306019             
+\end{tabular}%
+}
+\caption{Resultados obtenidos por el modelo utilizando el generador de distribución uniforme.}
+\label{tabla7}
+\end{table}
+
+\begin{table}[H]
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{c|c|c|c|c|c|c}
+\textbf{\begin{tabular}[c]{@{}c@{}}Ganancia por\\ unidad vendida\\ (x)\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Pérdida por\\ unidad no vendida\\ (y)\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Precio\\ devolución\\ (z)\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Número de\\ repeticiones\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Mejor número\\ de unidades\\ pedidas (s)\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Mejor\\ ganancia\\ media\end{tabular}} & \textbf{Tiempo (seg)} \\ \hline
+10                                                                                   & 5                                                                                      & 150                                                                        & 10000                                                                     & 59                                                                                        & 206.225                                                                   & 0.131999              \\
+10                                                                                   & 5                                                                                      & 150                                                                        & 100000                                                                    & 62                                                                                        & 205.93885                                                                 & 0.971228              \\ \hline
+10                                                                                   & 15                                                                                     & 150                                                                        & 10000                                                                     & 68                                                                                        & 194.9025                                                                  & 0.102593              \\
+10                                                                                   & 15                                                                                     & 150                                                                        & 100000                                                                    & 66                                                                                        & 191.18045                                                                 & 0.963636              \\ \hline
+20                                                                                   & 5                                                                                      & 150                                                                        & 10000                                                                     & 89                                                                                        & 533.4905                                                                  & 0.105125              \\
+20                                                                                   & 5                                                                                      & 150                                                                        & 100000                                                                    & 82                                                                                        & 525.97515                                                                 & 0.960033              \\ \hline
+20                                                                                   & 15                                                                                     & 150                                                                        & 10000                                                                     & 76                                                                                        & 521.3525                                                                  & 0.130639              \\
+20                                                                                   & 15                                                                                     & 150                                                                        & 100000                                                                    & 87                                                                                        & 516.4745                                                                  & 0.952006             
+\end{tabular}%
+}
+\caption{Resultados obtenidos por el modelo utilizando el generador de distribución proporcional.}
+\label{tabla8}
+\end{table}
+
+\begin{table}[H]
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{c|c|c|c|c|c|c}
+\textbf{\begin{tabular}[c]{@{}c@{}}Ganancia por\\ unidad vendida\\ (x)\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Pérdida por\\ unidad no vendida\\ (y)\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Precio\\ devolución\\ (z)\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Número de\\ repeticiones\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Mejor número\\ de unidades\\ pedidas (s)\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Mejor\\ ganancia\\ media\end{tabular}} & \textbf{Tiempo (seg)} \\ \hline
+10                                                                                   & 5                                                                                      & 150                                                                        & 10000                                                                     & 67                                                                                        & 401.0525                                                                  & 0.140159              \\
+10                                                                                   & 5                                                                                      & 150                                                                        & 100000                                                                    & 62                                                                                        & 397.07545                                                                 & 1.341655              \\ \hline
+10                                                                                   & 15                                                                                     & 150                                                                        & 10000                                                                     & 63                                                                                        & 373.167                                                                   & 0.137257              \\
+10                                                                                   & 15                                                                                     & 150                                                                        & 100000                                                                    & 62                                                                                        & 370.4748                                                                  & 1.316153              \\ \hline
+20                                                                                   & 5                                                                                      & 150                                                                        & 10000                                                                     & 73                                                                                        & 882.899                                                                   & 0.139900              \\
+20                                                                                   & 5                                                                                      & 150                                                                        & 100000                                                                    & 77                                                                                        & 880.23145                                                                 & 1.306804              \\ \hline
+20                                                                                   & 15                                                                                     & 150                                                                        & 10000                                                                     & 87                                                                                        & 865.4205                                                                  & 0.134624              \\
+20                                                                                   & 15                                                                                     & 150                                                                        & 100000                                                                    & 85                                                                                        & 859.1621                                                                  & 1.313701             
+\end{tabular}%
+}
+\caption{Resultados obtenidos por el modelo utilizando el generador de distribución ``triangular''.}
+\label{tabla9}
+\end{table}
+
+Se puede ver claramente que los resultados obtenidos son diferentes a los obtenidos anteriormente. Podemos ver como, en general,
+para valores bajos de $x$, si el valor de $y$ es bajo, es preferible pagar esa cantidad de dinero por cada unidad no vendida
+en vez del valor de $z$, lo cuál se traduce a tener, en general, un menor valor de $s$. Si aumentamos el valor de $y$, podemos
+ver que el valor de $s$ aumenta, posiblemente porque es preferible pagar una cantidad de dinero $z$ por devolver las unidades
+no vendidas en vez de una cantidad de dinero $y$ por cada una de ellas.
+
+Si aumentamos el valor de $x$, podemos ver que el valor de $s$ es bastante alto, acercándose a los valores de la modificación
+anterior. En este caso, parece que las ganancias permiten amortizar las pérdidas tanto por pagar el precio $y$ por cada unidad,
+como para el precio $z$ para devolver todo el pedido que no haya sido vendido.
+
+También podemos observar que los valores de $s$ se corresponden más a los obtenidos en la modificación anterior en el caso en
+el que tengamos una ganancia relativamente alta ($x = 20$). En caso contrario, los resultados son ligeramente superiores a los
+que se pueden ver en las tablas \ref{tabla1}, \ref{tabla2} y \ref{tabla3}, aunque son un poco superiores a éstos. Esto es normal,
+ya que la función de ganancia es ligeramente diferente.
+
+Por tanto, de aquí podemos conlcuir que es más interesante arriesgarse a asumir una pérdida por cada unidad no vendida si el valor
+de $z$ es muy grande y el de $y$ no tanto, y que en el caso de que $y$ se más grande, podría compensar más pagar el precio
+de devolución (siempre y cuando este no sea demasiado grande).
 
 \newpage
 
@@ -301,9 +424,50 @@ una distribución uniforme. A continuación se pueden ver los resultados obtenid
 
 \section{Mejorando los Generadores}
 
+Para estudiar la mejora de los generadores, vamos a sacar los generadores de datos del modelo de Monte Carlo y vamos a ponerlos
+a buscar valores aleatorios uniformes en el rango $[0, 1)$ en las tablas. Para ello, vamos a seguir teniendo nuestras
+tablas de tamaño 100, pero vamos a ir cambiando la cantidad de números aleatorios que se tienen que buscar cada vez
+para ver cómo son afectadas las búsquedas de un mayor número de elementos por las mejoras que vayamos implementando.
+
+Vamos a comparar los tiempos base que nos ofrecen los generadores normales con los mejorados. Para ello, haremos uso de gráficas,
+las cuáles ilustrarán mejor los casos a estudiar.
+
 \subsection{Reordenación de los valores}
 
+Para comparar el rendimiento de esta mejora con la base, vamos a centrarnos en el generador que utiliza una tabla de distribución
+triangular, ya que es donde más se pueden apreciar las diferencias.
+
+Para hacer la implementación, se ha tenido que modificar la estructura de las tablas para poder almacenar la probabilidad acumulada
+y el valor que aporta a esa probabilidad acumulada. Esto se debe a que, en el caso de la distribución triangular, este valor no
+se corresponde con el índice la tabla, ya que no va a estar a ordenado. El valor más probable es el centro de la distribución.
+Después le siguen sus valores vecinos a cada lado, y así sucesivamente.
+
+A continuación podemos ver los resultados obtenidos de distintas ejecuciones con distintas cantidades de números aleatorios a
+generar:
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.6]{img/mejora1.png}
+\caption{Mejora de la distribución triangular reordenando la tabla.}
+\label{fig:mejora1}
+\end{figure}
+
+Podemos ver que esta mejora permite reducir los tiempos de ejecución ligeramente a medida que va aumentando el número
+de valores aleatorios, ya que modifica la estructura de la tabla para reducir los tiempos de la búsqueda lineal, al situar
+los valores más probables primero. Sin embargo, el ``cuello de botella'' de este problema es la búsqueda, ya que sigue siendo
+una búsqueda lineal, y por tanto, se irá recorriendo la tabla de forma secuencial hasta llegar al valor correcto.
+
 \subsection{Mejorando la búsqueda: búsqueda binaria}
+
+En esta segunda mejora vamos a modificar el algoritmo de búsqueda para ver si éste ofrece cierta mejora en general, y además,
+si ofrece una mayor mejora comparándolo con solo reordenar la tabla.
+
+Vamos a estudiar primero los resultados para las dos primeras tablas, comparándolos con los resultados base. Para el caso
+de la tercera tabla, vamos a comparar también con los resultados de la sección anterior.
+
+A continuación podemos ver los resultados para las dos primeras tablas:
+
+
 
 \subsection{Tiempo de acceso constante a la tabla}
 
