@@ -80,10 +80,27 @@
 
 En esta sección vamos a estudiar primero el comportamiento de un modelo de
 simulación de un servidor con una única cola, y después de $m$ servidores
-con una única cola.
+con una única cola. Vamos a ver cómo distintos métodos de incremento del
+itempo pueden afectar al funcionamiento del sistema, y discutiremos cuál
+de ellos es mejor.
 
-\subsection{Gestión del tiempo. Métodos de incremento fijo e incremento
-variable de tiempo}
+\subsection{Método de incremento fijo del tiempo}
+
+El primer método de incremento del tiempo que vamos a estudiar es el incremento
+fijo. Como su propio nombre indica, el tiempo se va incrementando en una cantidad
+fija, tal como lo hace un reloj normal. Esta cantidad viene decidida por la persona
+que va a utilizar el sistema (pueden ser minutos, segundos, milésimas, horas, etc.).
+
+Debido a la naturaleza de dicho incremento, la variable de tiempo debe ser tratada
+como una variable entera. Por tanto, aunque en el pesudocódigo proporcionado se
+generen las llegadas y el servicio utilizando valores reales, dichos valores obtenidos
+deben ser transformados a enteros, redondeándolos al entero más próximo. Además, si
+el valor que se obtiene al hacer las transformaciones correspondientes es 0, se
+debe devolver 1, ya que si no, se generaría un suceso en el tiempo actual y, al
+incrementar el tiempo en una unidad, ese suceso se quedaría en un tiempo anterior
+al nuevo actual, y por tanto, nunca se podría llevar a cabo.
+
+Una vez dicho esto, vamos a establecer
 
 \end{document}
 
