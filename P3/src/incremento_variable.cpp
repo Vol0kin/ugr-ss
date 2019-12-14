@@ -41,15 +41,9 @@ void iniciarValores()
 	ocio = 0.0;
 }
 
-int main(int argc, char *argv[]){
-	if (argc == 1)
-    {
-		tLlegada = 9;
-		tServicio = 6;
-		total_a_atender = 10000;
-		numSimul = 100;
-	}
-    else if (argc == 3)
+int main(int argc, char *argv[])
+{
+	if (argc == 3)
     {
         tLlegada = atof(argv[1]);
         tServicio = atof(argv[2]);
@@ -82,7 +76,7 @@ int main(int argc, char *argv[]){
     // Inicializar semilla
 	srand(time(NULL));
 
-    cout << "% T. ocio servidor, Num. medio clientes cola, Num. total clientes, T. total ejecución" << endl;
+    cout << "Num. medio clientes cola, % T. ocio servidor, Num. total clientes, T. total ejecución" << endl;
 
 	for (int i = 0; i < numSimul; i++)
     {
@@ -147,7 +141,7 @@ int main(int argc, char *argv[]){
         totalEnCola += media_encola;
         totalOcio += porcent_ocio;
 		
-        cout << porcent_ocio << " " << media_encola << " " << total_a_atender << " " << tiempoIter << endl;
+        cout << media_encola << " " << porcent_ocio << " " << total_a_atender << " " << tiempoIter << endl;
 	}
 
     double tiempoMedio = tiempoTotal / numSimul,

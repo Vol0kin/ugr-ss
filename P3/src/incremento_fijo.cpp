@@ -49,14 +49,7 @@ void iniciarValores()
 
 int main(int argc, char *argv[])
 {
-	if (argc == 1)
-    {
-		tLlegada = 9;
-		tServicio = 6;
-		total_a_atender = 10000;
-		numSimul = 100;
-	}
-    else if (argc == 3)
+    if (argc == 3)
     {
         tLlegada = atof(argv[1]);
         tServicio = atof(argv[2]);
@@ -89,7 +82,7 @@ int main(int argc, char *argv[])
     // Inicializar semilla
 	srand(time(NULL));
 
-    cout << "% T. ocio servidor, Num. medio clientes cola, Num. total clientes, T. total ejecución" << endl;
+    cout << "Num. medio clientes cola, % T. ocio servidor, Num. total clientes, T. total ejecución" << endl;
 
 	for(int i = 0; i < numSimul; i++)
     {
@@ -105,12 +98,18 @@ int main(int argc, char *argv[])
         {
 			if (reloj == tiempo_llegada)
             {
-				tiempo_llegada = reloj + generaLlegada(tLlegada);
+                // Generar llegada
+                float llegada = generaLlegada(tLlegada);
+				tiempo_llegada = reloj + static_cast<long long int>(llegada);
                 
 				if (servidor_libre)
                 {
 					servidor_libre = false;
-					tiempo_salida = reloj + generaServicio(tServicio);
+                    
+                    // Generar servicio
+                    float servicio = generaServicio(tServicio);
+					tiempo_salida = reloj + static_cast<long long int>(servicio);
+
 					ocio += reloj - inicio_ocio;
 				}
                 else
@@ -130,7 +129,10 @@ int main(int argc, char *argv[])
 					acum_cola += (reloj-tultsuc)*encola;
 					tultsuc = reloj;
 					encola--;
-					tiempo_salida = reloj + generaServicio(tServicio);
+
+                    // Generar servicio
+                    float servicio = generaServicio(tServicio);
+					tiempo_salida = reloj + static_cast<long long int>(servicio);
 				}
                 else
                 {
@@ -154,7 +156,7 @@ int main(int argc, char *argv[])
         totalEnCola += media_encola;
         totalOcio += porcent_ocio;
 		
-        cout << porcent_ocio << " " << media_encola << " " << total_a_atender << " " << tiempoIter << endl;
+        cout << i << " " << media_encola << " " << porcent_ocio << " " << total_a_atender << " " << tiempoIter << endl;
 	}
 
     double tiempoMedio = tiempoTotal / numSimul,
