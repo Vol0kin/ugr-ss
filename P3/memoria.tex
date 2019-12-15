@@ -11,6 +11,7 @@
 \usepackage[T1]{fontenc}					% Usar textsc en sections
 \usepackage{amsmath, yhmath}						% Símbolos matemáticos
 \usepackage{subcaption}
+\usepackage{longtable}
 
 % Comando para poner el nombre de la asignatura
 \newcommand{\asignatura}{Simulación de Sistemas}
@@ -333,7 +334,248 @@ de mayor calidad, independientemente de qué medida del tiempo se use.
 \subsection{Modelo dinámico discreto de $m$ servidores con una única cola}
 
 En esta sección vamos a estudiar un modelo algo más complejo que el anterior,
-en el cuál tenemos $m$ servidores con una única cola.
+en el cuál tenemos $m$ servidores con una única cola. Vamos a empezar a estudiar
+el sistema primero con $m=1$, de forma que podamos verificar utilizando valores
+teóricos. Posteriormente, estudiaremos el sistema al aumentar $m$ y haciendo
+que el tiempo de servicio de los servidores se mantenga constante; es decir,
+vamos a hacer que \texttt{tserv} dividido $m$ sea igual tanto para $m=1$ como
+para valores más elevados. También probaremos a simular más de una vez, y además,
+cambiaremos los simuladores de datos, para ver qué efecto tiene dicho cambio
+sobre el sistema.
+
+\subsubsection{Verificación del sistema}
+
+Vamos a empezar experimentando con el servidor para ver si los resultados
+ofrecidos son buenos o no. Para ello, vamos a establecer una serie de condiciones:
+
+\begin{itemize}[label=\textbullet]
+	\item Como medida del tiempo utilizaremos los minutos, ya que no se especifica
+	ninguna medida concreta con la que realizar las pruebas y porque el cáclulo de los
+	valores teóricos será más sencillo. Por tanto, tendremos que $\texttt{tlleg} = 9$
+	y $\texttt{tserv} = 6$.
+	\item Como al sistema se le tiene que especificar cuál es el tiempo de parada,
+	vamos a utilizar los siguientes tiempos: 100, 1000, 10000, 100000, 1000000. De
+	esta forma, vamos a ver cómo evolucionan los resultados obtenidos al hacer la
+	simulación más larga.
+\end{itemize}
+
+Una vez hechas las simulaciones correspondientes, se pueden ver los resultados
+a continuación:
+
+\begin{table}[H]
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{c|c|c|c|c|c|}
+\cline{2-6}
+\multicolumn{1}{l|}{} & \multicolumn{5}{c|}{\textbf{Tiempo parada}} \\ \cline{2-6} 
+\textbf{} & \textbf{100} & \textbf{1000} & \textbf{10000} & \textbf{100000} & \textbf{1000000} \\ \hline
+\multicolumn{1}{|c|}{\textbf{\begin{tabular}[c]{@{}c@{}}T. medio\\ espera en cola\end{tabular}}} & 14.319 & 6.660 & 9.228 & 11.988 & 11.970 \\ \hline
+\multicolumn{1}{|c|}{\textbf{\begin{tabular}[c]{@{}c@{}}T. medio estancia\\ en sistema\end{tabular}}} & 20.319 & 12.660 & 15.228 & 17.988 & 17.970 \\ \hline
+\multicolumn{1}{|c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Núm. medio\\ clientes en cola\end{tabular}}} & 2.233 & 0.770 & 1.022 & 1.332 & 1.328 \\ \hline
+\multicolumn{1}{|c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Núm. medio\\ clientes en sistema\end{tabular}}} & 3.128 & 1.355 & 1.682 & 1.998 & 1.992 \\ \hline
+\multicolumn{1}{|c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Long. media\\ colas no vacías\end{tabular}}} & 2.860 & 2.166 & 2.474 & 3.006 & 2.996 \\ \hline
+\multicolumn{1}{|c|}{\textbf{\begin{tabular}[c]{@{}c@{}}\% tiempo\\ ocio servidor\end{tabular}}} & 10.530 & 41.511 & 34.085 & 33.362 & 33.507 \\ \hline
+\multicolumn{1}{|c|}{\textbf{Long. máx. cola}} & 5 & 7 & 10 & 17 & 26 \\ \hline
+\end{tabular}%
+}
+\caption{Resultados experimentando con el tiempo de parada.}
+\label{tab:colas-1}
+\end{table}
+
+Para comparar dichos resltados, vamos a calcular los valores teóricos, los
+cuáles tienen sentido cuando el sistema está en funcionamiento un tiempo lo
+suficientemente grande como para aproximarse a infinito. Los resultados
+podemos verlos a continuación:
+
+\begin{itemize}[label=\textbullet]
+	\item Tiempo medio de espera en cola
+	$= \frac{tserv^2}{tlleg-tserv} = \frac{6^2}{9-6} = \frac{36}{3} = 12$
+	\item Tiempo medio de estancia en el sistema
+	$= \frac{tserv \cdot tlleg}{tlleg-tserv} = \frac{6 \cdot 9}{9-6} = \frac{54}{3} = 18$
+	\item Número medio de clientes en cola
+	$= \frac{tserv^2}{tlleg (tlleg-tserv)} = \frac{6^2}{9\cdot (9-6)} = \frac{36}{27} = 1.\wideparen{3}$
+	\item Número medio de clientes en el sistema
+	$= \frac{tserv}{tlleg-tserv} = \frac{6}{9-6} = \frac{6}{3} = 2$
+	\item Longitud media de colas no vacías
+	$= \frac{tlleg}{tlleg-tserv} = \frac{9}{9-6} = \frac{9}{3} = 3$
+	\item Porcentaje de tiempo de ocio del servidor
+	$= \big(1 - \frac{tserv}{tlleg}\big) \cdot 100 = \big(1 - \frac{6}{9}\big) \cdot 100 = \frac{100}{3} = 33.\wideparen{3}$
+\end{itemize}
+
+Ahora, pasemos a analizar los resultados obtenidos. Vemos que para un tiempo de
+simulación pequeño, los resultados obtenidos se alejan bastante de los teóricos,
+ya que éstos últimos son para cantidades de tiempo que tienden a infinito. Notamos,
+no obstante, que a medida que se aumenta el tiempo de simulación, los valores sí
+que empiezan a tender a los teóricos. A partir de un tiempo de simulación de 100000
+unidades vemos que los resultados ya sí que casi iguales a los teóricos, con un cierto margen
+de error, obviamente. Por tanto, si quisiéramos obtener unos resultados acordes
+a los teóricos para cualesquiera valores de \texttt{tlleg} y \texttt{tserv}, deberíamos
+simular durante un tiempo lo suficientemente grande, siempre acorde al tamaño
+de las unidades de tiempo.
+
+\subsubsection{Aumento del número de servidores}
+
+Vamos a aumentar ahora el número de servidores que usamos, pero vamos a aumentar
+el valor de \texttt{tserv} de forma proporcional al número de servidores, tal
+y como se comentó anteriormente.
+
+Para hacer la experimentación, vamos a probar con 2, 3, 4, 5 y 10 servidores,
+y por tanto, con unos valores de \texttt{tserv} de 12, 18, 24, 30 y 60.
+En cada caso simularemos durante 100000 unidades de tiempo, ya que antes ha permitido
+obtener unos resultados que se aproximaban a los teóricos.
+
+\begin{table}[H]
+\begin{tabular}{c|c|c|c|c|c|c|}
+\cline{2-7}
+\multicolumn{1}{l|}{} & \multicolumn{6}{c|}{\textbf{Número de servidores}} \\ \cline{2-7} 
+\textbf{} & \textbf{1} & \textbf{2} & \textbf{3} & \textbf{4} & \textbf{5} & \textbf{10} \\ \hline
+\multicolumn{1}{|c|}{\textbf{\begin{tabular}[c]{@{}c@{}}T. medio\\ espera en cola\end{tabular}}} & 11.988 & 9.288 & 7.639 & 6.999 & 5.074 & 2.548 \\ \hline
+\multicolumn{1}{|c|}{\textbf{\begin{tabular}[c]{@{}c@{}}T. medio estancia\\ en sistema\end{tabular}}} & 17.988 & 21.288 & 25.639 & 30.999 & 35.074 & 62.548 \\ \hline
+\multicolumn{1}{|c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Núm. medio\\ clientes en cola\end{tabular}}} & 1.332 & 1.016 & 0.851 & 0.780 & 0.554 & 0.284 \\ \hline
+\multicolumn{1}{|c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Núm. medio\\ clientes en sistema\end{tabular}}} & 1.998 & 2.317 & 2.854 & 3.450 & 3.819 & 6.914 \\ \hline
+\multicolumn{1}{|c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Long. media\\ colas no vacías\end{tabular}}} & 3.006 & 3.009 & 2.846 & 3.026 & 2.798 & 2.854 \\ \hline
+\multicolumn{1}{|c|}{\textbf{\begin{tabular}[c]{@{}c@{}}\% tiempo\\ ocio servidor\end{tabular}}} & 33.362 & 34.981 & 33.258 & 33.255 & 34.702 & 33.709 \\ \hline
+\multicolumn{1}{|c|}{\textbf{Long. máx. cola}} & 17 & 21 & 15 & 19 & 16 & 12 \\ \hline
+\end{tabular}
+\caption{Resultados variando el número de servidores.}
+\label{tab:colas-2}
+\end{table}
+
+Los resultados pueden verse en la tabla \ref{tab:colas-2}. Vemos que, en general,
+existen mejoras al aumentar el número de servidores. Vemos que los tiempos de espera
+en cola se reducen, al igual que el número medio de clientes en cola y la longitud media
+de las colas no vacías. Por otro lado, el tiempo de estancia en el sistema aumenta, al
+igual que el número medio de clientes en el sistema. No obstante, como podemos ver,
+la longitud máxima de la cola no experimenta mucha mejora (se podrían llevar a cabo
+tests estadísticos para ver si existe o no mejora significativa), y el porcentaje
+de tiempo de ocio del servidor se mantiene casi constante.
+
+Por tanto, aumentar el número de servidores del que se dispone perimite obtener en
+general mejores resultados. No obstante, el tiempo de ocio va a ser el mismo en todos
+los casos, con lo cuál habrá potencia de cómputo desaprovechada siempre. Por tanto,
+si quisiéramos recomendar la mejor opción, tendríamos que encontrar un equilibrio entre
+los resultados que queramos conseguir y el presupuesto del que dispongamos, ya que este
+último factor influirá mucho a la hora de decantarnos por una u otra opcion.
+
+\subsubsection{Cálculo de valores medios}
+
+Lo siguiente que tenemos que hacer es modificar el sistema para que sea capaz
+de realizar más de una simulación. Para ello, hace falta llevar una cuenta de
+los valores que se van obteniendo, con el objetivo de poder sacar un valor medio
+final a partir de ellos, junto con su correspondiente desviación típica.
+
+Después de realizar algunas modificaciones del sistema, vamos a ver qué resultados
+ofrece. Para ello, vamos a obtener una tabla parecida a las anteriores, en las que
+probaremos a simular 100 y 1000 veces para distintos tiempos de parada, como por
+ejemplo 1000 y 10000, para ver qué resultados medios se obtienen (si son mejores
+que los que había antes) junto con su desviación típica. Los tiempos son los mismos
+de antes, con lo cuál no los comentaremos.
+
+Los resultados se pueden ver en la tabla \ref{tab:colas-repeat}. Podemos ver que al repetir las simulaciones
+una serie de veces, se consiguen mejores resultados de media. Para el caso
+del tiempo de parada de 1000, los resultados son peores que los de 10000. Además,
+la desviación típica es bastante grande, con lo cuál existe mucha variación de los
+resultados. Sin embargo, para el caso de 10000 unidades de tiempo, los resultados
+son bastante buenos, sobre todo si los comparamos con los de la tabla \ref{tab:colas-1}.
+En este caso se acercan más a la media, y tienen una desviación típica moderada, sin ser
+tan grande como en el caso de las 1000 unidades. Por tanto, de aquí podemos concluir
+que es importante realizar no una, si no un conjunto de simulaciones, y promediar
+los resultados obtenidos. Este acercamiento permite obtener resultados mucho
+más precisos que si simplemente se ejecuta una vez el sistema, ya que los procesos estocásticos
+son mucho más notables en una única simulación que en el promedio de un conjunto de
+simulaciones.
+
+\begin{table}[H]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{c|c|c|c|c|}
+\cline{2-5}
+\textbf{} & \multicolumn{4}{c|}{\textbf{Tiempo parada}} \\ \cline{2-5} 
+\multicolumn{1}{l|}{} & \multicolumn{2}{c|}{\textbf{1000}} & \multicolumn{2}{c|}{\textbf{10000}} \\ \cline{2-5} 
+\textbf{} & \multicolumn{2}{c|}{\textbf{Núm. simul.}} & \multicolumn{2}{c|}{\textbf{Núm. simul.}} \\ \cline{2-5} 
+\multicolumn{1}{l|}{} & \textbf{100} & \textbf{1000} & \textbf{100} & \textbf{1000} \\ \hline
+\multicolumn{1}{|c|}{\textbf{\begin{tabular}[c]{@{}c@{}}T. medio\\ espera en cola\end{tabular}}} & $10.012 \pm 5.093$ & $10.690 \pm 6.705$ & $11.646 \pm 2.230$ & $11.876 \pm 2.496$ \\ \hline
+\multicolumn{1}{|c|}{\textbf{\begin{tabular}[c]{@{}c@{}}T. medio estancia\\ en sistema\end{tabular}}} & $ 16.012\pm 5.093$ & $16.690 \pm 6.705$ & $17.646 \pm 2.230$ & $17.876 \pm 2.496$ \\ \hline
+\multicolumn{1}{|c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Núm. medio\\ clientes en cola\end{tabular}}} & $1.148 \pm 0.645$ & $1.229 \pm 0.865$ & $1.291 \pm 0.258$ & $1.326 \pm 0.298$ \\ \hline
+\multicolumn{1}{|c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Núm. medio\\ clientes en sistema\end{tabular}}} & $1.800 \pm 0.710$ & $1.883 \pm 0.928$ & $1.954 \pm 0.276$ & $1.992 \pm 0.319$ \\ \hline
+\multicolumn{1}{|c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Long. media\\ colas no vacías\end{tabular}}} & $2.557 \pm 0.849$ & $2.684 \pm 1.104$ & $2.905 \pm 0.409$ & $2.963 \pm 0.471$ \\ \hline
+\multicolumn{1}{|c|}{\textbf{\begin{tabular}[c]{@{}c@{}}\% tiempo\\ ocio servidor\end{tabular}}} & $34.823 \pm 8.434$ & $34.586 \pm 8.560$ & $33.677 \pm 2.499$ & $33.371 \pm 2.803$ \\ \hline
+\multicolumn{1}{|c|}{\textbf{Long. máx. cola}} & $7.230 \pm 2.730$ & $7.463 \pm 2.925$ & $12.590 \pm 2.656$ & $12.872 \pm 3.234$ \\ \hline
+\end{tabular}%
+}
+\caption{Resultados experimentando con el número de simulaciones.}
+\label{tab:colas-repeat}
+\end{table}
+
+\subsubsection{Modificando los generadores de datos}
+
+Por úlitmo, vamos a experimentar modificando los generadores de datos para ver
+cómo influyen éstos en los resultados obtenidos. Se pide implementar un generador
+determinísitico, el cuál devuleve siempre los valores medios, los cuáles son en este caso
+9 para \texttt{tlleg} y para \texttt{tserv}; y un generador uniforme que tenga
+como media los dos valores anteriormente mencionados. Para conseguir esto, basta
+con generar un uniforme en el rango $[0, 1)$ y multplicar dicho valor por
+dos veces el valor medio. De esta forma se obtiene un valor en el rango
+$[0, 2t)$, donde $t$ es \texttt{tlleg} o \texttt{tserv}. Así nos aseguramos
+de que los dos valores anteriores son los centrales del intervalo, y por tanto, son
+el valor medio (recordemos que el valor medio de un intervalo uniforme $[a, b)$ es
+$\frac{1}{2}(a+b)$, de forma que aquí el valor medio es $t$).
+
+Una vez implementados, para ver cómo se comportan, vamos a comparar los resultados
+obtenidos para un tiempo de simulación de 100000 unidades, ya que se considera
+un valor adecuado, con los obtenidos orignalmente, los cuáles se pueden ver en
+la tabla \ref{tab:colas-1}.
+
+Los resultados los podemos ver en la tabla \ref{tab:colas-gen}. Vemos que para
+el generador determinístico los valores obtenidos son los ideales, los mejores que
+se podrían obtener, ya que ningún cliente espera en cola y el tiempo que está un
+cliente en el sistema es justamente lo que tarda en ser atendido. Sin embargo,
+los resultados son irreales, ya que nunca o casi nunca nos encontraremos con
+una situación así, debido a que hay muchos factores que pueden alterar por ejemplo
+el tiempo de servicio (por ejemplo, que se produzca un fallo mientras se atienda
+a un cliente). Además, los resultados están casi totalmente alejados de los teóricos,
+excepto el porcentaje de tiempo de ocio del servidor. Por tanto, debemos evitar utilizar
+estos tipos de generadores, ya que no ofrecen resultados fiables.
+
+El generador uniforme, por otra parte, obtiene resultados diferentes al determnístico,
+pero aun así, son bastante malos en general, ya que se quedan bastante lejos de
+los teóricos. El único valor obtenido que está más o menos cerca del valor teórico
+es el porcentaje de tiempo de ocio del servidor, aunque sucedía lo mismo con el
+generador determinístico. Por tanto, no podemos decir que sea la mejor de las ideas
+utilizar este generador para este problema, ya que no modela la realidad del todo bien.
+
+\begin{table}[H]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{c|c|c|c|}
+\cline{2-4}
+\multicolumn{1}{l|}{} & \textbf{\begin{tabular}[c]{@{}c@{}}Generador\\ exponencial\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Generador\\ determinístico\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Generador\\ uniforme\end{tabular}} \\ \hline
+\multicolumn{1}{|c|}{\textbf{\begin{tabular}[c]{@{}c@{}}T. medio\\ espera en cola\end{tabular}}} & 11.988 & 0 & 3.398 \\ \hline
+\multicolumn{1}{|c|}{\textbf{\begin{tabular}[c]{@{}c@{}}T. medio estancia\\ en sistema\end{tabular}}} & 17.988 & 6 & 9.398 \\ \hline
+\multicolumn{1}{|c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Núm. medio\\ clientes en cola\end{tabular}}} & 1.332 & 0 & 0.377 \\ \hline
+\multicolumn{1}{|c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Núm. medio\\ clientes en sistema\end{tabular}}} & 1.998 & 0.667 & 1.036 \\ \hline
+\multicolumn{1}{|c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Long. media\\ colas no vacías\end{tabular}}} & 3.006 & 0 & 1.468 \\ \hline
+\multicolumn{1}{|c|}{\textbf{\begin{tabular}[c]{@{}c@{}}\% tiempo\\ ocio servidor\end{tabular}}} & 33.362 & 33.339 & 34.062 \\ \hline
+\multicolumn{1}{|c|}{\textbf{Long. máx. cola}} & 17 & 0 & 7 \\ \hline
+\end{tabular}%
+}
+\caption{Resultados experimentando con el tipo de generador.}
+\label{tab:colas-gen}
+\end{table}
+
+Por tanto, de aquí podemos concluir que es importante escoger un generador
+adecuado para el problema, uno que permita modelar de la mejor manera posible
+la realidad. Para este caso, por ejemplo, el generador exponencial es el que
+mejor modela los ratios de llegadas y servicio de un sistema, ya que nun
+nos encontraremos que los valores sean exactamente los medios, o que sigan una
+distribución uniforme, ya que no es el comportamiento típico.
+
+\newpage
+
+\section{\textsc{Mi Tercer Modelo de Simulación Discreto}}
+
+\subsection{Remolcador de un puerto}
+
+\section{\textsc{Análisis de Salidas y Experimentación}}
 
 \end{document}
 
