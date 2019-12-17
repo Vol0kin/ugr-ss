@@ -750,10 +750,209 @@ tener 5 puntos de atraque en vez de 4. Por tanto, podemos decir que la \textbf{m
 alternativa} que tenemos ahora mismo es modificar el sistema que tenemos
 de forma que éste disponga de \textbf{4 puntos de atraque}.
 
-
 \newpage
 
 \section{\textsc{Análisis de Salidas y Experimentación}}
+
+En esta última sección vamos a hacer un análisis de las salidas del modelo
+del puerto con remolcador. Vamos a comparar distintas alternativas al modelo
+original utilizando como medida para comparar el número de barcos en la cola de
+atraque. Vamos a intentar primero determinar el mejor en función de las salidas
+que obtengamos, simulando cada vez un número diferente de veces y quedándonos
+con el mejor sistema, y posteriormente, compararemos algunos sistemas utilizando
+técnicas estadísticas, como por ejemplo los intervalos de confianza.
+
+\subsubsection{Comparando las salidas en función del número de simulaciones}
+
+Vamos a estudiar dos alternativas al modelo original que ya hemos visto anteriormente:
+un modelo en el que el remolcador no se ve afectado por las tormentas, y un modelo
+en el que el remolcador es más rápido. Para ello, vamos a comparar siempre el modelo
+original con las modificaciones propuestas. Vamos a realizar un conjunto de simulaciones
+y vamos a ver qué porcentaje de veces un sistema es mejor que el otro.
+
+Para realizar todo esto, vamos a simular los sistemas primero una vez y vamos a tomar
+el valor obtenido para la medida de rendimiento seleccionada. Vamos a repetir este
+proceso 100 veces y veremos el porcentaje de veces que que un modelo es mejor
+que el otro, y por tanto, que uno de los modelos sería más recomendable que el otro.
+Vamos a repetir este proceso simulando 5, 10, 25 y 50 veces, y
+repitiendo 100 veces, tal y como hacíamos en el primer caso. No vamos a simular
+más de 50 veces ya que los tiempos de cómputo empiezan a ser demasiado elevados.
+Por ejemplo si simulásemos 100 veces, habría que repetir 100 simulaciones 100 veces,
+lo cuál hace que al final se hagan 10000 simulaciones. Esto no merece demasiado
+la pena, ya que solo llevaría un tiempo de cómputo progresivamente más grande.
+Además, como estamos comparando 100 veces los resultados obtenidos para cada
+número de simulaciones diferentes, se puede llegar a extraer alguna conclusión
+(aunque no sea la mejor) sin necesidad de simular tanto.
+
+Para comparar, vamos a crear dos tablas que contengan los resultados. Una tabla
+comparará el modelo original con el modelo en el que el remolcador no se ve afectado
+por las tormentas, mientras que la otra comparará el original con el remolcador
+más rápido. Para obtener los resultados de un script en \texttt{Python}, ya que nos ha permitido
+manejar la información de forma muy sencilla para poder sacar los resultados que
+necesitábamos.
+
+Para acelerar todo el proceso de comparación y cálculo de resultados, vamos a sacar primero
+los valores para comparar el modelo base con el del remolcador no afectado por
+las tormentas. Para comparar el modelo base con el modelo con el remolcador más
+rápido, vamos a reutilizar los resultados obtenidos para el modelo base la primera
+vez, de forma que no tengamos que simular de nuevo (lo cuál llevaría un tiempo
+extra considerable). Una vez dicho esto, veamos qué resultados se han obtenido
+en cada caso:
+
+\begin{table}[H]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+\textbf{Núm. simulaciones} & \textbf{1} & \textbf{5} & \textbf{10} & \textbf{25} & \textbf{50} \\ \hline
+\textbf{Modelo base} & 29\% & 24\% & 13\% & 4\% & 0\% \\ \hline
+\textbf{\begin{tabular}[c]{@{}c@{}}Modelo remolcador\\ no afectado por tormentas\end{tabular}} & \textbf{71\%} & \textbf{76\%} & \textbf{87\%} & \textbf{96\%} & \textbf{100\%} \\ \hline
+\end{tabular}%
+}
+\caption{Porcentaje de veces que un modelo es mejor que el otro. En negrita los mejores valores.}
+\label{tab:porcentaje-1}
+\end{table}
+
+\begin{table}[H]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+\textbf{Núm. simulaciones} & \textbf{1} & \textbf{5} & \textbf{10} & \textbf{25} & \textbf{50} \\ \hline
+\textbf{Modelo base} & 46\% & 47\% & 49\% & \textbf{54\%} & 42\% \\ \hline
+\textbf{Modelo remolcador rápido} & \textbf{54\%} & \textbf{53\%} & \textbf{51\%} & 46\% & \textbf{58\%} \\ \hline
+\end{tabular}%
+}
+\caption{Porcentaje de veces que un modelo es mejor que el otro. En negrita los mejores valores.}
+\label{tab:porcentaje-2}
+\end{table}
+
+Si observamos los valores de la tabla \ref{tab:porcentaje-1}, vemos que en todos
+los casos el sistema modificado sale como mejor opción con un porcentaje más elevado.
+A medida que se va aumentando el número de simulaciones que se realiza por cada
+repetición, el porcentaje de veces que es mejor el sistema modificado
+aumenta, ya que al promediar se van obteniendo resultados más fiables. Al final,
+el sistema modificado es recomendado el 100\% de las veces, ya que siempre
+ofrece mejores resultados. Por tanto, es posible que, al tomar decisiones de
+este tipo basándonos en unas pocas simulaciones, como 1 o 5, estemos cometiendo
+un error, ya que los resultados pueden no ser demasiado representativos.
+
+Si analizamos el caso que se puede ver en la tabla \ref{tab:porcentaje-2}, vemos
+que la situación es un poco diferente. Vemos como el modelo modificado es casi siempre
+mejor que el modelo base excepto en un caso. En general, aquí las diferencias no son
+tan abismales como en el caso anterior, ya que las veces que se recomendaría un sistema
+en vez del otro no distan mucho. Además, aquí no sucede algo como en el caso anterior en
+el que al aumentar el número de simulaciones se producía un crecimiento lineal de alguno
+de los modelos (es decir, que se podría recomendar cada vez más veces que el otro). Aquí
+primero se van obteniendo mejores resultados en el modelo base, pero a partir de
+las 50 simulaciones el porcentaje de veces que es mejor el sistema base
+parece comenzar a decrecer. Por tanto, no hay ningún patrón de comportamiento
+fijo. Esto, junto con los resultados obtenidos a lo largo de la experimentación,
+hace que haya un margen de error mucho mayor que en el caso anterior, ya que en
+caso de recomendar por ejemplo el modelo modificado, acertaríamos poco más del
+50\% de las veces en general. Podríamos hacer algún otro tipo de análisis para
+ver si existen diferencias significativas, y en función de eso y los resultados
+obtenidos anteriormente, decidir qué sistema recomendar.
+
+Como conclusión, a pesar de que el método es simple y en un principio parece que
+es capaz de permitirnos decidir de manera sencilla cuál es el mejor sistema en
+función del porcentaje de veces que uno es mejor que el otro, tiene serias
+limitaciones. Por ejemplo, se debe considerar el número de simulaciones que
+se realizan, ya que con unas pocas no se obtendrán resultados fiables. Además,
+hay casos en los que los resultados son demasiado ajustados, con lo cuál no
+podremos saber a ciencia cierta cuál de los dos modelos es mejor, si es que
+existe tal modelo. Por ello se suelen utilizar ténicas algo más sofisticas
+basadas en la estadística, las cuále veremos a continuación.
+
+\subsection{Intervalos de confianza}
+
+Los intervalos de confianza nos permiten determinar si existen diferencias
+significativas entre los resultados obtenidos para dos sitemas, modelos, etc.
+Son una técnica muy útil y relativamente fácil de utilizar, y que permite obtener
+en general muy buenos resultados. En este apartado, vamos a construir un intervalo
+de confianza para determinar si existen diferencias significativas entre el
+modelo con el remolcador que no se ve afectado por las tormentas y el modelo
+con el remolcador más rápido. Para ello, vamos a utilizar la misma medida
+de rendimiento que antes.
+
+El proceso para construir el intervalo de confianza es muy simple:
+
+\begin{enumerate}
+	\item Simular una serie de veces los dos modelos y obetener los resultados.
+	Para simplificar, vamos a suponer que cada vez se hace una única simulación.
+	\item Emparejar los resultados y calcular su diferencia, obteniendo una nueva
+	variable.
+	\item Calcular media y desviación típica de la nueva variable.
+	\item Obtener el intervalo de confianza utilizando la distribución $t$ de Student
+	y los valores calculados anteriormente.
+\end{enumerate}
+
+El objetivo es constuir el intervalo de confianza al 95\%, lo cuál supone
+utilizar un $\alpha=0.05$. Para construir el intervalo, lo primero que necesitamos
+son muestras, es decir, resultados de simulaciones. Para hacerlo, vamos a coger
+los resultados que hemos obtenidos para el apartado anterior y vamos a reutilizarlos.
+Adicionalmente vamos a añadir algunas simulaciones más. El motivo de esto se entenderá
+un poco más adelante. Una vez que hayamos calculado el intervalo de confianza,
+vamos a ver si el 0 se sitúa dentro de él. Si está dentro, entonces no podemos
+afirmar que existe diferencia significativa entre los dos modelos. Si no lo está,
+podremos afirmar con un 95\% de confianza que existen diferencias significativas
+entre los dos modelos.
+
+Vamos a construir el intervalo de confianza algunas veces, cambiando el número
+de muestras que se utilizan, para ver qué resultados se obtienen. Para ayudarnos,
+de nuevo, vamos a usar un script en \texttt{Python} que nos permita agilizar
+los cálculos realizados.
+
+Una vez que se han obtenido los resultados, se ha construido la siguiente
+tabla:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{$N$} & \textbf{$\bar{Z}$} & \textbf{$\sigma^2$} & \textbf{Intervalo} \\ \hline
+20 & 0.078 & 0.422 & $[-0.225, 0.382]$ \\ \hline
+40 & 0.058 & 0.688 & $[-0.207,  0.324]$ \\ \hline
+60 & 0.078 & 0.709 & $[-0.14, 0.295]$ \\ \hline
+80 & 0.152 & 0.735 & $[-0.039, 0.343]$ \\ \hline
+100 & 0.161 & 0.679 & $[-0.003, 0.324]$ \\ \hline
+120 & 0.201 & 0.646 & $[0.056, 0.346]$ \\ \hline
+\end{tabular}
+\caption{Resultados para el intervalo de confianza.}
+\label{tab:confianza}
+\end{table}
+
+Podemos ver que en la tabla tenemos tanto los tamaños de las muestras $N$
+como las medias, desviaciones típicas e intervalos correspondientes. Los valores
+de $Z$ se han calculado como $X_{remolcador rápido, i} - X_{remolcador tormenta, i}$.
+Vemos que para tamaños de muestra no muy grandes, el 0 cae dentro del intervalo. Sin embargo,
+para un valor de $N$ relativamente grande, como podría ser por ejemplo 120, el 0
+ya está fuera del intervalo. Como se ha querido estudiar la evolución del intervalo
+a medida que se aumentaba el número de muestras, se han tenido que realizar más
+simulaciones, como se ha dicho antes, ya que al principio disponíamos solo de
+100 resultados para cada modelo.
+
+Ahora, si nos paramos a analizar los resultados un poco más detenidamente,
+vemos que en la mayoría de casos, para tamaños de muestra menores o iguales
+a 100, no existe una diferencia significativa entre los dos modelos. Una
+vez que el tamaño de la muestra empieza a ser un poco grande, vemos que
+el 0 deja de estar en el intervalo, con lo cuál parece que los dos modelos
+tienen una diferencia significativa al 95\%. En este caso, el remolcador
+que no se ve afectado por la tormenta ofrecería unos mejores resultados,
+ya que el 0 se sitúa a la izquierda del extremo inferior del intervalo, además
+de que $\bar{Z}$ es positivo. Por tanto, a partir de esta información podemos
+deducir que los tiempos para el remolcador más rápido tienen que ser más grandes,
+y por tanto, peores que el otro modelo.
+
+Por tanto, en función del número de muestras del que dispongamos podríamos
+afirmar una cosa u otra. Si tenemos pocas muestras, podemos afirmar que
+no existen diferencias significativas entre los dos modelos con un 95\% de
+confianza. En caso de tener un número de muestras grande, podríamos afirmar
+con un 95\% de confianza que existen diferencias significativas entre los
+dos modelos y que, además, el mejor modelo es el del remolcador que no es
+afectado por las tormentas por los motivos especificados anteriormente.
+
+\subsection{Comparación de más de dos sistemas}
 
 \end{document}
 
