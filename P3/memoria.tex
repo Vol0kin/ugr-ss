@@ -911,30 +911,30 @@ tabla:
 \begin{tabular}{|c|c|c|c|}
 \hline
 \textbf{$N$} & \textbf{$\bar{Z}$} & \textbf{$\sigma^2$} & \textbf{Intervalo} \\ \hline
-20 & 0.078 & 0.422 & $[-0.225, 0.382]$ \\ \hline
-40 & 0.058 & 0.688 & $[-0.207,  0.324]$ \\ \hline
-60 & 0.078 & 0.709 & $[-0.14, 0.295]$ \\ \hline
-80 & 0.152 & 0.735 & $[-0.039, 0.343]$ \\ \hline
-100 & 0.161 & 0.679 & $[-0.003, 0.324]$ \\ \hline
-120 & 0.201 & 0.646 & $[0.056, 0.346]$ \\ \hline
+20 & 0.078 & 0.422 & $[-0.124, 0.281]$ \\ \hline
+40 & 0.058 & 0.688 & $[-0.165,  0.281]$ \\ \hline
+60 & 0.078 & 0.709 & $[-0.107, 0.262]$ \\ \hline
+80 & 0.152 & 0.735 & $[-0.012, 0.317]$ \\ \hline
+100 & 0.161 & 0.679 & $[0.025, 0.296]$ \\ \hline
+120 & 0.201 & 0.646 & $[0.084, 0.318]$ \\ \hline
 \end{tabular}
 \caption{Resultados para el intervalo de confianza.}
 \label{tab:confianza}
 \end{table}
 
 Podemos ver que en la tabla tenemos tanto los tamaños de las muestras $N$
-como las medias, desviaciones típicas e intervalos correspondientes. Los valores
+como las medias, varianzas e intervalos correspondientes. Los valores
 de $Z$ se han calculado como $X_{remolcador rápido, i} - X_{remolcador tormenta, i}$.
 Vemos que para tamaños de muestra no muy grandes, el 0 cae dentro del intervalo. Sin embargo,
-para un valor de $N$ relativamente grande, como podría ser por ejemplo 120, el 0
+para un valor de $N$ relativamente grande, como podría ser por ejemplo 100 o 120, el 0
 ya está fuera del intervalo. Como se ha querido estudiar la evolución del intervalo
 a medida que se aumentaba el número de muestras, se han tenido que realizar más
 simulaciones, como se ha dicho antes, ya que al principio disponíamos solo de
 100 resultados para cada modelo.
 
 Ahora, si nos paramos a analizar los resultados un poco más detenidamente,
-vemos que en la mayoría de casos, para tamaños de muestra menores o iguales
-a 100, no existe una diferencia significativa entre los dos modelos. Una
+vemos que en la mayoría de casos, para tamaños de muestra menores
+a 100 no existe una diferencia significativa entre los dos modelos. Una
 vez que el tamaño de la muestra empieza a ser un poco grande, vemos que
 el 0 deja de estar en el intervalo, con lo cuál parece que los dos modelos
 tienen una diferencia significativa al 95\%. En este caso, el remolcador
@@ -942,7 +942,7 @@ que no se ve afectado por la tormenta ofrecería unos mejores resultados,
 ya que el 0 se sitúa a la izquierda del extremo inferior del intervalo, además
 de que $\bar{Z}$ es positivo. Por tanto, a partir de esta información podemos
 deducir que los tiempos para el remolcador más rápido tienen que ser más grandes,
-y por tanto, peores que el otro modelo.
+y por tanto, peores que los del otro modelo.
 
 Por tanto, en función del número de muestras del que dispongamos podríamos
 afirmar una cosa u otra. Si tenemos pocas muestras, podemos afirmar que
@@ -953,6 +953,77 @@ dos modelos y que, además, el mejor modelo es el del remolcador que no es
 afectado por las tormentas por los motivos especificados anteriormente.
 
 \subsection{Comparación de más de dos sistemas}
+
+Por último, vamos a realizar un análisis entre 4 modelos diferentes:
+
+\begin{itemize}[label=\textbullet]
+	\item Un modelo en el que hay 4 puntos de atraque.
+	\item Un modelo en el que hay 5 puntos de atraque.
+	\item Un modelo con un remolcador más rápido.
+	\item Un modelo con un remolcador que no se ve afectado por las tormentas.
+\end{itemize}
+
+Para ello, vamos a utilizar el \textbf{método de la selección del mejor entre
+$k$ sistemas}. Queremos estar bastante seguros de que hemos hecho la elección
+correcta. Por tanto, queremos que la probabilida de seleccionar el sistema
+correcto sea mayor a un valor $P^*$ determinado. En este caso, queremos estar
+seguros al 95\% de que hacemos la elección correcta, ya que si nos ponemos en
+la piel de la persona que debe invertir para mejorar el sistema, todas las mejoras
+son caras, por tanto no se pueden tomar a la ligera. Por tanto, en este caso,
+tenemos que $P^* = 0.95$. Queremos además que la indiferencia $d^*$ sea relativamente
+pequeña, ya que, como hemos podido comprobar anteriormente, la medida utilizada
+tiene unos resultados en general bastante bajos, y las diferencias suelen ser
+unas cuantas décimas como mucho, si es que existen. Por tanto, nos interesa
+tener, por ejemplo, $d^* = 0.1$, ya que queremos cometer un error bajo al decidir
+el mejor sistema. El número de simulaciones inicial, $n_0$, también debe
+ser escogido. En este caso, hemos probado con $n_0 = 20$ y $n_0 = 40$.
+Con el primer valor se ha tenido algún que otro problema, ya que la expresión
+dentro de la raíz que se obtenía en el caso del remolcador no afectado por las
+tormentas era negativo, con lo cuál no se puede aplicar la raíz cuadrada sobre
+dicho valor. Por tanto, utilizaremos $n_0 = 40$, ya que no hemos tenido ningún
+tipo de problema con este valor. Por último, el valor de $h1$ viene determinado
+por los de $P^*$ y $k$ (el número de sistemas). En este caso, tenemos que
+$h1 = 3.003$.
+
+Para obtener los datos, hemos reutilizado algunos de los que ya teníamos del
+apartado anterir y hemos generado nuevos para los modelos con más puntos de
+atraque. En caso de necesitar más datos, se han hecho más simulaciones. En todos
+los casos, los datos proceden de 1 simulación sin repetir.
+
+Una vez dicho esto, vamos a ver los resultados que se han obtenido. Para ello,
+nos hemos ayudado de un scrpt en \texttt{Python} para obtener los resultados.
+A continuación se puede ver una tabla con todos los resultados obtenidos:
+
+\begin{table}[H]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline
+\textbf{Sistema} & \textbf{$X_i^{(1)}(40)$} & \textbf{$s^2_i(20)$} & \textbf{$N_i$} & \textbf{$X_i^{(2)}(N_i - 40)$} & \textbf{$W_{i1}$} & \textbf{$W_{i2}$} & \textbf{$X^p_i(N_i)$} \\ \hline
+\textbf{4 puntos atraque} & 0.087 & 0.00008284 & 41 & 0.089 & 4.586 & -3.586 & \textbf{0.081} \\ \hline
+\textbf{5 puntos atraque} & 0.047 & 0.00000408 & 41 & 0.045 & 17.258 & -16.258 & 0.090 \\ \hline
+\textbf{Remolcador rápido} & 1.171 & 0.221 & 199 & 1.225 & 0.210 & 0.790 & 1.213 \\ \hline
+\textbf{Remolcador inmune tormentas} & 1.112 & 1.112 & 278 & 1.002 & 0.150 & 0.850 & 1.018 \\ \hline
+\end{tabular}%
+}
+\caption{Resultados del método de selección del mejor sistema entre $k$.}
+\label{tab:mejor-sistema}
+\end{table}
+
+Para comparar los sistemas, tenemos que fijarnos en el valor de $X^p_i(N_i)$, el cuál
+la suma ponderada de $X_i^{(1)}(40)$ y $X_i^{(2)}(N_i - 40)$ utilizando los pesos
+$W_{i1}$ y $W_{i2}$. Tenemos que fijarnos en el valor más pequeño, ya que nos interesa
+minimizar el número medio de barcos en la cola de atraque.
+
+Si nos fijamos en los resultados obtenidos, vemos que el mejor sistema es el
+que tiene \textbf{4 puntos de atraque}, ya que es el que obtiene un valor menor
+de $X^p_i(N_i)$. La segunda mejor opción sería el puerto con 5 puntos de atraque,
+ya que no dista del mejor valor. Para asegurarnos de si existen diferencias significativas
+podríamos hacer un estudio con intervalos de confianza. Sin embargo, ese no es
+el objetivo principal de este apartado. Por tanto, podríamos quedarnos con el
+modelo con 4 puntos de atraque con una probabilidad de 0.95 de que sea la opción correcta
+con una indiferencia de 0.1, ya que es el que ha ofrecido el menor número
+medio de barcos en la cola de atraque de los cuatro sistemas que hemos comparado. 
 
 \end{document}
 

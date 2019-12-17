@@ -1,0 +1,32 @@
+A continuación se procede a decir qué es cada uno los archivos incluidos:
+
+- src: Contiene los archivos fuente de los programas.
+  ├── incremento_fijo.cpp: Programa que implementa el incremento fijo del tiempo.
+  ├── incremento_variable.cpp: Programa que implementa el incremento variable del tiempo.
+	├── colammk.cpp: Sistema de m servidores con una cola base.
+  ├── colammk-v1.cpp: Modificación del sistema base para simular más de una vez.
+  ├── colammk-vDet.cpp: Modificación del sistema base para usar un generador determinístico.
+  ├── colammk-vUni.cpp: Modificación del sistema base para usar un generador uniforme.
+	├── puerto.cpp: Versión base del modelo del puerto con remolcador.
+	├── puerto-tons.cpp: Modificación del sistema base para medir toneladas cargadas.
+  ├── puerto-atr4.cpp: Modificación del sistema con las toneladas para tener 4 puntos de atraque.
+  ├── puerto-atr5.cpp: Modificación del sistema con las toneladas para tener 5 puntos de atraque.
+  ├── puerto-rem.cpp: Modificación del sistema con las toneladas para tener un remolcador más rápido.
+  └── puerto-tor.cpp: Modificación del sistema con las toneladas para tener un remolcador no afectado por las tormentas.
+
+- include: Contiene cabeceras que se incluyen junto con algunos de los fuentes a la hora de compilar.
+	├── puerto.h: Cabeceras para puerto.cpp.
+	├── puerto4.h: Cabecera con la modificación necesaria para puerto-atr4.cpp.
+	├── puerto5.h: Cabecera con la modificación necesaria para puerto-atr5.cpp.
+	└── puertorem.h: Cabecera con la modificación necesaria para puerto-rem.cpp.
+
+También se han hecho una serie de scripts para el capítulo 3. Los ficheros de datos
+se tienen que generar en un directorio data/. Los binarios tienen que estar en el directorio
+bin/ (en caso de que se quieran modificar los fuentes). Los nombres de los archivos y
+de los binarios se pueden cambiar en los scripts.
+
+- comparacion.py: Script que permite obtener el porcentaje de veces que un sistema es mejor que otro (apartado 3.1).
+- intervalo-confianza.py: Script que calcula intervalos de confianza (apartado 3.2).
+- elegir-entre-k.py: Script que calcula los resultados necesarios para elegir el mejor de entre k sistemas (apartado 3.3).
+- run.py: Ejecuta todos los modelos para el apartado 3.1.
+- simula.py: Ejecuta un simulador, añadiendo los resultados a un archivo, simulando N veces.

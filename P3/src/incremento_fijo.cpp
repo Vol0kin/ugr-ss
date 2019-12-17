@@ -167,15 +167,5 @@ int main(int argc, char *argv[])
     cout << "Numero medio de clientes en cola: " << colaMedia << endl;
     cout << "Tiempo medio del servidor en ocio: " << mediaOcio << endl;
 
-	if (tServicio < tLlegada)
-    {
-		float p = (float)(tServicio/tLlegada);
-		float q = (p*p)/(1-p);
-		float pto = 100*(1-p);
-        cout <<  endl << "p = tServicio / tLlegada = " << p << endl;
-        cout << "Q(n) = (p*p)/(1-p) = " << q << endl;
-        cout << "PTO = 100*(1-p) = " << pto << endl;
-	}
-
 	return 0;
 }

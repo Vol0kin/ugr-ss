@@ -22,6 +22,5 @@ for group, p in zip((originals, storms, faster), programs):
         for i in range(100):
             print(f"Simulando: {p} {n} repeticiones. Salida en {f}. Progreso {i+1}/100")
             os.system(f'{p} {n}| tail -n 13 | head -n 1 | grep -oE "media\([^,]*\)" | grep -oE "[0-9]+\.[0-9]+" >> {f}')
-            if n < 100:
-                time.sleep(1)
+            time.sleep(1)
 

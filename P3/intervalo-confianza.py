@@ -10,16 +10,16 @@ def calcular_intervalo_confianza(rap, torm, n, alfa):
     dif_rap_torm = rap[:n] - torm[:n]
 
     media = np.mean(dif_rap_torm)
-    desv = np.std(dif_rap_torm)
+    var = np.var(dif_rap_torm, ddof=1)
 
     print(f"\nMedia: {media}")
-    print(f"Desviación típica: {desv}")
+    print(f"Varianza: {var}")
     print(f"N: {n}")
     print(f"alfa: {alfa}")
 
     t_values = t.interval(1-alfa, n-1)
 
-    intervalo = [media + t * np.sqrt(desv/n) for t in t_values]
+    intervalo = [media + t * np.sqrt(var/n) for t in t_values]
     print(f"Intervalo obtenido: {intervalo}")
 
 # Leer los ficheros
