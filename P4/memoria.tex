@@ -79,7 +79,43 @@
 \section{Introducción}
 
 El objetivo de esta práctica es el estudio de un modelo dinámico discreto basado
-en el ecosistema de Lotka-volterra.
+en las ecuaciones de Lotka-Volterra. Estas ecuaciones permiten estudiar ecosistemas
+con dos especies relacionadas entre sí: las \textbf{presas} y los \textbf{depredadores}.
+Estas ecuaciones se pueden ver a continuación:
+
+\begin{equation}
+\begin{split}
+\frac{dx}{dt} = a_{11}x - a_{12}xy \\
+\frac{dy}{dt} = a_{21}xy - a_{22}y
+\end{split}
+\end{equation}
+
+\noindent donde $x$ representa la población de presas e $y$ representa la población
+de depredadores. El resto de parámetros, en este caso, respresentan lo siguiente:
+
+\begin{itemize}[label=\textbullet]
+	\item $a_{11}$ representa la tasa de crecimiento de las presas.
+	\item $a_{12}$ representa una la efectividad de los depredadores a la hora de
+	capturar las presas.
+	\item $a_{21}$ representa el valor nutricional de las presas (a mayor valor, menos
+	presas será necesario que cace un depredador para sobrevivir).
+	\item $a_{22}$ representa la tasa de crecimiento de los depredadores. En este caso,
+	un valor más grande indica que la población decrece más, mientras que un valor más
+	bajo indica que decrece en menor medida, y por tanto, los miembros de la población
+	son más longevos.
+\end{itemize}
+
+Una vez explicado el sistema a estudiar y una vez que se ha implementado siguiendo
+las instrucciones proporcionadas, vamos a experimentar con los parámetros del sistema
+para ver cómo evolucionan las dos especies en función de estos. También haremos
+una comparativa entre los dos métodos de integración que se proponen: el método de Euler
+y el de Runge-Kutta.
+
+Para todas las experimentaciones vamos a simular desde $\texttt{tinic} = 0$ hasta $\texttt{tfin} = 200$,
+ya que para valores más altos de \texttt{tfin} no se pueden apreciar bien
+los resultados en las gráficas. El intervalo de cálculo será en un principio de 0.1, pero a la hora
+de comparar los distintos métodos de integración será variable. Los demás valores se van
+a ir variando con el objetivo de estudiar el funcionamiento del sistema.
 
 \section{Experimentación con las condiciones iniciales}
 
