@@ -1,10 +1,9 @@
 #include <iostream>
-#include <cmath>
 #include <cstdlib>
 
 using namespace std;
 
-#define CSV 0
+#define CSV 1
 
 /* ************************************************************************** */
 // Declarar datos que utilizaran las funciones
