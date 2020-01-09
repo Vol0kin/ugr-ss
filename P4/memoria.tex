@@ -10,6 +10,7 @@
 \usepackage{enumitem}						% Permitir enumerate con distintos simbolos
 \usepackage[T1]{fontenc}					% Usar textsc en sections
 \usepackage{amsmath}						% Símbolos matemáticos
+\usepackage{subcaption}
 
 % Comando para poner el nombre de la asignatura
 \newcommand{\asignatura}{Simulación de Sistemas}
@@ -119,9 +120,118 @@ a ir variando con el objetivo de estudiar el funcionamiento del sistema.
 
 \section{Experimentación con las condiciones iniciales}
 
+Lo primero que vamos a hacer es experimentar con las condiciones iniciales, con el
+objetivo de ver cómo cambia el comportamiento del sistema en función de estos.
 
+Lo primero que vamos a hacer es establecer los valores de los parámetros $a_{ij}$,
+ya que estos se mantendrán fijos a lo largo de la experimentación. En este caso,
+los valores son los siguientes:
+
+$$
+	a_{11} = 5, \; a_{12} = 0.05, \; a_{21} = 0.0004, \; a_{22} = 0.2
+$$
+
+En un primer instante, se pide que los valores iniciales de las dos poblaciones
+sean $x = \frac{a_{22}}{a_{21}}$ e $y = \frac{a_{11}}{a_{12}}$. Si los calculamos,
+obtenemos que $x = 500$ e $y = 100$. Si ahora ejecutamos el simulador con los parámetros
+correspondientes, obtenemos los siguientes resultados:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.6]{img/x500y100}
+	\caption{Simulación del sistema con 500 presas ($x$) y 100 depredadores ($y$).}
+\end{figure}
+
+Vemos que en este caso el sistema permanece en equilibrio, ya el número de individuos
+que componen las dos poblaciones no varía a lo largo del tiempo. Esto se debe a que
+los valores iniciales son proporcionales a los parámetros $a_{ij}$, de forma que
+el número inicial de presas depende de la tasa de crecimiento de los depredadores
+y del valor nutricional de las presas, mientras que el número inicial de depredadores
+depende de la tasa de incremento de las presas y de la efectividad de los depredadores.
+De esta forma, nos podemos asegurar que el número inicial de individuos sea el justo para
+que en ningún momento exista una fluctuación en el número de individuos que componen las
+poblaciones.
+
+Habiendo visto la situación de equilibrio anterior, vamos a ver ahora qué es lo que pasa
+cuando se modifican los valores iniciales para las dos poblaciones. Vamos a probar, por ejemplo,
+con un sistema en el que hayan más presas, conservando el mismo número de depredadores.
+Por ejemplo, vamos a establecer que $x = 600$, para ver qué es lo que sucede al salir de la
+zona de equilibrio. Los resultados se pueden ver a continuación:
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.5\textwidth}
+	\centering
+	\includegraphics[scale=0.45]{img/x600y100}
+	\subcaption{Evolución de las dos poblaciones en conjunto}
+	\label{fig:x600}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+	\centering
+	\includegraphics[scale=0.45]{img/circulo-x600}
+	\subcaption{Número de presas en función del número de depredadores.}
+	\label{fig:circ-x600}
+\end{subfigure}
+\caption{Resultados para un número inicial de 600 presas.}
+\end{figure}
+
+Tal y como vemos en la figura \ref{fig:x600}, al aumentar el número inicial de presas y hacer que
+su valor no dependa de los parámetros $a_{ij}$ se empiezan a producir cambios en las dos poblaciones.
+Vemos que ambas poblaciones van creciendo y dereciendo de la misma forma periódicamente. Vemos también
+que estos crecimientos están acotados, ya que no se superan ciertos rangos de valores. Se puede observar
+que cuando la población de presas disminuye, se produce un aumento en la población de depredadores.
+Lo mismo sucede en el caso contrario: cuando decrece la de depredadores, aumenta la de presas. Estas evoluciones
+son completamente lógicas y razonables, ya que a menos presas, menos comida tendrán los depredadores, y por tanto
+un mayor número de ellos morirá. A más presas, más comida, y por tanto más va a crecer la población de depredadores.
+La evolución de las dos poblaciones se puede ver también en la figura \ref{fig:circ-x600}, donde vemos
+la evolución de la población de presas en función de la de depredadores. Vemos que la evolución tiene
+forma circular, casi como una elipse. Por tanto, observando ambas gráficas, podemos concluir que con estos
+valores iniciales, las dos poblaciones crecen y decrecen de forma equilibrada, sin extinguirse ninguna de ellas
+en ningún momento.
+
+Ahora, si probamos a modificar el número inicial de depredadores y hacemos que tenga el valor
+$y = 150$, sin modificar el número de presas iniciales (es decir, dejando dicho número a 500),
+obtenemos los siguientes resultados:
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.5\textwidth}
+	\centering
+	\includegraphics[scale=0.45]{img/x500y150}
+	\subcaption{Evolución de las dos poblaciones en conjunto}
+	\label{fig:y150}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+	\centering
+	\includegraphics[scale=0.45]{img/circulo-y150}
+	\subcaption{Número de presas en función del número de depredadores.}
+	\label{fig:circ-y150}
+\end{subfigure}
+\caption{Resultados para un número inicial de 150 depredadores.}
+\end{figure}
+
+Vemos que en este caso sucede algo parecido al anterior, ya que no se extingue ninguna de las especies.
+No obstante, la evolución de las dos poblaciones es algo diferente. Aquí podemos ver que los aumentos
+y las disminuciones del número de presas es mucho más prounciado que en el caso anterior, ya que los
+valores máximos alcanzados son mucho más altos que en el caso anterior. Los mínimos también son muy diferentes,
+ya que se quedan bastante cerca de 0, es decir, al borde de la extinción. El crecimiento de la población
+de depredadores también ha experimentado un ligero cambio, ya que ahora se alcanzan valores máximos algo
+más altos. Además, la forma del crecimiento ha cambiado, ya que ha pasado de tener una forma sinusoidal a otra
+que recuerda más a una ``ola''. Si ahora observamos la figura \ref{fig:circ-y150} vemos que, efectivamente, ha
+habido un cambio bastante importante respecto al caso anterior. La forma ha dejado de parecerse a una elipse para
+parecer una circunferencia bastante deformada. La parte de abajo está bastante aplanada, lo cuál implica
+un decrecimiento muy rápido del número de depredadores una vez que el de presas es casi 0. Después, se produce
+un crecimiento en el número de presas hasta llegar al máximo, y posteriormente un decrecimiento de nuevo debido
+a que el número de depredadores se ha visto incrementado debido a la presencia de más comida. Por tanto, a la vista
+de los resultados, vemos que en este sistema también hay una evolución equilibrada de las dos especies, sin que
+ninguna de ellas se extinga.
 
 \section{Experimentación con los parámetros}
+
+Una vez que hemos experimentado con los valores iniciales de las dos poblaciones, vamos
+a probar a modificar los parámetros $a_{ij}$ para ver qué cambios se producen en el sistema.
+Para ello, vamos a partir del sistema con 600 presas y 100 depredadores, ya que es el que tiene
+una evolución más balanceada de los dos que hemos probado anteriormente.
 
 \section{Comparativa de los métodos de integración}
 
