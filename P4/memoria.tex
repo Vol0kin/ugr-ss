@@ -95,15 +95,16 @@ Estas ecuaciones se pueden ver a continuación:
 de depredadores. El resto de parámetros, en este caso, respresentan lo siguiente:
 
 \begin{itemize}[label=\textbullet]
-	\item $a_{11}$ representa la tasa de crecimiento de las presas.
+	\item $a_{11}$ representa la tasa de crecimiento de las presas. En un principio vale $5$.
 	\item $a_{12}$ representa una la efectividad de los depredadores a la hora de
-	capturar las presas.
+	capturar las presas. En un principio vale $0.05$.
 	\item $a_{21}$ representa el valor nutricional de las presas (a mayor valor, menos
-	presas será necesario que cace un depredador para sobrevivir).
-	\item $a_{22}$ representa la tasa de crecimiento de los depredadores. En este caso,
+	presas será necesario que cace un depredador para sobrevivir). En un principio
+	vale $0.0004$.
+	\item $a_{22}$ representa la tasa de mortalidad de los depredadores. En este caso,
 	un valor más grande indica que la población decrece más, mientras que un valor más
 	bajo indica que decrece en menor medida, y por tanto, los miembros de la población
-	son más longevos.
+	son más longevos. Inicialmente vale $0.2$.
 \end{itemize}
 
 Una vez explicado el sistema a estudiar y una vez que se ha implementado siguiendo
@@ -208,6 +209,7 @@ obtenemos los siguientes resultados:
 	\label{fig:circ-y150}
 \end{subfigure}
 \caption{Resultados para un número inicial de 150 depredadores.}
+\label{fig:dep}
 \end{figure}
 
 Vemos que en este caso sucede algo parecido al anterior, ya que no se extingue ninguna de las especies.
@@ -232,6 +234,125 @@ Una vez que hemos experimentado con los valores iniciales de las dos poblaciones
 a probar a modificar los parámetros $a_{ij}$ para ver qué cambios se producen en el sistema.
 Para ello, vamos a partir del sistema con 600 presas y 100 depredadores, ya que es el que tiene
 una evolución más balanceada de los dos que hemos probado anteriormente.
+
+Primero, vamos a probar a modificar el parámetro $a_{11}$, el cuál recordemos que se
+relaciona con la tasa de crecimiento de las presas. Vamos a probar a incrementar dicho
+valor, para ver qué es lo que sucede en el sistema. Vamos a cambiar dicho valor, por ejemplo,
+a 10, de forma que las presas crezcan en mayor medida. A continuación podemos ver los resultados:
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.5\textwidth}
+	\centering
+	\includegraphics[scale=0.45]{img/a11-10}
+	\subcaption{Evolución de las dos poblaciones en conjunto}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+	\centering
+	\includegraphics[scale=0.45]{img/circulo-a11}
+	\subcaption{Número de presas en función del número de depredadores.}
+\end{subfigure}
+\caption{Resultados para $a_{11} = 10$.}
+\end{figure}
+
+En general, los resultados obtenidos se asemejan a los que se pueden ver en la figura
+\ref{fig:dep}. La principal diferencia es que el máximo al que llega la población de
+presas va cambiando, mientras que el de los depredadores parece mantenerse constante.
+Parece que existe cierta tendencia a la baja en cuanto al número máximo de individuos
+en la población de presas, a pesar del crecimiento irregular de esta. Esto se puede
+ver mejor en la evolución conjunta, donde se puede ver que algunas zonas son más gruesas
+debido a que los valores que se van obteniendo difieren a lo largo de la simulación.
+En este segundo gráfico vemos también que la población de depredadores es capaz de crecer
+hasta valores que hasta ahora no habíamos visto, debido a que hay más presas a las que
+cazar, ya que se reproducen en una mayor medida, y por tanto, se generan más presas.
+
+Ahora, si probamos a modificar el valor de $a_{12}$ a por ejemplo $0.15$ (es decir,
+los depredadores son algo más eficaces) obtenemos los siguientes resultados:
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.5\textwidth}
+	\centering
+	\includegraphics[scale=0.45]{img/a12}
+	\subcaption{Evolución de las dos poblaciones en conjunto}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+	\centering
+	\includegraphics[scale=0.45]{img/circulo-a12}
+	\subcaption{Número de presas en función del número de depredadores.}
+\end{subfigure}
+\caption{Resultados para $a_{12} = 0.15$.}
+\end{figure}
+
+Aquí podemos ver que si los depredadores son más efectivos se producen menos cazas,
+lo cuál implica que tanto la población de las presas crezca mucho más que en los casos
+anteriores como que el número de depredadores baje mucho más, hasta casi extinguirse,
+ya que cuando cazan matan más presas, y por tanto se quedan con menos comida disponible,
+lo cuál va a hacer que acaben muriendo por inanición.
+
+Si probamos a hacer que las presas tengan un mayor valor nutritivo (parámetro $a_{21}$), de por ejemplo
+$0.01$, obtenemos los resultados que se pueden ver en la figura \ref{fig:a21}.
+Vemos que, al ser las presas más nutritivas, la población de depredadores crece muchísimo
+de golpe en el momento en el que se produzca una cacería, las cuáles, al igual que en el caso
+anterior, son menos comunes, pero aquí debido a otros factores, entre los cuáles encontramos
+por ejemplo un mayor tiempo de recuperación de la población de presas. Este incremento se debe
+a que los depredadores están mejor alimentados, con lo cuál posiblemente puedan vivir más tiempo
+y reproducirse más. Como consecuencia, tal y como se dijo anteriormente, se tiene que la
+población de presas tarda más tiempo en recuperarse, ya que permanece mucho tiempo al borde
+de la extinción debido a la gran presencia de depredadores que hay. Una vez que el número
+de depredadores baje lo suficiente debido a que hay pocas presas que cazar, entonces el
+número de presas puede volver a crecer hasta unos valores que los situarían fuera del riesgo de
+extinción, próximos a los iniciales. Una vez que se lleguen a esos valores, se volvería a repetir
+todo el proceso.
+
+Por último, podemos probar a modificar el valor del parámetro $a_{22}$, el cuál se relaciona
+con la tasa de mortalidad de los depredadores. Vamos a probar a subir el valor hasta
+$0.5$, para ver cómo son afectadas las dos poblaciones por dicho parámetro. Los resultados
+se pueden ver en la figura \ref{fig:a22}.
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.5\textwidth}
+	\centering
+	\includegraphics[scale=0.45]{img/a21}
+	\subcaption{Evolución de las dos poblaciones en conjunto}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+	\centering
+	\includegraphics[scale=0.45]{img/circulo-a21}
+	\subcaption{Número de presas en función del número de depredadores.}
+\end{subfigure}
+\caption{Resultados para $a_{21} = 0.01$.}
+\label{fig:a21}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.5\textwidth}
+	\centering
+	\includegraphics[scale=0.45]{img/a22}
+	\subcaption{Evolución de las dos poblaciones en conjunto}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+	\centering
+	\includegraphics[scale=0.45]{img/circulo-a22}
+	\subcaption{Número de presas en función del número de depredadores.}
+\end{subfigure}
+\caption{Resultados para $a_{22} = 0.3$.}
+\label{fig:a22}
+\end{figure}
+
+Como podemos comprobar, una mayor tasas de mortalidad implica que la población de depredadores
+experimente cambios muy seguidos, creciendo y decreciendo con una frecuencia muy elevada. Estos
+crecimientos y decrecimientos afectan también a la población de presas (como es de imaginar), haciendo
+que también crezca y decrezca con una frecuencia elevada. Los crecimientos en una de las poblaciones
+implican decrecimientos en los de la otra, y viceversa, tal y como pasaba con los ejemplos de la
+sección anterior. Podemos ver que esta evolución está en equilibrio, ya que ninguna de las especies llega
+al punto en el que se extinga.
+
+De esta sección podemos concluir que no solo es importante conocer los valores iniciales de las
+poblaciones, si no que también hay que considerar los valores de los parámetros, ya que estos van
+a afectar a las interacciones entre las dos poblaciones de una u otra forma.
 
 \section{Comparativa de los métodos de integración}
 
