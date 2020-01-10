@@ -1,0 +1,3 @@
+En el directorio src/ se puede encontrar el programa fuente. Se adjunta un
+archivo makefile para realizar la compilación. Se necesita crear previamente
+el direcotorio de salida bin/ para poder compilar el programa.
