@@ -3,7 +3,7 @@
 
 using namespace std;
 
-#define CSV 1
+#define CSV 0
 
 /* ************************************************************************** */
 // Declarar datos que utilizaran las funciones
