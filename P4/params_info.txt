@@ -1,2 +1,0 @@
-Iniciales-> bin/depredadores_presas 5 0.05 0.0004 0.2 0.1 0 200 500 100 1
-Buenos (no se produce extincion) -> bin/depredadores_presas 5 0.05 0.0004 0.2 0.1 0 200 1000 100 1
