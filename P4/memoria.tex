@@ -356,5 +356,126 @@ a afectar a las interacciones entre las dos poblaciones de una u otra forma.
 
 \section{Comparativa de los métodos de integración}
 
+Lo último que nos queda por comparar son los métodos de integración utilizados. Por una parte,
+tenemos el método de Euler, el cuál es un método simple pero no muy recomendado,
+ya que suele tener bastante error de precisión (tiene bastante error de truncatura local).
+Por otra parte, tenemos el método de Runge-Kutta, el cuál hemos venido utilizando
+hasta ahora. Es bastante más complejo que el de Euler, ya que es de mayor orden,
+pero permite obtener mejores resultados en general ya que comete menos error de
+precisión.
+
+Para comparar estos métodos, vamos a utilizar distintos intervalos de cálculo. Vamos a
+probar los dos métodos con el intervalo de cálculo que llevamos utilizando hasta
+ahora, el cuál es $h = 0.1$. También probaremos con valores más pequeños, como
+por ejemplo $h = 0.05$ y $h = 0.01$ con el objetivo de ver cuál es el efecto del
+intervalo de cálculo en los resultados obtenidos. En cuanto al resto de parámetros, vamos
+a utilizar de nuevo 600 presas y 100 depredadores, y el resto de parámetros los dejaremos
+tal y como estaban al principio. Los resultados se pueden ver a continuación:
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.5\textwidth}
+	\centering
+	\includegraphics[scale=0.45]{img/rk-0-1}
+	\subcaption{Método de Runge-Kutta.}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+	\centering
+	\includegraphics[scale=0.45]{img/eu-0-1}
+	\subcaption{Método de Euler.}
+\end{subfigure}
+\caption{Resultados para $h=0.1$.}
+\label{fig:h-0.1}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.5\textwidth}
+	\centering
+	\includegraphics[scale=0.45]{img/rk-0-05}
+	\subcaption{Método de Runge-Kutta.}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+	\centering
+	\includegraphics[scale=0.45]{img/eu-0-05}
+	\subcaption{Método de Euler.}
+\end{subfigure}
+\caption{Resultados para $h=0.05$.}
+\label{fig:h-0.05}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.5\textwidth}
+	\centering
+	\includegraphics[scale=0.45]{img/rk-0-01}
+	\subcaption{Método de Runge-Kutta.}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+	\centering
+	\includegraphics[scale=0.45]{img/eu-0-01}
+	\subcaption{Método de Euler.}
+\end{subfigure}
+\caption{Resultados para $h=0.01$.}
+\label{fig:h-0.01}
+\end{figure}
+
+
+En general, podemos ver que los resultados obtenidos para el método de Runge-Kutta
+no varían mucho, por no decir casi nada, ya que al ser un método de cuarto orden, permite
+obtener unos resultados muy buenos con un error muy bajo. En cambio, si comparamos
+el método de Euler con el de Runge-Kutta, vemos que los resultados obtenidos por
+el método de Euler son bastante malos en general. Como se puede
+observar en la figura \ref{fig:h-0.1}, el método de Euler no es capaz de obtener ningún
+tipo de resultado, ya que al ser el intervalo de cálculo tan grande, el error de truncatura
+cometido es cada vez más grande, debido a que se va acumulando con el error que ya se tenía
+anteriormente, de forma que los resultados que se obtengan sean sin sentido o erróneos.
+
+Al reducir el intervalo de cálculo, como por ejemplo se puede ver en la comparativa de la
+figura \ref{fig:h-0.05}, los resultados para el método de Euler siguen siendo malos,
+y que se quedan muy lejos de los obtenidos por Runge-Kutta para el mismo intervalo de cálculo.
+Si seguimos reduciendo el intervalo de cálculo, vemos que los resultados se van pareciendo
+a los obtenidos por Runge-Kutta, aunque solo al principio, ya que luego comienzan a salirse
+del rango.
+
+Si para el método de Euler seguimos bajando el valor de $h$, obtenemos los siguientes
+resultados:
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.5\textwidth}
+	\centering
+	\includegraphics[scale=0.45]{img/eu-0-001}
+	\subcaption{Método de Euler con $h=0.001$.}
+	\label{fig:eu-0.001}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+	\centering
+	\includegraphics[scale=0.45]{img/eu-0-0001}
+	\subcaption{Método de Euler con $h=0.0001$}
+	\label{fig:eu-0.0001}
+\end{subfigure}
+\caption{Método de Euler con valores de $h$ más pequeños.}
+\end{figure}
+
+Vemos que en el caso de la figura \ref{fig:eu-0.001} los resultados ya se asemejan más
+a los obtenidos por el método de Runge-Kutta, aunque se sigue dando que en las últimas
+épocas los resultados empiecen a incrementarse ligeramente. En cambio, para el caso
+que se puede observar en la figura \ref{fig:eu-0.0001}, vemos que ahora los resultados
+obtenidos por Euler sí que se parecen a los de Runge-Kutta. Sin embargo, para obtener
+dichos resultados hemos tenido que reducir mucho el intervalo de cálculo, hasta un
+valor de $h = 0.0001$, lo cuál ha resultado en una ejecución más lenta debido
+a que el número de cálculos a realizar se ha visto incrementando significativamente.
+
+Por tanto, de aquí podemos concluir que el método de Runge-Kutta, a pesar de ser algo
+más complejo, es capaz de ofrecer mejores resultados que el de Euler, que es más sencillo.
+Para obtener unos resultados similares al método de Runge-Kutta con Euler, tenemos que
+hacer que el intervalo de cálculo sea pequeño a costa de un mayor tiempo de cómputo,
+lo cuál puede suponer un problema si no se dispone del hardware adecuado. Por tanto,
+tenemos que elegir el método de integración con cuidado, ya que los resultados para
+un mismo intervalo de cálculo pueden variar mucho dependiendo de cuál utilicemos.
+
+
+
 \end{document}
 
