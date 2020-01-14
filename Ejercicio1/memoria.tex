@@ -1,0 +1,110 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[spanish,es-nodecimaldot]{babel}	% Utilizar español
+\usepackage[utf8]{inputenc}					% Caracteres UTF-8
+\usepackage{graphicx}						% Imagenes
+\usepackage[hidelinks]{hyperref}			% Poner enlaces sin marcarlos en rojo
+\usepackage{fancyhdr}						% Modificar encabezados y pies de pagina
+\usepackage{float}							% Insertar figuras
+\usepackage[textwidth=390pt]{geometry}		% Anchura de la pagina
+\usepackage[nottoc]{tocbibind}				% Referencias (no incluir num pagina indice en Indice)
+\usepackage{enumitem}						% Permitir enumerate con distintos simbolos
+\usepackage[T1]{fontenc}					% Usar textsc en sections
+\usepackage{amsmath}						% Símbolos matemáticos
+
+% Comando para poner el nombre de la asignatura
+\newcommand{\asignatura}{Simulación de Sistemas}
+\newcommand{\autor}{Vladislav Nikolov Vasilev}
+\newcommand{\titulo}{Problema 1}
+\newcommand{\subtitulo}{Modelo de Montecarlo}
+
+% Configuracion de encabezados y pies de pagina
+\pagestyle{fancy}
+\lhead{\autor{}}
+\rhead{\asignatura{}}
+\lfoot{Grado en Ingeniería Informática}
+\cfoot{}
+\rfoot{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}		% Linea cabeza de pagina
+\renewcommand{\footrulewidth}{0.4pt}		% Linea pie de pagina
+
+\begin{document}
+\pagenumbering{gobble}
+
+% Pagina de titulo
+\begin{titlepage}
+
+\begin{minipage}{\textwidth}
+
+\centering
+
+\includegraphics[scale=0.5]{img/ugr.png}\\
+
+\textsc{\Large \asignatura{}\\[0.2cm]}
+\textsc{GRADO EN INGENIERÍA INFORMÁTICA}\\[1cm]
+
+\noindent\rule[-1ex]{\textwidth}{1pt}\\[1.5ex]
+\textsc{{\Huge \titulo\\[0.5ex]}}
+\textsc{{\Large \subtitulo\\}}
+\noindent\rule[-1ex]{\textwidth}{2pt}\\[3.5ex]
+
+\end{minipage}
+
+\vspace{0.5cm}
+
+\begin{minipage}{\textwidth}
+
+\centering
+
+\textbf{Autor}\\ {\autor{}}\\[2.5ex]
+\textbf{Rama}\\ {Computación y Sistemas Inteligentes}\\[2.5ex]
+\vspace{0.3cm}
+
+\includegraphics[scale=0.3]{img/etsiit.jpeg}
+
+\vspace{0.7cm}
+\textsc{Escuela Técnica Superior de Ingenierías Informática y de Telecomunicación}\\
+\vspace{1cm}
+\textsc{Curso 2019-2020}
+\end{minipage}
+\end{titlepage}
+
+\pagenumbering{arabic}
+\tableofcontents
+\thispagestyle{empty}				% No usar estilo en la pagina de indice
+
+\newpage
+
+\setlength{\parskip}{1em}
+
+\section{\textsc{Descripción del problema}}
+
+Una pequeña fábrica alimenticia se dedica a la producción de caramelos y huevos de Pascua.
+Cada año, la fabrica recibe pedidos durante la primera semana de diciembre de huevos de
+pascua Pascua de distintas confiterías. La demanda total de huevos varía año tras año, pero
+suele seguir una distribución triangular con valor más probable $= 2600$ unidades, menor = $2000$
+unidades y mayor $= 3000$ unidades.
+
+Debido a razones estacionales, resulta más barato comprar el chocolate necesario para la
+producción de los huevos durante el mes de agosto. Por este motivo, la empresa suele adquirir
+una gran cantidad de chocolate durante este mes, y en caso de que cuando reciba los pedidos
+sea necesario adquirir más chocolate, se obtiene la cantidad adicional necesaria para satisfacer
+la demanda de forma exacta. Si se da el caso de que el chocolate comprado en agosto supera las
+necesidades de producción, se dona la cantidad restante a comedores escolares. Se sabe además que:
+
+\begin{itemize}[label=\textbullet]
+	\item Cada huevo de Pascua emplea 250 gramos de chocolate.
+	\item El precio del chocolate en agosto es de 1 euro por kilo.
+	\item El precio del chocolate en diciembre es de $1.5$ euros por kilo.
+	\item El precio de venta de los huevos de Pascua es de $0.60$ euros la unidad.
+\end{itemize}
+
+Nuestro objetivo es construir un modelo de simulación que ayude a la empresa a determinar
+cuántos kilos de chocolate se deberían comprar en el mes de agosto para optimizar el nivel
+de las ganancias.
+
+\section{\textsc{Descripción del modelo construido}}
+
+\section{\textsc{Experimentación y resultados}}
+
+\end{document}
+
