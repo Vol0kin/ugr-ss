@@ -116,13 +116,17 @@ int main(int argc, char* argv[])
             mejorDesviacion = desviacionEsperada;
         }
 
-        cout << "Suministro: " << s << "\tGanancia esperada: " << gananciaMediaEsperada
-             << "\tDesviacion: " << desviacionEsperada << endl;
+        cout << "Suministro maximo que se puede satisfacer con chocolate de agosto: " << s
+             << "\t\tKilos de chocolate comprados: " << s * 0.25
+             << "\t\tGanancia esperada: " << gananciaMediaEsperada << " +/- " << desviacionEsperada << endl;
 
     }
-    
-    cout << "\nMejor suministro: " << mejorSuministro << "\tMejor ganancia media: "
-         << mejorGananciaMedia << "\tDesviacion: " << mejorDesviacion << endl;
+
+    cout << "\n\n--------------------RESULTADOS FINALES--------------------" << endl;    
+    cout << "Mejor suministro maximo que se puede satisfacer con el chocolate de agosto: "
+         << mejorSuministro << " unidades" << endl;
+    cout << "Kilos de chocolate comprados para satisfacer el mejor suministro: " << mejorSuministro * 0.25 << endl;
+    cout << "Mejor ganancia media: " << mejorGananciaMedia << " +/- " << mejorDesviacion << " euros" << endl;
     
     return 0;
 }

@@ -102,7 +102,7 @@ class ModeloServidor
         void sucesoLlegadaServidor()
         {
             // Guardar el tiempo en el que ha llegado el cliente
-            // Se guarda al final de la lsita de tiempos
+            // Se guarda al final de la lista de tiempos
             tiemposLlegadas.push_back(reloj);
 
             // Generar una nueva llegada
