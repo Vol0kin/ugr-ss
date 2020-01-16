@@ -28,7 +28,6 @@ class ModeloServidor
         {
             int tipoSuceso;
             double tiempo;
-            double tiempoLlegada;
 
             bool operator<(const Suceso& otroSuceso) const
             {
@@ -38,6 +37,9 @@ class ModeloServidor
 
         // Lista de sucesos
         list<Suceso> listaSucesos;
+
+        // Lista de tiempos de llegada
+        list<double> tiemposLlegadas;
 
         // Declaracion de variables
         double reloj, tiempoParada, tTotalClientesEnSistema;
@@ -69,29 +71,43 @@ class ModeloServidor
             // Limpiar lista de sucesos por si ha quedado algun suceso anterior
             listaSucesos.clear();
 
+            // Limpiar lista de tiempos de llegada por si ha quedado alguan llegada anterior
+            tiemposLlegadas.clear();
+
             // Generar suceso inicial e insertarlo en la lista de sucesos
             Suceso sucesoInicial = generarSuceso(SUCESO_LLEGADA, TIEMPO_MEDIO_LLEGADAS);
             insertarSuceso(sucesoInicial);
 
             // Generar suceso final e insertarlo en la lista de sucesos
-            Suceso sucesoFinal = generarSuceso(SUCESO_LLEGADA, TIEMPO_MEDIO_LLEGADAS, true);
+            Suceso sucesoFinal = generarSucesoFinSimulacion();
             insertarSuceso(sucesoFinal);
         }
 
         // Metodo para generar sucesos
-        Suceso generarSuceso(int tipoSuceso, double tiempoMedio, bool esSucesoFinal=false) const
+        Suceso generarSuceso(int tipoSuceso, double tiempoMedio) const
         {
             // Generar nuevo suceso
             Suceso suceso;
 
             suceso.tipoSuceso = tipoSuceso;
-            suceso.tiempo = generadorExponencial(tiempoMedio);
-            suceso.tiempoLlegada = esSucesoFinal ? 0.0 : suceso.tiempo;
+            suceso.tiempo = reloj + generadorExponencial(tiempoMedio);
 
             return suceso;
         }
 
-        // Metodo para insertar un suceso
+        // Metodo para generar el suceso fin de simulacion
+        Suceso generarSucesoFinSimulacion() const
+        {
+            // Generar nuevo suceso
+            Suceso suceso;
+
+            suceso.tipoSuceso = SUCESO_FIN_SIMULACION;
+            suceso.tiempo = reloj + TIEMPO_FINAL;
+
+            return suceso;
+        }
+
+        // Metodo para insertar un suceso, manteniendo la lista ordenada por tiempo
         void insertarSuceso(const Suceso& suceso)
         {
             // Insertar el suceso en la lista
@@ -99,6 +115,84 @@ class ModeloServidor
 
             // Mantener lista ordenada
             listaSucesos.sort();
+        }
+
+        // Metodo que representa el suceso llegada de cliente al servidor
+        void sucesoLlegadaServidor()
+        {
+            // Guardar el tiempo en el que ha llegado el cliente
+            // Se guarda al final de la lsita de tiempos
+            tiemposLlegadas.push_back(reloj);
+
+            // Generar una nueva llegada
+            Suceso llegada = generarSuceso(SUCESO_LLEGADA, TIEMPO_MEDIO_LLEGADAS);
+            insertarSuceso(llegada);
+
+            // Comprobar si el servidor A esta libre y realizar accion correspondiente
+            if (libreServA)
+            {
+                libreServA = false;
+                
+                Suceso servicioServA = generarSuceso(SUCESO_FIN_SERVICIO_SERVIDOR_A, TIEMPO_MEDIO_SERVICIO_SERVIDOR_A);
+                insertarSuceso(servicioServA);
+            }
+            else
+            {
+                enColaServA++;
+            }
+        }
+
+        void sucesoFinServicioServidorA()
+        {
+            // Comprobar si hay clientes en la cola del servidor A
+            if (enColaServA > 0)
+            {
+                enColaServA--;
+                
+                Suceso servicioServA = generarSuceso(SUCESO_FIN_SERVICIO_SERVIDOR_A, TIEMPO_MEDIO_SERVICIO_SERVIDOR_A);
+                insertarSuceso(servicioServA);
+            }
+            else
+            {
+                libreServA = true;
+            }
+
+            // Comprobar si el servidor B esta libre y realizar accion correspondiente
+            if (libreServB)
+            {
+                libreServB = false;
+                
+                Suceso servicioServB = generarSuceso(SUCESO_FIN_SERVICIO_SERVIDOR_B, TIEMPO_MEDIO_SERVICIO_SERVIDOR_B);
+                insertarSuceso(servicioServB);
+            }
+            else
+            {
+                enColaServB++;
+            }
+        }
+
+        void sucesoFinServicioServidorB()
+        {
+            // Incrementar el numero de clientes atendidos y el tiempo total
+            // de los clientes en el servidor
+            numClientesAtendidos++;
+            tTotalClientesEnSistema += reloj - tiemposLlegadas.front();
+
+            // Eliminar tiempo de llegada del cliente mas antiguo (el primero)
+            tiemposLlegadas.pop_front();
+
+            // Comprobar si hay clientes en la cola del servidor A
+            if (enColaServB > 0)
+            {
+                enColaServB--;
+
+                Suceso servicioServB = generarSuceso(SUCESO_FIN_SERVICIO_SERVIDOR_B, TIEMPO_MEDIO_SERVICIO_SERVIDOR_B);
+                insertarSuceso(servicioServB);
+            }
+            else
+            {
+                libreServB = true;
+            }
         }
 
         // Metodo generador exponencial
@@ -113,7 +207,7 @@ class ModeloServidor
 
 
 
-int main()
+int main(int argc, char* argv[])
 {
     return 0;
 }
