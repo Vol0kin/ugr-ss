@@ -10,6 +10,8 @@
 \usepackage{enumitem}						% Permitir enumerate con distintos simbolos
 \usepackage[T1]{fontenc}					% Usar textsc en sections
 \usepackage{amsmath}						% Símbolos matemáticos
+\usepackage{algorithm}						% Environtment algorithm
+\usepackage{algpseudocode}			% Pseudocodigo
 
 % Comando para poner el nombre de la asignatura
 \newcommand{\asignatura}{Simulación de Sistemas}
@@ -104,7 +106,84 @@ de las ganancias.
 
 \section{\textsc{Descripción del modelo construido}}
 
+Para modelar el sistema anteriormente descrito se ha construido un \textbf{modelo de Montecarlo}.
+Este modelo es el más adecuado al problema ya que no se tiene en cuenta el paso del tiempo.
+
+Para poder construir el modelo necesitamos construir primero un generador de datos. Dicho generador
+se utilizará para obtener la demanda de huevos de Pascua en el mes de diciembre. Para hacerlo, vamos
+a utilizar el generador que se ha proporcionado en el enunciado del problema. Este es un generador
+triangular con extremo inferior $a = 2000$, extremo superior $b = 3000$ y valor más probable
+$c = 2600$. Como el funcionamiento ya es conocido, no vamos a entrar en más detalle.
+
+Una vez que tengamos el generador, podemos construir el modelo de Montecarlo. Dicho modelo debe
+ofrecer información sobre la demanda que puede satisfacer en el mes de diciembre con el chocolate
+que se ha comprado en el mes de agosto, los kilos de chocolate que se han comprado para satisfacer
+dicha demanda y el beneficio que se espera obtener (junto con su desviación típica). Vamos a ver primero
+cómo se podría implementar el modelo y luego lo vamos a comentar brevemente:
+
+\begin{algorithm}[H]
+\caption{Modelo de Montecarlo.}
+\begin{algorithmic}[1]
+\State PRECIO\_HUEVO\_VENTA $\gets 0.6$
+\State PRECIO\_HUEVO\_AGOS $\gets 1 \cdot 0.25$
+\State PRECIO\_HUEVO\_DIC $\gets 1.5 \cdot 0.25$
+\State $mejorSuministro \gets a$
+\State $mejorGananciaMedia \gets -\infty$
+\State $mejorDesviacion \gets 0$
+\For{$s \gets a$ \textbf{to} $b$}
+	\State $sum \gets 0$
+	\State $sum2 \gets 0$
+	\For{$i \gets 1$ \textbf{to} $numVeces$}
+		\State $demanda \gets$ generademanda()
+		\State $ganancia \gets demanda \cdot$ PRECIO\_HUEVO\_VENTA
+		\If{$s \geq demanda$}
+			\State $dineroPagado \gets s \cdot$ PRECIO\_HUEVO\_AGOS
+		\Else
+			\State $dineroPagado \gets s \cdot$ PRECIO\_HUEVO\_AGOS $+ (demanda - s) \cdot$ PRECIO\_HUEVO\_DIC
+		\EndIf
+		\State $ganancia \gets ganancia - dineroPagado$
+		\State $sum \gets sum + ganancia$
+		\State $sum2 \gets sum2 + ganancia^2$
+	\EndFor
+	\State $gananciaMediaEsperada \gets \frac{sum}{numVeces}$
+	\State $\sigma \gets \sqrt{\frac{sum2 - numVeces \cdot gananciaMediaEsperada^2}{numVeces -1}}$
+	
+	\If{$gananciaMediaEsperada > mejorGananciaMedia$}
+		\State $mejorSuministro \gets s$
+		\State $mejorGananciaMedia \gets gananciaMediaEsperada$
+		\State $mejorDesviacion \gets \sigma$
+	\EndIf	
+	\State Mostrar información por pantalla sobre la simulación $i-$ésima
+\EndFor
+\State Mostrar información sobre los mejores resultados
+\end{algorithmic}
+\end{algorithm}
+
+Lo primero que se hace es fijar algunas constantes como podrían ser el precio del huevo de Pascua cuando
+se vende (esta es la variable \texttt{PRECIO\_HUEVO\_VENTA}), el precio de producir un huevo
+con el chocolate comprado en el mes de agosto (variable \texttt{PRECIO\_HUEVO\_AGOS}) y el precio de
+producir un huevo durante el mes de diciembre (variable \texttt{PRECIO\_HUEVO\_DIC}). Para calcular
+estas dos últimas variables se utiliza el precio del kilo de chocolate en el mes correspondiente
+y se multiplica por la cantidad de kilos de chocolate que se necesitan para producir un huevo (recordemos
+que dicho valor son 250 gramos, o lo que es lo mismo, $0.25$ kilos). Una vez que se han fijado dichas constantes
+se fijan los valores iniciales de las variables que se quieren obtener y se procede a la simulación.
+
+La variable \texttt{s} representa la demanda de huevos de Pascua que se puede satisfacer con el chocolate
+comprado en agosto. Se prueba cada posible valor entero entre el extremo inferior y el superior de la distribución
+triangular (2000 y 3000 respectivamente). Para cada uno de ellos se simula \texttt{numVeces} generando la demanda
+con el generador triangular y calculando la ganancia que se obtiene en función de si la demanda es
+superior o no a la que se puede satisfacer. Finalmente, se obtienen los resultados promedios y se actualizan
+los mejores valores encontrados en el caso de que el beneficio que se haya obtenido es superior al mejor
+encontrado. A la hora de mostrar los resultados, para obtener los kilos de chocolate que se han comprado
+simplemente basta con multiplicar el valor de \texttt{s} por la cantidad de kilos de chocolate que forman un
+huevo, valor que ya sabemos que es $0.25$.
+
+Una vez que hemos explicado el funcionamiento general del modelo, vamos a ver la experimentación
+realizada y los resultados que se han obtenido.
+
 \section{\textsc{Experimentación y resultados}}
+
+
 
 \end{document}
 
