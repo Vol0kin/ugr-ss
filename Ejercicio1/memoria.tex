@@ -183,7 +183,60 @@ realizada y los resultados que se han obtenido.
 
 \section{\textsc{Experimentación y resultados}}
 
+La experimentación realizada ha consistido en ejecutar una serie de veces el modelo de simulación
+y obtener los resultados finales con el objetivo de ver si existe alguna diferencia notable entre los
+resultados obtenidos entre una ejecución y otra. Posteriormente, se utilizarán los resultados obtenidos
+para extraer conclusiones sobre cuánto chocolate se debería comprar en el mes de agosto y por qué.
 
+Es importante destacar que en todas las simulaciones que se han realizado
+se ha establecido que $\texttt{numVeces} = 100000$. Al simular un número tan grande de veces nos
+aseguramos que el valor medio obtenido se acerque al real, además de que aquellos valores atípicos
+debidos a la aleatoriedad del proceso no repercutan tanto sobre el resultado final.
+
+Una vez que hemos comentado los aspectos anteriores, vamos a ejecutar el modelo 10 veces y a guardar
+los resultados. Una vez que los tengamos, vamos a crear con ellos una tabla, la cuál se puede ver
+a continuación:
+
+\begin{table}[H]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{\begin{tabular}[c]{@{}c@{}}Demanda máxima\\ que se puede satisfacer (\texttt{s})\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Kilos de chocolate\\ comprados\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Mejor ganancia \\ media esperada\end{tabular}} \\ \hline
+2477 & 619.25 & $883.078 \pm 42.3824$ \\ \hline
+2484 & 621 & $883.192 \pm 43.4126$ \\ \hline
+2487 & 621.75 & $883.123 \pm 43.7636$ \\ \hline
+2478 & 619.5 & $883.196 \pm 42.5978$ \\ \hline
+2483 & 620.75 & $883.084 \pm 43.3198$ \\ \hline
+2481 & 620.25 & $883.19 \pm 43.0771$ \\ \hline
+2488 & 622 & $883.154 \pm 43.9941$ \\ \hline
+2474 & 618.5 & $883.156 \pm 41.9778$ \\ \hline
+2481 & 620.25 & $883.252 \pm 42.8743$ \\ \hline
+2472 & 618 & $883.101 \pm 41.6759$ \\ \hline
+\end{tabular}%
+}
+\caption{Resutados obtenidos por el modelo tras 10 ejecuciones con $\texttt{numVeces} = 100000$.}
+\label{tab:my-table}
+\end{table}
+
+Si observamos los resultados, vemos que existe algo de diferencia en el valor de \texttt{s} obtenido
+y en el de la cantidad de kilos de chocolate que se compran (el cuál recordemos que depende
+directamente de \texttt{s}), aunque dicha diferencia no es muy grande. Si nos fijamos ahora en la
+mejor ganancia media que se espera obtener, vemos que los resultados no difieren mucho entre ellos
+(difieren como mucho en una o dos décimas, pero no más). Estas ligeras variaciones, al igual que las
+de los otros valores de salida, podrían deberse a la aleatoriedad a la hora de generar la demanda,
+ya que en algunos casos se podría generar más veces una demanda superior a la que se puede satisfacer que
+en otros, lo cuál haría que la ganancia esperada para los mismos valores de \texttt{s} en dos ejecuciones
+diferentes fuesen algo diferentes. Por tanto, debido a que las ganancias son muy próximas entre ellas
+para todos los casos, se podría decir que cualquiera de los resultados es bueno, y que habría muy
+poco margen de error al recomendar una u otra opción.
+
+Ahora bien, si quisiéramos recomendar a la empresa cuánto chocolate comprar, podríamos decirle que compre
+entre 618 y 622 kilos de chocolate, ya que estos son los valores que forman los extremos del rango de kilos
+que aparece reflejado en la tabla \ref{tab:my-table}. Como siempre es mejor que sobre un poco a que falte, podríamos decir
+que \textbf{comprar 622 kilos de chocolate en agosto} es la mejor opción, ya que permite maximizar
+los beneficios y tener cierto margen de error, de forma que no sea necesario luego comprar tanto chocolate
+en diciembre en caso de que la demanda sea superior al suministro del que se dispone.
 
 \end{document}
 
