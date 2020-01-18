@@ -86,7 +86,24 @@
 
 \section{\textsc{Descripción del problema}}
 
+Un sistema de colas consta de 2 servidores (A y B) dispuestos en serie. Los clientes
+que acceden al sistema son primero atendidos por el servidor A. Una vez que acaba
+la atención en el servidor A, pasan a ser atendidos por el servidor B, y cuando terminan
+de ser atendidos, salen del sistema. Cada servidor tiene una cola de espera FIFO. Todos
+los tiempos siguen una distribución exponencial. Para las llegadas, dicha distribución tiene
+una media de 1 minuto. Para el tiempo de servicio en el servidor A se tiene una media de $0.8$
+minutos, mientras que para el servidor B se tiene una media de $1.2$ minutos.
+
+El objetivo es construir un modelo de simulación (en este caso, un modelo dinámico discreto)
+el cuál permita simular el sistema anteriormente descrito y que además, permita calcular el tiempo de estancia
+medio de los clientes en el sistema. Adicionalmente, se quiere determinar hasta cuánto tiempo
+habría que reducir el tiempo de servicio del servidor B, dejando el mismo tiempo de servicio para el servidor
+A, para conseguir un tiempo medio de estancia inferior a 10 minutos.
+
 \section{\textsc{Grafo de sucesos}}
+
+Una vez que hemos hecho la descripción del problema, lo primero que nos interesa hacer es determinar
+los sucesos relevantes que queremos que estén en el sistema.
 
 \begin{figure}[H]
 \centering
