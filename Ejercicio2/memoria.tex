@@ -103,7 +103,32 @@ A, para conseguir un tiempo medio de estancia inferior a 10 minutos.
 \section{\textsc{Grafo de sucesos}}
 
 Una vez que hemos hecho la descripción del problema, lo primero que nos interesa hacer es determinar
-los sucesos relevantes que queremos que estén en el sistema.
+los sucesos relevantes que tenemos que modelizar. Si nos paramos a analizar la secuencia de sucesos
+que se tienen que seguir para atender a un cliente de principio a fin, nos encontramos con lo siguiente:
+
+\begin{enumerate}
+	\item Lo primero que se produce es la llegada del cliente al sistema. Por tanto, debe existir
+	un suceso que represente dicha llegada al sistema.
+	\item Una vez que el cliente ha llegado, si el servidor A está libre, se inicia la atención
+	del cliente. En caso contrario, el cliente debe esperar su turno en la cola. Por tanto, necesitamos
+	un suceso que represente el inicio de atención en el servidor A.
+	\item Ya que hemos decidido modelizar el inicio de la atención en el servidor A, también necesitamos
+	modelizar el final de atención. Puede suceder que una vez que se termine de atender el cliente actual
+	queden otros en la cola, con lo cuál se podría pasar a atender el primero. En caso de no haber ninguno,
+	el servidor quedaría libre, de forma que el siguiente cliente no necesitaría esperar en la cola para poder
+	pasar a ser atendido.
+	\item Lo siguiente que pasaría sería que el cliente pasa a ser atendido por el servidor B, siempre
+	y cuando este esté libre. En caso de que no lo esté, deberá quedarse esperando en la cola hasta
+	que le toque. Por tanto, necesitamos un suceso que represente el inicio de atención en el servidor B.
+	\item Tal y como hicimos antes, necesitaremos un suceso que represente el fin de atención en el
+	servidor B. De aquí, tal y como pasaba antes, puede suceder que se pase a atender el siguiente cliente
+	si hay alguien esperando en la cola o que el servidor se quede libre.
+	\item Finalmente, una vez que ha finalizado la atención en el servidor B, el cliente sale del sistema.
+	Por tanto, necesitamos un suceso que represente la salida del sistema.
+\end{enumerate}
+
+Con los seis sucesos anteriormente descritos, podemos construir el grafo de sucesos. Adicionalmente,
+necesitaríamos un suceso extra que genere la primera llegada. El grafo resultante se puede ver a continuación:
 
 \begin{figure}[H]
 \centering
@@ -115,7 +140,7 @@ los sucesos relevantes que queremos que estén en el sistema.
 \node [circle, draw, text width=1.8cm, below=of finA] (iniB) {Comeinzo servicio servidor B};
 \node [circle, draw, text width=2cm, left=of iniB] (finB) {Fin servicio servidor B};
 \node [circle, draw, text width=1.3cm, left=of finB] (salida) {Salida sistema};
-\draw	(inicio) edge[left] node{0} (llegada)
+\draw	(inicio) edge[left] node{exp(1')} (llegada)
 		(llegada) edge[in=60, out=30, loop, above] node{exp(1')}
 		(llegada) edge[above] node{0} (iniA)
 		(llegada) edge[below] node{$servA = libre$} (iniA)
@@ -133,6 +158,12 @@ los sucesos relevantes que queremos que estén en el sistema.
 \caption{Versión inicial del grafo de sucesos.}
 \end{figure}
 
+El grafo anterior puede ser simplificado ya que hay un conjunto de sucesos a los que solo
+entran arcos con duración 0. Estos nodos son \textbf{Comienzo servicio servidor A},
+\textbf{Comienzo servicio servidor B} y \textbf{Salida sistema}. Si lo simplificamos,
+eliminando dichos nodos y ajustando los enlaces que salen de los nodos eliminados,
+obtenemos el siguiente grafo:
+
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}
@@ -140,7 +171,7 @@ los sucesos relevantes que queremos que estén en el sistema.
 \node [circle, draw, text width=1.4cm, below=of inicio] (llegada) {Llegada Servidor};
 \node [circle, draw, text width=2cm, right=of llegada] (finA) {Fin servicio servidor A};
 \node [circle, draw, text width=2cm, right=of finA] (finB) {Fin servicio servidor B};
-\draw	(inicio) edge[left] node{0} (llegada)
+\draw	(inicio) edge[left] node{exp(1')} (llegada)
 		(llegada) edge[in=60, out=30, loop, above] node{exp(1')}
 		(llegada) edge[above] node{exp(0.8')} (finA)
 		(llegada) edge[below] node{$servA = libre$} (finA)
@@ -156,7 +187,20 @@ los sucesos relevantes que queremos que estén en el sistema.
 \caption{Versión simplificada del grafo de sucesos.}
 \end{figure}
 
+Vemos que este grafo está compuesto por tres sucesos y el suceso de inicio. Las conexiones
+que salían anteriormente de los nodos eliminados se han conservado, de forma que no se
+ha perdido ninguna transición.
+
 \section{\textsc{Descripción del modelo}}
+
+Una vez que hemos visto el grafo de sucesos, vamos a describir algunos aspectos
+fundamentales del modelo de cara a la implementación de este.
+
+\subsection{Variables de interés}
+
+\subsection{Rutinas de interés}
+
+\subsection{Estructura y composición de la lista de sucesos}
 
 \section{\textsc{Experimentación y resultados}}
 
