@@ -721,8 +721,6 @@ Una vez que hemos comprobado el funcoinamiento del modelo y hemos determinado el
 realizar, vamos a ir variando el tiempo de servicio del servidor B para determinar con qué valor el
 tiempo medio de estancia es inferior a los 10 minutos. A continuación se pueden ver los resultados:
 
-% Please add the following required packages to your document preamble:
-% \usepackage{graphicx}
 \begin{table}[H]
 \centering
 \begin{tabular}{|c|c|c|}
@@ -744,12 +742,33 @@ es el que tenía inicialmente un mayor tiempo de servicio, con lo cuál los clie
 en la cola de dicho servidor.
 
 Parece que si el tiempo disminuye hasta aproximadamente 0.8 minutos (o lo que es lo mismo, 48 segundos),
-de forma que el tiempo de servicio del servidor B sea más o menos igual al tiempo del servidor A,
-el tiempo medio de estancia se queda por debajo de los 10 minutos. Por tanto, tendríamos que reducir
-el tiempo de servicio o bien hasta 0.8 minutos, o bien hasta un valor en el rango $[0.8, 0.9)$, ya que parece
-que el valor óptimo se encuentra en este rango (con un tiempo de servicio de 0.8 minutos se queda bastante por debajo
-de los 10 minutos, mientras que con un tiempo de servicio de 0.9 minutos se queda algo por encima; por tanto,
-habrá más de un valor en el rango que permita obtener un tiempo medio de servicio inferior a 10 minutos).
+el tiempo medio de estancia disminuye hasta aproximadamente 7.66 minutos. Si se disminuye hasta 0.9 segundos, se
+obtiene un tiempo medio de estancia de 11.18 minutos. Por tanto, parece que existe algún valor de tiempo
+entre estos dos que permita obtener por primera vez un tiempo de servicio inferior a 10 minutos. De hecho, si
+probamos algunos valores por debajo de 0.9, obtenemos lo siguiente:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{\begin{tabular}[c]{@{}c@{}}Tiempo de servicio\\ del servidor B (min)\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Tiempo medio\\ de estancia (min)\end{tabular}} & \textbf{Desviación} \\ \hline
+0.89 & 10.3719 & 4.1549 \\ \hline
+0.88 & 9.98339 & 3.66075 \\ \hline
+0.87 & 9.41839 & 3.04787 \\ \hline
+\end{tabular}
+\caption{Resultados obtenidos por el modelo al variar el tiempo de servicio del servidor B por debajo de 0.9 minuots.}
+\label{tab:sim3}
+\end{table}
+
+Vemos que para un tiempo de servicio de 0.88 minutos obtenemos un tiempo medio de estancia inferior a 10 minutos, aunque
+con un margen de error demasiado pequeño. Por tanto, el primer tiempo de servicio con el que de verdad podríamos
+conseguir un tiempo medio de estancia inferior a 10 minutos sería 0.87 minutos, ya que en este caso existe cierto margen
+de error respecto a los 10 minutos. Por tanto, \textbf{podríamos intentar reducir el tiempo de servicio del servidor B hasta
+0.87 minutos}, ya que de esta forma se consigue un tiempo medio de estancia inferior a 10 minutos y se deja cierto margen
+de error. Podríamos reducirlo más, pero no tiene sentido bajar de 0.8 minutos, ya que entonces el servidor A pasaría a ser
+el cuello de botella, y debemos recordar que queremos dejar constante el tiempo de servicio del servidor A.
+Por tanto, de manera general, el tiempo de servicio del servidor B tendría que ser similar al del servidor A.
+
 
 \end{document}
 
