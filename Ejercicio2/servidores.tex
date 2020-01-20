@@ -156,7 +156,7 @@ que se tienen que seguir para atender a un cliente de principio a fin, nos encon
 	Por tanto, necesitamos un suceso que represente la salida del sistema.
 \end{enumerate}
 
-Con los seis sucesos anteriormente descritos, podemos construir el grafo de sucesos. Adicionalmente,
+Con los seis sucesos anteriormente descritos podemos construir el grafo de sucesos. Adicionalmente,
 necesitaríamos un suceso extra que genere la primera llegada. El grafo resultante se puede ver a continuación:
 
 \begin{figure}[H]
@@ -677,9 +677,79 @@ for (int i = 0; i < numSimulaciones; i++)
 modeloServidor->generarInforme();
 \end{lstlisting}
 
-
-
 \section{\textsc{Experimentación y resultados}}
+
+Una vez que hemos descrito el modelo, vamos a hacer una pequeña experimentación con él
+para ver cómo funciona. Para ello, vamos a ir variando el número de simulaciones que se hacen
+con el objetivo de ver cómo van variando los resultados y determinar el número de simulaciones más adecuado.
+Posteriormente, vamos a ir modificando el valor del tiempo de servicio en el servidor B
+para determinar hasta cuánto tiempo se tendría que reducir para que el tiempo de servicio
+sea inferior a 10 minutos.
+
+Primero, vamos a probar el modelo con 1, 10, 100 y 1000 simulaciones. Se va a crear una tabla
+donde aparezca el tiempo medio de estancia y la desvición para cada caso. Los resultados
+se pueden ver a continuación:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{\begin{tabular}[c]{@{}c@{}}Número\\ de simulaciones\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Tiempo medio\\ de estancia (min)\end{tabular}} & \textbf{Desviación} \\ \hline
+1 & 49.8074 & - \\ \hline
+10 & 46.5123 & 14.5153 \\ \hline
+100 & 46.9491 & 13.5793 \\ \hline
+1000 & 46.4281 & 14.4308 \\ \hline
+\end{tabular}
+\caption{Resultados obtenidos por el modelo al variar el número de simulaciones.}
+\label{tab:sim1}
+\end{table}
+
+Vemos que a medida que aumentamos el número de simulaciones los resultados se van estabilizando.
+Para una única simulación, vemos que el tiempo medio de estancia varía bastante respecto
+a los otros. Para 10, 100 y 1000 simulaciones vemos que los resultados son bastante parecidos.
+Podemos afirmar que el modelo ofrece unos buenos resultados en general, ya que no existe una
+diferencia significativa entre los resultados obtenidos utilizando un número diferente de simulaciones.
+Obviamente, los resultados que se obtendrán con una única simulación van a ser bastante diferentes
+a los obtenidos al simular más de una vez, ya que una única simulación es muy susceptible al ruido
+provocado por la aleatoriedad a la hora de generar la información.
+
+Si tuviéramos que escoger un número de simulaciones, la mejor opción sería utilizar 1000 simulaciones,
+ya que no se tarda demasiado en hacerlas y, al tener un mayor número de muestras, los resultados
+obtenidos serán más parecidos a los reales que se podrían obtener.
+
+Una vez que hemos comprobado el funcoinamiento del modelo y hemos determinado el número de simulaciones a
+realizar, vamos a ir variando el tiempo de servicio del servidor B para determinar con qué valor el
+tiempo medio de estancia es inferior a los 10 minutos. A continuación se pueden ver los resultados:
+
+% Please add the following required packages to your document preamble:
+% \usepackage{graphicx}
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{\begin{tabular}[c]{@{}c@{}}Tiempo de servicio\\ del servidor B (min)\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Tiempo medio\\ de estancia (min)\end{tabular}} & \textbf{Desviación} \\ \hline
+1.2 & 46.4281 & 14.4308 \\ \hline
+1.1 & 32.4829 & 12.9522 \\ \hline
+1 & 18.9374 & 8.79197 \\ \hline
+0.9 & 11.1853 & 4.78277 \\ \hline
+0.8 & 7.66874 & 2.56844 \\ \hline
+\end{tabular}
+\caption{Resultados obtenidos por el modelo al variar el tiempo de servicio del servidor B.}
+\label{tab:sim2}
+\end{table}
+
+Vemos que a medida que disminuimos el tiempo de servicio del servidor B, el tiempo medio de estancia
+va disminuyendo. Esto es completamente lógico, ya que el servidor B es el cuello de botella del sistema, debido a que
+es el que tenía inicialmente un mayor tiempo de servicio, con lo cuál los clientes se van acumulando
+en la cola de dicho servidor.
+
+Parece que si el tiempo disminuye hasta aproximadamente 0.8 minutos (o lo que es lo mismo, 48 segundos),
+de forma que el tiempo de servicio del servidor B sea más o menos igual al tiempo del servidor A,
+el tiempo medio de estancia se queda por debajo de los 10 minutos. Por tanto, tendríamos que reducir
+el tiempo de servicio o bien hasta 0.8 minutos, o bien hasta un valor en el rango $[0.8, 0.9)$, ya que parece
+que el valor óptimo se encuentra en este rango (con un tiempo de servicio de 0.8 minutos se queda bastante por debajo
+de los 10 minutos, mientras que con un tiempo de servicio de 0.9 minutos se queda algo por encima; por tanto,
+habrá más de un valor en el rango que permita obtener un tiempo medio de servicio inferior a 10 minutos).
 
 \end{document}
 

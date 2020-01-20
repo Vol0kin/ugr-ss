@@ -1,0 +1,3 @@
+En el directorio src/ se encuentra el código fuente. Se ha dejado un
+makefile por si se quiere compilar. Antes de compilar, se debe crear
+el directorio bin/, ya que ahí se va a crear el binario.
