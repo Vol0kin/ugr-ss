@@ -12,12 +12,41 @@
 \usepackage{amsmath}						% Símbolos matemáticos
 \usepackage{tikz}
 \usetikzlibrary{positioning, arrows, shapes}
+\usepackage{listings}
 
 \tikzset{
 	->, % Hace que los arcos sean dirigidos
 	>=stealth, % Hace que la punta de las flechas sean gruesas
 	node distance=3cm % Distancia minima entre nodos
 }
+
+\usepackage{color}
+ 
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+ 
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=4
+}
+
+\lstset{style=mystyle, language=C++}
 
 % Comando para poner el nombre de la asignatura
 \newcommand{\asignatura}{Simulación de Sistemas}
@@ -196,11 +225,459 @@ ha perdido ninguna transición.
 Una vez que hemos visto el grafo de sucesos, vamos a describir algunos aspectos
 fundamentales del modelo de cara a la implementación de este.
 
+\subsection{Consideraciones previas}
+
+El tiempo se va a representar en minutos, ya que se ha considerada que es la medida
+más adecuada según los datos proporcionados en la descripción del problema (los tiempos
+están dados en minutos). Además, los resultados serán más fácilmente interpretables de
+esta forma.
+
+Se va a utilizar la técnica del incremento variable del tiempo, ya que es más eficiente
+que la técnica de incremento fijo, además de que permite obtener unos mejores resultados
+que la otra técnica.
+
+En cada ejecución se van a realizar \texttt{numSimulaciones} simulaciones. En cada una
+de ellas se simulará hasta que se produzca un suceso de fin de simulación. Se escogerá
+el siguiente suceso y se adelantará el tiempo al momento en el que tiene el lugar el suceso,
+y en función de qué tipo de suceso, se hará una cosa u otra. Es importante destacar que, antes
+de comenzar cada simulación, se reiniciará el sistema, de forma que las variables clave
+tengan los valores iniciales que les corresponde y no se tenga información de simulaciones
+anteriores.
+
+Por último, se quiere destacar que a la hora de hacer la implementación se han juntado las variables
+y las tareas en una clase, encapsulando por tanto toda la información y la funcionalidad del
+simulador en una estructura de datos que podamos utilizar.
+
 \subsection{Variables de interés}
 
-\subsection{Rutinas de interés}
+Además de definir los sucesos, otra cosa muy importante que necesitamos determinar son las variables
+a utilizar. Hay de dos tipos: las variables de estado, las cuales son necesarias para el correcto funcionamiento
+del sistema, y los contadores estadísticos, los cuáles irán acumulando información con el objetivo
+de ofrecer información estadística de salida. A continuación, vamos a ver cada tipo de variable.
+
+\subsubsection{Variables de estado}
+
+Las variables de estado que encontramos son las siguientes:
+
+\begin{itemize}[label=\textbullet]
+	\item \texttt{reloj}: Esta variable es esencial, y como su propio nombre indica, representa
+	el reloj, determinando en qué instante de tiempo nos encontramos.
+	\item \texttt{enColaServA}: Esta variable indica cuántos clientes hay esperando en la
+	cola del servidor A.
+	\item \texttt{enColaServB}: La variable indica cuántos clientes hay esperando en la
+	cola del servidor B.
+	\item \texttt{libreServA}: Indica si el servidor A se encuentra libre (\texttt{true}) o si
+	está ocupado (\texttt{false}).
+	\item \texttt{libreServB}: Indica si el servidor B se encuentra libre (\texttt{true}) o si
+	está ocupado (\texttt{false}).
+	\item \texttt{listaSucesos}: Lista que contiene los sucesos próximos. Los sucesos están ordenados
+	por tiempo (el suceso más próximo es el primero de la lista).
+	\item \texttt{sucesoActual}: Variable que contiene el suceso actual.
+	\item \texttt{tiemposLlegada}: Vector que almacena el tiempo en el que llega cada cliente.
+	El primer elemento representa el tiempo de llegada del cliente más antiguo; el último, el del
+	cliente más reciente. Cuando un cliente sale del sistema, se elimina el primer elemento, ya que
+	ha salido el cliente que llevaba más tiempo en el sistema.
+	\item \texttt{finSimulación}: Indica si se ha terminado la simulación (\texttt{true}) o si todavía
+	no (\texttt{false}).
+\end{itemize}
+
+\subsubsection{Contadores estadísticos}
+
+Los contadores estadísticos que se han considerado son los siguientes:
+
+\begin{itemize}[label=\textbullet]
+	\item \texttt{numClientesAtendidos}: Acumulador que indica cuántos clientes han sido atendidos
+	por el sistema. Cada vez que sale un cliente se incrementa en uno.
+	\item \texttt{tTotalClientesSistema}: Acumulador que indica cuánto tiempo en total han pasado
+	en el sistema todos los clientes atendidos.
+\end{itemize}
 
 \subsection{Estructura y composición de la lista de sucesos}
+
+Hasta ahora hemos estado hablando de los sucesos y de la lista de sucesos, pero no hemos
+profundizado demasiado en cómo deberían ser ambos elementos.
+
+Por una parte tenemos el \textbf{suceso}. Un suceso no es más que una estructura de datos de
+tipo registro con dos campos:
+
+\begin{itemize}[label=\textbullet]
+	\item \texttt{tipoSuceso} Valor entero que representa el tipo de suceso que se va a llevar
+	a cabo.
+	\item \texttt{tiempo}: Instante de tiempo en el que se lleva a cabo el suceso.
+\end{itemize}
+
+Por otra parte tenemos la \textbf{lista de sucesos}, la cuál contendrá registros del tipo anteriormente
+especificado. La lista permitirá hacer inserciones por el final y eliminar elementos por el principio.
+Los elementos tienen que estar ordenados por el tiempo, de forma que el suceso más próximo sea
+el primero, mientras que el más lejano el último. Para hacer esto, a la hora de implementar el modelo
+he utilizado el tipo \texttt{list} que ofrece \texttt{C++}, el cuál es una lista doblemente enlazada
+que permite hacer las operaciones de inserción y borrado en tiempo constante. 
+
+\subsection{Rutinas de interés y estructura de la simulación}
+
+Lo último que nos queda es definir cuáles son las rutinas de interés del modelo. Vamos a ver
+cómo se podrían implementar dichas rutinas. Para cada una de ellas se va a mostrar el código
+en \texttt{C++} con el que se ha implementado, de forma que se tenga la referencia del modelo
+desarrollado en todo momento.
+
+Por una parte tenemos la generación de sucesos. Podemos hacer la generación de forma genérica
+para casi todos los tipos de sucesos menos para el suceso \textbf{fin de simulación}, para el
+que podemos hacer una rutina aparte.
+
+La rutina para generar sucesos de forma genérica es la siguiente:
+
+\begin{lstlisting}
+// Metodo para generar sucesos
+Suceso generarSuceso(int tipoSuceso, double tiempoMedio) const
+{
+	// Generar nuevo suceso
+    Suceso suceso;
+
+    suceso.tipoSuceso = tipoSuceso;
+    suceso.tiempo = reloj + generadorExponencial(tiempoMedio);
+    
+    return suceso;
+}
+\end{lstlisting}
+
+La rutina para generar el suceso fin de simulación es la siguiente:
+
+\begin{lstlisting}
+// Metodo para generar el suceso fin de simulacion
+Suceso generarSucesoFinSimulacion() const
+{
+	// Generar nuevo suceso
+    Suceso suceso;
+
+    suceso.tipoSuceso = SUCESO_FIN_SIMULACION;
+    suceso.tiempo = reloj + TIEMPO_FINAL;
+
+    return suceso;
+}
+\end{lstlisting}
+
+Para generar los tiempos de los sucesos se ha utilizado un generador exponencial, el cuál
+puede ser implementado de la siguiente forma:
+
+\begin{lstlisting}
+// Metodo generador exponencial
+double generadorExponencial(double media) const
+{
+	double u;
+    u = (double) random();
+    u = (double) (u/(RAND_MAX+1.0));
+    return (-media * log(1 - u));
+}
+\end{lstlisting}
+
+Una vez que tenemos el suceso, para insertarlo en la lista de sucesos de forma ordenada podemos
+utilizar la siguiente rutina:
+
+\begin{lstlisting}
+// Metodo para insertar un suceso, manteniendo la lista ordenada por tiempo
+void insertarSuceso(const Suceso& suceso)
+{
+	// Insertar el suceso en la lista
+    listaSucesos.push_back(suceso);
+
+    // Mantener lista ordenada
+    listaSucesos.sort();
+}
+\end{lstlisting}
+
+Para poder utilizar la rutina de la forma anterior, tenemos que sobrecargar el operador
+$<$ del registro \texttt{Suceso} o bien definir una función para comparar. En este caso
+se ha optado por lo primero, y se tiene que el registro tiene la siguiente forma:
+
+\begin{lstlisting}
+// Estructura suceso
+struct Suceso
+{
+	int tipoSuceso;
+    double tiempo;
+
+    bool operator<(const Suceso& otroSuceso) const
+    {
+    	return tiempo < otroSuceso.tiempo;
+	}
+};
+\end{lstlisting}
+
+Es necesario tener una rutina para inicializar el modelo de simulación, tanto la primera vez como
+entre simulación y simulación. Esta rutina se encarga de iniciar todas las variables, tal y como
+se ha especificado anteriormente. La rutina se puede implementar de la siguiente forma:
+
+\begin{lstlisting}
+ // Metodo de inicializacion del modelo
+void inicializarModelo()
+{
+	// Inicializar reloj y tiempo parada
+    reloj = TIEMPO_INICIAL;
+    tiempoParada = TIEMPO_FINAL;
+
+    // Inicializar colas y disponibilidad de los servidores
+    enColaServA = enColaServB = 0;
+    libreServA = libreServB = true;
+
+    // Inicializar valores estadisticos
+    numClientesAtendidos = 0;
+    tTotalClientesEnSistema = 0.0;
+
+    // Limpiar lista de sucesos por si ha quedado algun suceso anterior
+    listaSucesos.clear();
+
+    // Limpiar lista de tiempos de llegada por si ha quedado alguan llegada anterior
+    tiemposLlegadas.clear();
+
+    // Generar suceso inicial e insertarlo en la lista de sucesos
+    Suceso sucesoInicial = generarSuceso(SUCESO_LLEGADA, TIEMPO_MEDIO_LLEGADAS);
+    insertarSuceso(sucesoInicial);
+
+    // Generar suceso final e insertarlo en la lista de sucesos
+    Suceso sucesoFinal = generarSucesoFinSimulacion();
+    insertarSuceso(sucesoFinal);
+
+    finSimulacion = false;
+}
+\end{lstlisting}
+
+También necesitamos tener una rutina para obtener el siguiente suceso y actualizar
+el reloj al tiempo correspondiente, además de eliminar el suceso obtenido de la lista
+de sucesos. Para hacer estas tareas, podemos utilizar una rutina como la siguiente:
+
+\begin{lstlisting}
+// Metodo para obtener el siguiente suceso
+void siguienteSuceso()
+{
+	// Obtener suceso y actualizar lista de sucesos y reloj
+    sucesoActual = listaSucesos.front();
+    listaSucesos.pop_front();
+
+    reloj = sucesoActual.tiempo;
+}
+\end{lstlisting}
+
+De alguna forma tenemos que procesar el suceso actual y determinar qué rutina llamar
+en función del tipo de suceso. Para hacer esto, podemos utilizar una rutina como la siguiente:
+
+\begin{lstlisting}
+// Metodo para procesar el suceso actual
+void procesarSucesoActual()
+{
+	switch(sucesoActual.tipoSuceso)
+    {
+    	case SUCESO_LLEGADA:
+        	sucesoLlegadaServidor();
+           break;
+		case SUCESO_FIN_SERVICIO_SERVIDOR_A:
+        	sucesoFinServicioServidorA();
+           break;
+		case SUCESO_FIN_SERVICIO_SERVIDOR_B:
+        	sucesoFinServicioServidorB();
+           break;
+		case SUCESO_FIN_SIMULACION:
+        	sucesoFinSimulacion();
+           break;
+	}
+}
+\end{lstlisting}
+
+Cada una de las rutinas anteriores está asociada a un suceso del grafo, menos la rutina
+\texttt{sucesoFinSimulacion()}, la cuál se utiliza para terminar la simulación. A continuación
+se puede ver qué es lo que se hace en cada una de ellas de forma más detallada:
+
+\begin{lstlisting}
+// Metodo que representa el suceso llegada de cliente al servidor
+void sucesoLlegadaServidor()
+{
+	// Guardar el tiempo en el que ha llegado el cliente
+    // Se guarda al final de la lista de tiempos
+    tiemposLlegadas.push_back(reloj);
+
+    // Generar una nueva llegada
+    Suceso llegada = generarSuceso(SUCESO_LLEGADA, TIEMPO_MEDIO_LLEGADAS);
+    insertarSuceso(llegada);
+
+    // Comprobar si el servidor A esta libre y realizar accion correspondiente
+    if (libreServA)
+    {
+    	libreServA = false;
+                
+        Suceso servicioServA = generarSuceso(SUCESO_FIN_SERVICIO_SERVIDOR_A, TIEMPO_MEDIO_SERVICIO_SERVIDOR_A);
+        insertarSuceso(servicioServA);
+	}
+    else
+    {
+    	enColaServA++;
+	}
+}
+\end{lstlisting}
+
+\begin{lstlisting}
+// Metodo que representa el suceso fin de servicio en el servidor A
+void sucesoFinServicioServidorA()
+{
+	// Comprobar si hay clientes en la cola del servidor A
+    if (enColaServA > 0)
+    {
+    	enColaServA--;
+                
+        Suceso servicioServA = generarSuceso(SUCESO_FIN_SERVICIO_SERVIDOR_A, TIEMPO_MEDIO_SERVICIO_SERVIDOR_A);
+        insertarSuceso(servicioServA);
+	}
+	else
+    {
+    	libreServA = true;
+	}
+
+    // Comprobar si el servidor B esta libre y realizar accion correspondiente
+    if (libreServB)
+    {
+    	libreServB = false;
+                
+        Suceso servicioServB = generarSuceso(SUCESO_FIN_SERVICIO_SERVIDOR_B, TIEMPO_MEDIO_SERVICIO_SERVIDOR_B);
+		insertarSuceso(servicioServB);
+	}
+    else
+    {
+    	enColaServB++;
+	}
+}
+\end{lstlisting}
+
+\begin{lstlisting}
+// Metodo que representa el suceso fin de servicio en el servidor B
+void sucesoFinServicioServidorB()
+{
+	// Incrementar el numero de clientes atendidos y el tiempo total
+    // de los clientes en el servidor
+    numClientesAtendidos++;
+    tTotalClientesEnSistema += reloj - tiemposLlegadas.front();
+
+    // Eliminar tiempo de llegada del cliente mas antiguo (el primero)
+    tiemposLlegadas.pop_front();
+
+    // Comprobar si hay clientes en la cola del servidor A
+    if (enColaServB > 0)
+    {
+    	enColaServB--;
+    	
+    	Suceso servicioServB = generarSuceso(SUCESO_FIN_SERVICIO_SERVIDOR_B, TIEMPO_MEDIO_SERVICIO_SERVIDOR_B);
+		insertarSuceso(servicioServB);
+	}
+    else
+    {
+    	libreServB = true;
+	}
+}
+\end{lstlisting}
+
+\begin{lstlisting}
+// Metodo que representa el suceso fin de simulacion
+void sucesoFinSimulacion()
+{
+	finSimulacion = true;
+
+	double tiempoMedioEstancia = calcularTiempoMedioEstancia();
+    tiemposMediosEstancia.push_back(tiempoMedioEstancia);
+}
+\end{lstlisting}
+
+Podemos ver que la rutina \texttt{sucesoFinSimulacion()} calcula el tiempo medio de estancia
+y lo guarda en un vector. Dicho vector será accedido más adelante para generar el informe. El
+vector tendrá tamaño \texttt{numSimulaciones}. Para calcular el tiemo de estancia medio de los
+clientes en el servidor, podemos utilizar la siguiente expresión, la cuál relaciona el tiempo
+total que han pasado todos los clientes atendidos dentro del sistema y el número total de clientes
+atendidos:
+
+\begin{equation}
+	tiempoEstanciaMedio = \frac{tTotalClientesSistema}{numClientesAtendidos}
+\end{equation}
+
+Para ayudarse con el cálculo, la rutina anterior utiliza otra rutina que hace el cálculo,
+la cuál se puede ver a continuación:
+
+\begin{lstlisting}
+// Metodo para calcular el tiempo de estancia medio al terminar una simulacion
+double calcularTiempoMedioEstancia() const
+{
+	return tTotalClientesEnSistema / numClientesAtendidos;
+}
+\end{lstlisting}
+
+Una rutina que nos será útil más adelante es la que permite determinar si se ha producido
+el fin de la simulación o no. A pesar de que implementar la rutina es trivial, se ofrece la
+implementación realizada a continuación:
+
+\begin{lstlisting}
+// Metodo que permite determinar si ha finalizado la simulacion
+bool esFinSimulacion() const
+{
+	return finSimulacion;
+}
+\end{lstlisting}
+
+La última rutina que nos interesa es la generación del informe. El informe contendrá el resultado
+medio de todas las simualciones junto con su desviación típica. Para ello, se va a utilizar el vector
+anteriormente mencionado en el que se han ido guardando los resultados medios para cada simulación.
+A partir de estos, se puede extraer un valor medio global, además de la desviación típica. Podemos
+generar el informe de la siguiente forma:
+
+\begin{lstlisting}
+// Metodo para generar el informe final
+void generarInforme() const
+{
+	// Obtener suma de los valores medios y suma de los cuadrados de los valores medios
+    double sum = accumulate(tiemposMediosEstancia.begin(), tiemposMediosEstancia.end(), 0.0);
+    double sum2 = inner_product(tiemposMediosEstancia.begin(),
+                                tiemposMediosEstancia.end(),
+                                tiemposMediosEstancia.begin(),
+                                0.0);
+            
+    // Obtener valores medios
+    double tMedioEstancia = sum / numSimulaciones,
+    	    desv = sqrt((sum2 - numSimulaciones * tMedioEstancia * tMedioEstancia) / (numSimulaciones - 1));
+            
+	// Mostrar resultados por pantalla
+    cout << "\n\nRESULTADOS PARA " << numSimulaciones << " SIMULACIONES" << endl;
+    cout << "Tiempo medio de estancia: " << tMedioEstancia << " +/- " <<  desv << " minutos" << endl;             
+}
+\end{lstlisting}
+
+Por último, nos queda por ver la estructura general del programa de simulación. Simplemente
+tendríamos que iniciar primero la semilla aleatoria y luego simular \texttt{numSimulaciones}
+veces, reiniciando los valores de las variables en cada simulación. Una vez que se han hecho
+todas las simulaciones se muestra el informe.
+
+La estructura anteriormente mencionada se puede ver a continuación:
+
+\begin{lstlisting}
+// Inicializar semilla aleatoria
+srand(time(NULL));
+
+// Crear instancia del modelo de simulacion
+ModeloServidor* modeloServidor = new ModeloServidor(numSimulaciones);
+
+// Simular numSimulaciones veces
+for (int i = 0; i < numSimulaciones; i++)
+{
+    cout << "Simulacion " << i << "..." << endl;
+
+    // Iniciar el modelo antes de simular
+    modeloServidor->inicializarModelo();
+
+    while(!modeloServidor->esFinSimulacion())
+    {
+    	modeloServidor->siguienteSuceso();
+        modeloServidor->procesarSucesoActual();
+	}
+}
+
+// Generar informe mostrando la media para todas las simulaciones
+modeloServidor->generarInforme();
+\end{lstlisting}
+
+
 
 \section{\textsc{Experimentación y resultados}}
 
